@@ -1,0 +1,80 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+String getApiKey() {
+    def keyProperties = new Properties()
+    def keyPropertiesFile = rootProject.file('key.properties')
+    if (keyPropertiesFile.exists()) {
+        keyPropertiesFile.withReader('UTF-8') { reader ->
+            keyProperties.load(reader)
+        }
+        assert keyProperties['secrets.MAP_API_KEY'] != null, "secrets.MAP_API_KEY not set in key.properties"
+        return keyProperties['secrets.MAP_API_KEY']
+    }
+    assert System.getenv().get('secrets.MAP_API_KEY') != null, "secrets.MAP_API_KEY not set in System properties"
+    return System.getenv().get('secrets.MAP_API_KEY')
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 30
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    defaultConfig {
+        applicationId "com.dancechaos.dance_chaos"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        manifestPlaceholders = [ MAP_API_KEY:getApiKey()]   // API key must be in github secrets or in key.properties (gitignored)
+    }
+
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-analytics'
+}

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1032463184615",
+    "firebase_url": "https://dancechaos-prod.firebaseio.com",
+    "project_id": "dancechaos-prod",
+    "storage_bucket": "dancechaos-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032463184615:android:25ad159ba81ef8cad8a842",
+        "android_client_info": {
+          "package_name": "com.dancechaos.dance_chaos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032463184615-ujdjqh0j9laelf20i9uqjl66e8kvu922.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUX1N8lZizX8yf_uXNRRAeY907EVmHsMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032463184615-ujdjqh0j9laelf20i9uqjl66e8kvu922.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
