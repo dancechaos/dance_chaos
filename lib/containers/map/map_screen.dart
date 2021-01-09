@@ -129,7 +129,7 @@ class FireMapState extends State<FireMap> {
     GeoFirePoint point = geo.point(latitude: currentCameraPosition.target.latitude, longitude: currentCameraPosition.target.longitude);
     return firestore.collection('locations').add({
       'position': point.data,
-      'name': 'Yay I can be queried!'
+      'displayName': 'Yay I can be queried!'
     });
   }
 
@@ -140,7 +140,7 @@ class FireMapState extends State<FireMap> {
       Map<String, dynamic> data = document.data();
         GeoPoint pos = data['position']['geopoint'];
         double distance = data['distance'];
-        _addMarker(pos, document.id, data['name'], snippet: distance.toString());
+        _addMarker(pos, document.id, data['displayName'], snippet: distance.toString());
     });
   }
 
