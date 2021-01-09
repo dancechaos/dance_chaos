@@ -17,12 +17,14 @@ import 'package:redux/redux.dart';
 import 'app/core/localization.dart';
 import 'app/core/routes.dart';
 import 'app/core/theme.dart';
+import 'app/repo/location_repository.dart';
 import 'app/repo/profile_repository.dart';
 import 'app/repo/reactive_repository.dart';
 import 'app/repo/user_repository.dart';
 import 'containers/map/map_screen.dart';
 import 'containers/todo/add_todo.dart';
 import 'firebase/middleware/store_todos_middleware.dart';
+import 'firebase/repo/firestore_location_repository.dart';
 import 'firebase/repo/reactive_todos_repository.dart';
 import 'firebase/repo/firestore_profile_repository.dart';
 import 'firebase/repo/user_repository.dart';
@@ -41,6 +43,7 @@ class DanceChaosApp extends StatelessWidget {
     ReactiveTodosRepository todosRepository,
     UserRepository userRepository,
     ProfileRepository profileRepository,
+    LocationRepository locationRepository,
     bool useLocalFirebaseEmulator = false,
   })  : store = Store<AppState>(
           appReducer,
@@ -49,6 +52,7 @@ class DanceChaosApp extends StatelessWidget {
             todosRepository ?? FirestoreReactiveTodosRepository(),
             userRepository ?? FirebaseUserRepository(),
             profileRepository ?? FirestoreProfileRepository(useLocalFirebaseEmulator: useLocalFirebaseEmulator),
+            locationRepository ?? FirestoreLocationRepository(),
           ),
         ),
         super(key: key) {

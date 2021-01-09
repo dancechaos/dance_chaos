@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dance_chaos/app/repo/location_info_entity.dart';
 import 'package:dance_chaos/models/profile_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -32,4 +33,16 @@ class LocationInfo {
   String toString() {
     return 'UserInfo{id: $id, location: $location)}';
   }
+
+  LocationInfoEntity toEntity() {
+    return LocationInfoEntity(id: id, location: location);
+  }
+
+  static LocationInfo fromEntity(LocationInfoEntity entity) {
+    return entity == null ? null : LocationInfo(
+      id: entity.id,
+      location: entity.location,
+    );
+  }
+
 }

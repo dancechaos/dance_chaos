@@ -21,6 +21,13 @@ class Utility {
     return false;
   }
 
+  static Map<String, Object> addToMap(Map<String, Object> map, String field, value) {
+    if (value != null)
+      map[field] = value;
+    return map;
+  }
+
+
   static final Duration timeoutDefault = Duration(seconds: 10);
 
   static final int retriesDefault = 3;

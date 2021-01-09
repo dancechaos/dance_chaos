@@ -47,22 +47,16 @@ class ProfileEntity extends UserEntity {
 
   Map<String, Object> toJson() {
     Map<String, Object> map = {'id': id};
-    addToMap(map, 'displayName', displayName);
-    addToMap(map, 'photoUrl', photoUrl);
-    addToMap(map, 'phoneNumber', phoneNumber);
-    addToMap(map, 'email', email);
-    addToMap(map, 'isAnonymous', isAnonymous);
-    addToMap(map, 'birthdate', birthdate);
-    addToMap(map, 'tracking', tracking.toString());
-    addToMap(map, 'providerId', providerId);
-    addToMap(map, 'displayName', displayName);
-    addToMap(map, 'homeLocation', homeLocation);
-    return map;
-  }
-
-  Map<String, Object> addToMap(Map<String, Object> map, String field, value) {
-    if (value != null)
-      map[field] = value;
+    Utility.addToMap(map, 'displayName', displayName);
+    Utility.addToMap(map, 'photoUrl', photoUrl);
+    Utility.addToMap(map, 'phoneNumber', phoneNumber);
+    Utility.addToMap(map, 'email', email);
+    Utility.addToMap(map, 'isAnonymous', isAnonymous);
+    Utility.addToMap(map, 'birthdate', birthdate);
+    Utility.addToMap(map, 'tracking', tracking.toString());
+    Utility.addToMap(map, 'providerId', providerId);
+    Utility.addToMap(map, 'displayName', displayName);
+    Utility.addToMap(map, 'homeLocation', homeLocation);
     return map;
   }
 

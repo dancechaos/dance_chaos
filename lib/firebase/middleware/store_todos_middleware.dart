@@ -6,6 +6,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/actions/actions.dart';
+import 'package:dance_chaos/app/repo/location_info_entity.dart';
+import 'package:dance_chaos/app/repo/location_repository.dart';
 import 'package:dance_chaos/app/repo/profile_entity.dart';
 import 'package:dance_chaos/app/repo/profile_repository.dart';
 import 'package:dance_chaos/app/repo/reactive_repository.dart';
@@ -23,6 +25,7 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
   ReactiveTodosRepository todosRepository,
   UserRepository userRepository,
   ProfileRepository profileRepository,
+  LocationRepository locationRepository,
 ) {
   return [
     TypedMiddleware<AppState, InitAppAction>(
@@ -38,7 +41,7 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
       _syncProfileToUser(userRepository, profileRepository),
     ),
     TypedMiddleware<AppState, ChangeLocationAction>(
-      _changeLocation(userRepository),
+      _changeLocation(locationRepository),
     ),
     TypedMiddleware<AppState, ProfileChangedAction>(
       _profileChanged(userRepository, profileRepository),
@@ -133,17 +136,15 @@ void Function(
     ChangeLocationAction action,
     NextDispatcher next,
     ) _changeLocation (
-    UserRepository repository,
+    LocationRepository locationRepository,
     ) {
   return (store, action, next) {
     LocationInfo initialLocation = store.state.locationInfo;
     next(action);
 
     if (initialLocation != store.state.locationInfo) {  // User location changed, now update my location in the shared repo
-      print('------------------changeLocation profile: ${action
-          .profile}, location (lat,long): (${action.location
-          ?.latitude}, ${action.location
-          ?.longitude}) '); // todo(don) UpdateLocation
+      print('changeLocation profile: ${action.profile}, location (lat,long): (${action.location?.latitude}, ${action.location?.longitude}) ');
+      locationRepository.updateLocation(store.state.locationInfo?.toEntity());
     }
   };
 }
