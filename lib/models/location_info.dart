@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/app/repo/location_info_entity.dart';
-import 'package:dance_chaos/models/profile_actions.dart';
 import 'package:flutter/material.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -35,7 +33,6 @@ class LocationInfo {
     return 'UserInfo{id: $id, location: $location)}';
   }
 
-  static Geoflutterfire geo = Geoflutterfire();
   LocationInfoEntity toEntity() {
     return LocationInfoEntity(id: id, location: location);
   }
