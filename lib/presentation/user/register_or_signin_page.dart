@@ -63,8 +63,8 @@ class _RegisterOrSignInPageState extends State<RegisterOrSignInPage> {
           child: Card(
             child: Padding(
                 padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
+//                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
                       padding: const EdgeInsets.only(top: 16.0),
