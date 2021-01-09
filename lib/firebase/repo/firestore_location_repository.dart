@@ -13,7 +13,7 @@ import 'package:dance_chaos/app/repo/utility.dart';
 import 'firestore_profile_repository.dart';
 
 class FirestoreLocationRepository implements LocationRepository {
-  static const String path = 'location';
+  static const String path = 'locations';
 
   int _retryCounter = 0;
 
