@@ -260,18 +260,18 @@ class FireMapState extends State<FireMap> {
         center: center,
         radius: rad,
         field: 'position',
-        strictMode: true
+        strictMode: true,
       );
     }).listen(_updateMarkers);
   }
 
   _updateQuery(value) {
       final zoomMap = {
-          100.0: 12.0,
-          200.0: 10.0,
-          300.0: 7.0,
-          400.0: 6.0,
-          500.0: 5.0
+          100.0: 17.0,
+          200.0: 15.0,
+          300.0: 12.0,
+          400.0: 11.0,
+          500.0: 10.0
       };
       final zoom = zoomMap[value];
       mapController.moveCamera(CameraUpdate.zoomTo(zoom));
