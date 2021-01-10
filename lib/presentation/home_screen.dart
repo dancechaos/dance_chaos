@@ -9,6 +9,7 @@ import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/tabs/ac
 import 'package:dance_chaos/containers/appbar/profile_selector.dart';
 import 'package:dance_chaos/containers/appbar/settings_selector.dart';
 import 'package:dance_chaos/containers/map/map_screen.dart';
+import 'package:dance_chaos/containers/tabs/maps.dart';
 import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/appbar/extra_actions_container.dart';
 import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/appbar/filter_selector.dart';
 import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/todo/filtered_todos.dart';
@@ -36,7 +37,7 @@ class HomeScreen extends StatelessWidget {
               SettingsSelector(visible: activeTab == AppTab.todos),
             ],
           ),
-          body: activeTab == AppTab.todos ? FilteredTodos() : activeTab == AppTab.stats ? Stats() : FireMap(profile: StoreProvider.of<AppState>(context, listen: false).state.profile),
+          body: activeTab == AppTab.todos ? FilteredTodos() : activeTab == AppTab.stats ? Stats() : Maps(),
           floatingActionButton: FloatingActionButton(
             key: ArchSampleKeys.addTodoFab,
             onPressed: () {

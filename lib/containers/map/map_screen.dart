@@ -1,4 +1,5 @@
 import 'package:dance_chaos/firebase/repo/firestore_profile_repository.dart';
+import 'package:dance_chaos/models/location_info.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,15 +15,15 @@ import 'dart:async';
 
 class FireMap extends StatefulWidget {
   final Profile profile;
+  final LocationInfo locationInfo;
 
-  FireMap({this.profile, Key key}) : super(key: key);
+  FireMap({this.profile, this.locationInfo, Key key}) : super(key: key);
 
   State createState() => FireMapState();
 }
 
 class FireMapState extends State<FireMap> {
   GoogleMapController mapController;
-  Location location = new Location();
 
   FirebaseFirestore firestore = FirestoreProfileRepository.firestore();
   Geoflutterfire geo = Geoflutterfire();
@@ -47,10 +48,11 @@ class FireMapState extends State<FireMap> {
     // Move map to new location
     if (currentCameraPosition == null) {
       currentCameraPosition = CameraPosition(
-        target: widget.profile.homeLocation != null ? LatLng(widget.profile.homeLocation.latitude, widget.profile.homeLocation.longitude) : defaultLocation,
+        target: widget.locationInfo?.location != null ? LatLng(widget.locationInfo.location.latitude, widget.locationInfo.location.longitude) :
+          widget.profile.homeLocation != null ? LatLng(widget.profile.homeLocation.latitude, widget.profile.homeLocation.longitude) : defaultLocation,
         zoom: currentZoom,
       );  // Default location is user's home or global default
-      _animateToUser(); // Attempt to move the map to the user's current location
+//      _animateToUser(); // Attempt to move the map to the user's current location
     }
 
     super.initState();
@@ -111,18 +113,18 @@ class FireMapState extends State<FireMap> {
     });
   }
 
-  _animateToUser() async {
-    LocationData pos = await location.getLocation();
-    if (pos != null) if ((pos.longitude != currentCameraPosition.target.longitude) && (pos.latitude != currentCameraPosition.target.latitude)) {
-      mapController.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(pos.latitude, pos.longitude),
-            zoom: currentZoom,
-          )
-      )
-      );
-    }
-  }
+  // _animateToUser() async {
+  //   LocationData pos = await location.getLocation();
+  //   if (pos != null) if ((pos.longitude != currentCameraPosition.target.longitude) && (pos.latitude != currentCameraPosition.target.latitude)) {
+  //     mapController.animateCamera(CameraUpdate.newCameraPosition(
+  //         CameraPosition(
+  //           target: LatLng(pos.latitude, pos.longitude),
+  //           zoom: currentZoom,
+  //         )
+  //     )
+  //     );
+  //   }
+  // }
 
   // Set GeoLocation Data
   Future<DocumentReference> _addGeoPoint() async {
