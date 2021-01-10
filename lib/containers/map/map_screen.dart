@@ -48,23 +48,22 @@ class FireMapState extends State<FireMap> {
     // Move map to new location
     if (currentCameraPosition == null) {
       currentCameraPosition = CameraPosition(
-        target: widget.locationInfo?.location != null ? LatLng(widget.locationInfo.location.latitude, widget.locationInfo.location.longitude) :
-          widget.profile.homeLocation != null ? LatLng(widget.profile.homeLocation.latitude, widget.profile.homeLocation.longitude) : defaultLocation,
+        target: _getTargetCameraPosition(),
         zoom: currentZoom,
       );  // Default location is user's home or global default
-//      _animateToUser(); // Attempt to move the map to the user's current location
     }
 
     super.initState();
   }
 
   build(context) {
+    _checkCameraPosition();
     return Stack(children: [
     GoogleMap(
           initialCameraPosition: currentCameraPosition,
           onMapCreated: _onMapCreated,
           myLocationEnabled: true,
-          mapType: MapType.hybrid, 
+          mapType: MapType.hybrid,
           compassEnabled: true,
           markers: Set<Marker>.of(markers.values),
           onCameraMove: _onCameraMove,
@@ -85,7 +84,7 @@ class FireMapState extends State<FireMap> {
         left: 10,
         child: Slider(
           min: 100.0,
-          max: 500.0, 
+          max: 500.0,
           divisions: 4,
           value: radius.value,
           label: 'Radius ${radius.value}km',
@@ -113,18 +112,47 @@ class FireMapState extends State<FireMap> {
     });
   }
 
-  // _animateToUser() async {
-  //   LocationData pos = await location.getLocation();
-  //   if (pos != null) if ((pos.longitude != currentCameraPosition.target.longitude) && (pos.latitude != currentCameraPosition.target.latitude)) {
-  //     mapController.animateCamera(CameraUpdate.newCameraPosition(
-  //         CameraPosition(
-  //           target: LatLng(pos.latitude, pos.longitude),
-  //           zoom: currentZoom,
-  //         )
-  //     )
-  //     );
-  //   }
-  // }
+  LatLng _getTargetCameraPosition() {
+    return widget.locationInfo?.location != null ? LatLng(
+        widget.locationInfo.location.latitude,
+        widget.locationInfo.location.longitude) :
+    widget.profile.homeLocation != null ? LatLng(
+        widget.profile.homeLocation.latitude,
+        widget.profile.homeLocation.longitude) : defaultLocation;
+  }
+
+    bool _checkCameraPosition() {
+
+      LatLng newLocation = _getTargetCameraPosition();
+
+      _checkIfAnimateNeeded(newLocation);
+
+    return false; // No change
+  }
+
+  void _checkIfAnimateNeeded(LatLng newLocation) {
+//    double distance = geo.point(latitude: currentCameraPosition.target.latitude, longitude: currentCameraPosition.target.longitude).distance(lat: newLocation.latitude, lng: newLocation.longitude);
+    if (mapController != null) {
+      mapController.getScreenCoordinate(newLocation).then((coordinate) {
+        double screenWidth = MediaQuery.of(context).size.width *
+            MediaQuery.of(context).devicePixelRatio;
+        double screenHeight = MediaQuery.of(context).size.height *
+            MediaQuery.of(context).devicePixelRatio;
+
+        if (coordinate.x <= 0 || coordinate.y <= 0 || coordinate.x >= screenWidth || coordinate.y >= screenHeight) {
+          print('Animating to $newLocation');
+          mapController.animateCamera(CameraUpdate.newCameraPosition(
+              currentCameraPosition = CameraPosition(
+                target: newLocation,
+                zoom: currentZoom,
+              )
+            )
+          ); // Default location is user's home or global default
+        }
+        return coordinate;
+      });
+    }
+  }
 
   // Set GeoLocation Data
   Future<DocumentReference> _addGeoPoint() async {
@@ -226,6 +254,7 @@ class FireMapState extends State<FireMap> {
     GeoFirePoint center = geo.point(latitude: lat, longitude: lng);
 
     // subscribe to query
+    subscription?.cancel();
     subscription = radius.switchMap((rad) {
       return geo.collection(collectionRef: ref).within(
         center: center,
@@ -255,7 +284,7 @@ class FireMapState extends State<FireMap> {
 
   @override
   dispose() {
-    subscription.cancel();
+    subscription?.cancel();
     super.dispose();
   }
 
