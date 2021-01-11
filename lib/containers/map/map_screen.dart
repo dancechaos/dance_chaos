@@ -6,8 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import 'package:google_maps_flutter_web/google_maps_flutter_web.dart' as web;
 //import 'package:flutter/foundation.dart' show kIsWeb;
 
-import 'package:location/location.dart';
-
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
@@ -251,6 +249,7 @@ class FireMapState extends State<FireMap> {
 
     // Make a reference to firestore
     var ref = firestore.collection('locations');
+//          .where('name', isEqualTo: 'darshan');
     GeoFirePoint center = geo.point(latitude: lat, longitude: lng);
 
     // subscribe to query
