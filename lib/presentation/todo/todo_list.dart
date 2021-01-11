@@ -5,10 +5,10 @@
 import 'package:dance_chaos/app/core/keys.dart';
 import 'package:dance_chaos/app/core/localization.dart';
 import 'package:dance_chaos/containers/tabs/app_loading.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/todo/todo_details.dart';
+import 'package:dance_chaos/containers/todo/todo_details.dart';
 import 'package:dance_chaos/models/models.dart';
 import 'package:dance_chaos/presentation/loading_indicator.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/presentation/todo/todo_item.dart';
+import 'package:dance_chaos/presentation/todo/todo_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

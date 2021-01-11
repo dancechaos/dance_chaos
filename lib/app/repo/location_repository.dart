@@ -3,7 +3,7 @@
 // in the LICENSE file.
 
 import 'dart:async';
-import 'location_info_entity.dart';
+import '../entity/location_info_entity.dart';
 
 abstract class LocationRepository {
   Future<void> updateLocation(LocationInfoEntity locationInfoEntity);

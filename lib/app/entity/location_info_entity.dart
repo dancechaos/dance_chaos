@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dance_chaos/app/repo/utility.dart';
+import 'package:dance_chaos/app/entity/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:meta/meta.dart';

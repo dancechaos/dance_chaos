@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/app/core/keys.dart';
 import 'package:dance_chaos/app/core/localization.dart';
-import 'package:dance_chaos/app/repo/utility.dart';
+import 'package:dance_chaos/app/entity/utility.dart';
 import 'package:dance_chaos/models/app_state.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:flutter/foundation.dart';

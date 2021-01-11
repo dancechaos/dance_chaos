@@ -6,9 +6,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dance_chaos/app/repo/location_info_entity.dart';
+import 'package:dance_chaos/app/entity/location_info_entity.dart';
+import 'package:dance_chaos/app/entity/utility.dart';
 import 'package:dance_chaos/app/repo/location_repository.dart';
-import 'package:dance_chaos/app/repo/utility.dart';
 
 import 'firestore_profile_repository.dart';
 

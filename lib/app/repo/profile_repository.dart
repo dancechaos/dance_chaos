@@ -5,8 +5,8 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:dance_chaos/app/repo/profile_entity.dart';
-import 'package:dance_chaos/app/repo/user_entity.dart';
+import 'package:dance_chaos/app/entity/profile_entity.dart';
+import 'package:dance_chaos/app/entity/user_entity.dart';
 
 /// A data layer class works with reactive data sources, such as Firebase. This
 /// class emits a Stream of TodoEntities. The data layer of the app.

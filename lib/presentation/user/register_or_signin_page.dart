@@ -6,7 +6,7 @@ import 'dart:async';
 
 import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/app/core/keys.dart';
-import 'package:dance_chaos/app/repo/utility.dart';
+import 'package:dance_chaos/app/entity/utility.dart';
 import 'package:dance_chaos/firebase/repo/user_repository.dart';
 import 'package:dance_chaos/flutter_signin_button/button_builder.dart';
 import 'package:dance_chaos/flutter_signin_button/button_list.dart';
@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dance_chaos/app/core/localization.dart';
 import 'package:redux/redux.dart';

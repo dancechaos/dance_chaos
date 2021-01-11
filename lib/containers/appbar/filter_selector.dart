@@ -4,7 +4,7 @@
 
 import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/models/models.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/presentation/appbar/filter_button.dart';
+import 'package:dance_chaos/presentation/appbar/filter_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_redux/flutter_redux.dart';

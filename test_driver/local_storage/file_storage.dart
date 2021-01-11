@@ -6,7 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dance_chaos/app/repo/todo_entity.dart';
+import 'package:dance_chaos/app/entity/todo_entity.dart';
 import 'package:dance_chaos/app/repo/todos_repository.dart';
 
 

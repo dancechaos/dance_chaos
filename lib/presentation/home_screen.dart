@@ -5,20 +5,18 @@
 import 'package:dance_chaos/app/core/keys.dart';
 import 'package:dance_chaos/app/core/localization.dart';
 import 'package:dance_chaos/app/core/routes.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/tabs/active_tab.dart';
+import 'package:dance_chaos/containers/appbar/extra_actions_container.dart';
+import 'package:dance_chaos/containers/appbar/filter_selector.dart';
 import 'package:dance_chaos/containers/appbar/profile_selector.dart';
 import 'package:dance_chaos/containers/appbar/settings_selector.dart';
-import 'package:dance_chaos/containers/map/map_screen.dart';
+import 'package:dance_chaos/containers/tabs/active_tab.dart';
 import 'package:dance_chaos/containers/tabs/maps.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/appbar/extra_actions_container.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/appbar/filter_selector.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/todo/filtered_todos.dart';
 import 'package:dance_chaos/containers/tabs/stats.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/tabs/tab_selector.dart';
+import 'package:dance_chaos/containers/tabs/tab_selector.dart';
+import 'package:dance_chaos/containers/todo/filtered_todos.dart';
 import 'package:dance_chaos/localization.dart';
 import 'package:dance_chaos/models/models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen() : super(key: ArchSampleKeys.homeScreen);

@@ -4,7 +4,7 @@
 
 import 'package:dance_chaos/app/core/keys.dart';
 import 'package:dance_chaos/app/core/localization.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/containers/todo/edit_todo.dart';
+import 'package:dance_chaos/containers/todo/edit_todo.dart';
 import 'package:dance_chaos/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

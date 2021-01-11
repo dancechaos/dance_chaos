@@ -6,11 +6,11 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/actions/actions.dart';
+import 'package:dance_chaos/app/entity/profile_entity.dart';
+import 'package:dance_chaos/app/entity/todo_entity.dart';
 import 'package:dance_chaos/app/repo/location_repository.dart';
-import 'package:dance_chaos/app/repo/profile_entity.dart';
 import 'package:dance_chaos/app/repo/profile_repository.dart';
 import 'package:dance_chaos/app/repo/reactive_repository.dart';
-import 'package:dance_chaos/app/repo/todo_entity.dart';
 import 'package:dance_chaos/app/repo/user_repository.dart';
 import 'package:dance_chaos/models/location_info.dart';
 import 'package:dance_chaos/models/models.dart';

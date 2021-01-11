@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dance_chaos/app/repo/profile_entity.dart';
-import 'package:dance_chaos/app/repo/user_entity.dart';
+import 'package:dance_chaos/app/entity/profile_entity.dart';
+import 'package:dance_chaos/app/entity/user_entity.dart';
 import 'package:dance_chaos/models/profile_actions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

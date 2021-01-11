@@ -5,8 +5,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'user_entity.dart';
+import 'package:dance_chaos/app/entity/user_entity.dart';
 
 abstract class UserRepository {
   Future<void> initApp();

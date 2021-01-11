@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:dance_chaos/app/repo/todo_entity.dart';
+import 'package:dance_chaos/app/entity/todo_entity.dart';
 import 'package:dance_chaos/app/repo/todos_repository.dart';
 import 'package:key_value_store/key_value_store.dart';
 

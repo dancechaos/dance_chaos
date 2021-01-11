@@ -1,6 +1,6 @@
-import 'package:dance_chaos/app/repo/profile_entity.dart';
-import 'package:dance_chaos/app/repo/todo_entity.dart';
-import 'package:dance_chaos/app/repo/user_entity.dart';
+import 'package:dance_chaos/app/entity/profile_entity.dart';
+import 'package:dance_chaos/app/entity/todo_entity.dart';
+import 'package:dance_chaos/app/entity/user_entity.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:dance_chaos/models/todo.dart';
 

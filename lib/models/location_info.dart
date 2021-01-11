@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dance_chaos/app/repo/location_info_entity.dart';
+import 'package:dance_chaos/app/entity/location_info_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 

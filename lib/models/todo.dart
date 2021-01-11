@@ -1,5 +1,5 @@
 import 'package:dance_chaos/app/core/uuid.dart';
-import 'package:dance_chaos/app/repo/todo_entity.dart';
+import 'package:dance_chaos/app/entity/todo_entity.dart';
 import 'package:meta/meta.dart';
 
 // Copyright 2018 The Flutter Architecture Sample Authors. All rights reserved.

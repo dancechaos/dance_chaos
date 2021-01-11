@@ -5,12 +5,9 @@
 import 'dart:async';
 import 'dart:io' as io;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dance_chaos/app/entity/todo_entity.dart';
 import 'package:dance_chaos/app/repo/reactive_repository.dart';
-import 'package:dance_chaos/app/repo/todo_entity.dart';
-import 'package:flutter/foundation.dart';
 
-import '../../main.dart';
 import 'firestore_profile_repository.dart';
 
 class FirestoreReactiveTodosRepository implements ReactiveTodosRepository {

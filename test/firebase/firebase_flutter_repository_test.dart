@@ -5,9 +5,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dance_chaos/app/repo/profile_entity.dart';
-import 'package:dance_chaos/app/repo/todo_entity.dart';
-import 'package:dance_chaos/app/repo/user_entity.dart';
+import 'package:dance_chaos/app/entity/profile_entity.dart';
+import 'package:dance_chaos/app/entity/todo_entity.dart';
+import 'package:dance_chaos/app/entity/user_entity.dart';
 import 'package:dance_chaos/firebase/repo/reactive_todos_repository.dart';
 import 'package:dance_chaos/firebase/repo/firestore_profile_repository.dart';
 import 'package:dance_chaos/firebase/repo/user_repository.dart';

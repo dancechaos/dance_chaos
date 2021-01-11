@@ -7,10 +7,10 @@ import 'dart:io' as io;
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dance_chaos/app/repo/profile_entity.dart';
+import 'package:dance_chaos/app/entity/profile_entity.dart';
+import 'package:dance_chaos/app/entity/user_entity.dart';
+import 'package:dance_chaos/app/entity/utility.dart';
 import 'package:dance_chaos/app/repo/profile_repository.dart';
-import 'package:dance_chaos/app/repo/user_entity.dart';
-import 'package:dance_chaos/app/repo/utility.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';

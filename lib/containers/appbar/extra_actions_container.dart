@@ -4,7 +4,7 @@
 
 import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/models/models.dart';
-import 'file:///C:/Users/don/workspace/github/dance_chaos/lib/presentation/appbar/extra_actions_button.dart';
+import 'package:dance_chaos/presentation/appbar/extra_actions_button.dart';
 import 'package:dance_chaos/selectors/selectors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
