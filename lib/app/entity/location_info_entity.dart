@@ -9,6 +9,11 @@ class LocationInfoEntity {
   final String id;
   final String displayName;
   final GeoPoint location;
+
+  static const ID = 'id';
+  static const DISPLAY_NAME = 'displayName';
+  static const POSITION = 'position';
+
   static Geoflutterfire geo = Geoflutterfire();
 
   const LocationInfoEntity({@required this.id, this.displayName, this.location});
@@ -27,13 +32,13 @@ class LocationInfoEntity {
 
   @override
   String toString() {
-    return 'LocationInfoEntity{id: $id, displayName: $displayName, location: $location)}';
+    return 'LocationInfoEntity{$ID: $id, $DISPLAY_NAME: $displayName, location: $location)}';
   }
 
   Map<String, dynamic> toJson() {
-    Map<String, Object> map = {'id': id};
-    Utility.addToMap(map, 'position', geo.point(latitude: location.latitude, longitude: location.longitude).data);
-    Utility.addToMap(map, 'displayName', displayName);
+    Map<String, Object> map = {ID: id};
+    Utility.addToMap(map, POSITION, geo.point(latitude: location.latitude, longitude: location.longitude).data);
+    Utility.addToMap(map, DISPLAY_NAME, displayName);
     return map;
     // return {'id': id,
     // 'position': geo.point(latitude: location.latitude, longitude: location.longitude).data};
@@ -41,9 +46,9 @@ class LocationInfoEntity {
 
   static LocationInfoEntity fromJson(String id, Map<String, dynamic> json) {
     return LocationInfoEntity(
-      id: id ?? json['id'] as String,
-      displayName: json['displayName'] as String,
-      location: json['position']['geopoint'] as GeoPoint,
+      id: id ?? json[ID] as String,
+      displayName: json[DISPLAY_NAME] as String,
+      location: json[POSITION]['geopoint'] as GeoPoint,
     );
   }
 

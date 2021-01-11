@@ -1,3 +1,4 @@
+import 'package:dance_chaos/app/entity/location_info_entity.dart';
 import 'package:dance_chaos/firebase/repo/firestore_profile_repository.dart';
 import 'package:dance_chaos/models/location_info.dart';
 import 'package:dance_chaos/models/profile.dart';
@@ -156,8 +157,8 @@ class FireMapState extends State<FireMap> {
   Future<DocumentReference> _addGeoPoint() async {
     GeoFirePoint point = geo.point(latitude: currentCameraPosition.target.latitude, longitude: currentCameraPosition.target.longitude);
     return firestore.collection('locations').add({
-      'position': point.data,
-      'displayName': 'Yay I can be queried!'
+      LocationInfoEntity.POSITION: point.data,
+      LocationInfoEntity.DISPLAY_NAME: 'Yay I can be queried!'
     });
   }
 
@@ -166,9 +167,9 @@ class FireMapState extends State<FireMap> {
     markers.clear();
     documentList.forEach((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data();
-        GeoPoint pos = data['position']['geopoint'];
+        GeoPoint pos = data[LocationInfoEntity.POSITION]['geopoint'];
         double distance = data['distance'];
-        _addMarker(pos, document.id, data['displayName'], snippet: distance.toString());
+        _addMarker(pos, document.id, data[LocationInfoEntity.DISPLAY_NAME], snippet: distance.toString());
     });
   }
 
@@ -258,7 +259,7 @@ class FireMapState extends State<FireMap> {
       return geo.collection(collectionRef: ref).within(
         center: center,
         radius: rad,
-        field: 'position',
+        field: LocationInfoEntity.POSITION,
         strictMode: true,
       );
     }).listen(_updateMarkers);

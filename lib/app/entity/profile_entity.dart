@@ -13,6 +13,9 @@ class ProfileEntity extends UserEntity {
   final TrackingState tracking;
   final GeoPoint homeLocation;
 
+  static const ID = 'id';
+  static const DISPLAY_NAME = 'displayName';
+
   ProfileEntity({@required id, displayName, photoUrl, email, phoneNumber, isAnonymous, providerId, this.birthdate, this.tracking, this.homeLocation})
     :
     super(
@@ -45,8 +48,8 @@ class ProfileEntity extends UserEntity {
   int get hashCode => super.hashCode ^ birthdate.hashCode ^ tracking.hashCode ^ homeLocation.hashCode;
 
   Map<String, Object> toJson() {
-    Map<String, Object> map = {'id': id};
-    Utility.addToMap(map, 'displayName', displayName);
+    Map<String, Object> map = {ID: id};
+    Utility.addToMap(map, DISPLAY_NAME, displayName);
     Utility.addToMap(map, 'photoUrl', photoUrl);
     Utility.addToMap(map, 'phoneNumber', phoneNumber);
     Utility.addToMap(map, 'email', email);
@@ -61,8 +64,8 @@ class ProfileEntity extends UserEntity {
 
   static ProfileEntity fromJson(String id, Map<String, Object> json) {
     return ProfileEntity(
-      id: id ?? json['id'] as String,
-      displayName: json['displayName'] as String,
+      id: id ?? json[ID] as String,
+      displayName: json[DISPLAY_NAME] as String,
       photoUrl: json['photoUrl'] as String,
       phoneNumber: json['phoneNumber'] as String,
       email: json['email'] as String,
@@ -84,7 +87,7 @@ class ProfileEntity extends UserEntity {
 
   @override
   String toString() {
-    return 'ProfileEntity{id: $id, displayName: $displayName, photoUrl: $photoUrl, phoneNumber: $phoneNumber, email: $email, isAnonymous: $isAnonymous, birthdate: $birthdate, providerID: $providerId, tracking: $tracking, homeLocation: $homeLocation}';
+    return 'ProfileEntity{id: $id, $DISPLAY_NAME: $displayName, photoUrl: $photoUrl, phoneNumber: $phoneNumber, email: $email, isAnonymous: $isAnonymous, birthdate: $birthdate, providerID: $providerId, tracking: $tracking, homeLocation: $homeLocation}';
   }
 
 }
