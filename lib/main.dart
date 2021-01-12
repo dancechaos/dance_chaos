@@ -77,7 +77,7 @@ class DanceChaosApp extends StatelessWidget {
           ArchSampleRoutes.profile: (context) => ProfilePage(profile: store.state.profile),
           ArchSampleRoutes.register: (context) => RegisterOrSignInPage(authScreen: AuthScreenType.register),
           ArchSampleRoutes.signIn: (context) => RegisterOrSignInPage(authScreen: AuthScreenType.signIn,),
-          ArchSampleRoutes.maps: (context) => FireMap(profile: store.state.profile),
+//          ArchSampleRoutes.maps: (context) => FireMap(profile: store.state.profile),
         },
       ),
     );

@@ -10,11 +10,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import 'package:google_maps_flutter_web/google_maps_flutter_web.dart' as web;
 //import 'package:flutter/foundation.dart' show kIsWeb;
 
-import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:redux/redux.dart';
 import 'package:rxdart/rxdart.dart';
-import 'dart:async';
 
 class FireMap extends StatefulWidget {
   final Profile profile;
@@ -27,8 +24,6 @@ class FireMap extends StatefulWidget {
 
 class FireMapState extends State<FireMap> {
   GoogleMapController mapController;
-
-  FirebaseFirestore firestore = FirestoreProfileRepository.firestore();
 
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId selectedMarker;
