@@ -1,14 +1,18 @@
+import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/app/entity/location_info_entity.dart';
 import 'package:dance_chaos/firebase/repo/firestore_profile_repository.dart';
+import 'package:dance_chaos/models/app_state.dart';
 import 'package:dance_chaos/models/location_info.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import 'package:google_maps_flutter_web/google_maps_flutter_web.dart' as web;
 //import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:redux/redux.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
@@ -244,6 +248,42 @@ class FireMapState extends State<FireMap> {
   }
 
   _startQuery() async {
+    Store<AppState> store = StoreProvider.of<AppState>(context, listen: false);
+    store.dispatch(ListenForMapChangesAction(updateMarkers));
+  }
+  void updateMarkers(List<LocationInfoEntity> documentList) {
+    print(documentList);
+    markers.clear();
+    documentList.forEach((LocationInfoEntity document) {
+      onMapChange(document);
+    });
+  }
+
+  void onMapChange(LocationInfoEntity locationInfoEntity) {
+    final MarkerId markerId = MarkerId(locationInfoEntity.id);
+
+    final Marker marker = Marker(
+      markerId: markerId,
+      position: LatLng(
+        locationInfoEntity.location.latitude,
+        locationInfoEntity.location.longitude,
+      ),
+      infoWindow: InfoWindow(title: locationInfoEntity.displayName, snippet: locationInfoEntity.snippet),
+      onTap: () {
+        _onMarkerTapped(markerId);
+      },
+      onDragEnd: (LatLng position) {
+        _onMarkerDragEnd(markerId, position);
+      },
+      // icon: BitmapDescriptor.fromAssetImage(asset: 'abc'),
+    );
+
+    setState(() {
+      markers[markerId] = marker;
+    });
+  }
+
+  _xstartQuery() async {
     // Get map location
     double lat = currentCameraPosition.target.latitude;
     double lng = currentCameraPosition.target.longitude;

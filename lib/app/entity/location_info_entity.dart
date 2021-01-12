@@ -9,6 +9,7 @@ class LocationInfoEntity {
   final String id;
   final String displayName;
   final GeoPoint location;
+  final String snippet;
 
   static const ID = 'id';
   static const DISPLAY_NAME = 'displayName';
@@ -16,7 +17,7 @@ class LocationInfoEntity {
 
   static Geoflutterfire geo = Geoflutterfire();
 
-  const LocationInfoEntity({@required this.id, this.displayName, this.location});
+  const LocationInfoEntity({@required this.id, this.displayName, this.location, this.snippet});
 
   @override
   int get hashCode =>

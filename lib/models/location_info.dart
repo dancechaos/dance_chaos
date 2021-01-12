@@ -7,39 +7,43 @@ import 'package:meta/meta.dart';
 class LocationInfo {
   final String id;
   final GeoPoint location;
+  final String displayName;
 
-  const LocationInfo({this.id, this.location});
+  const LocationInfo({this.id, this.displayName, this.location});
 
   LocationInfo copyWith({String id, GeoPoint location}) {
     return LocationInfo(
       id: id ?? this.id,
+      displayName: displayName ?? this.displayName,
       location: location ?? this.location,
     );
   }
 
   @override
   int get hashCode =>
-      id.hashCode ^ location.hashCode;
+      id.hashCode ^ displayName.hashCode ^ location.hashCode;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is LocationInfo &&
           id == other.id &&
+          displayName == other.displayName &&
           location == other.location;
 
   @override
   String toString() {
-    return 'UserInfo{id: $id, location: $location)}';
+    return 'UserInfo{id: $id, displayName: $displayName, location: $location)}';
   }
 
   LocationInfoEntity toEntity() {
-    return LocationInfoEntity(id: id, location: location);
+    return LocationInfoEntity(id: id, displayName: displayName, location: location);
   }
 
   static LocationInfo fromEntity(LocationInfoEntity entity) {
     return entity == null ? null : LocationInfo(
       id: entity.id,
+      displayName: entity.displayName,
       location: GeoPoint(entity.location.latitude, entity.location.longitude),
     );
   }

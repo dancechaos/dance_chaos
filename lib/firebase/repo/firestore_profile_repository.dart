@@ -13,7 +13,6 @@ import 'package:dance_chaos/app/entity/utility.dart';
 import 'package:dance_chaos/app/repo/profile_repository.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 
 class FirestoreProfileRepository implements ProfileRepository {
   static const String path = 'profile';
@@ -62,7 +61,7 @@ class FirestoreProfileRepository implements ProfileRepository {
     // Wait until a new chunk is available, then process it.
     await for (DocumentSnapshot user in source) {
       Map<String,dynamic> data = user.data();
-      yield data == null || data['id'] == null ? null : ProfileEntity.fromJson(data['id'], data);
+      yield data == null || (data['id'] == null && user.id == null) ? null : ProfileEntity.fromJson(user.id, data);
     }
   }
 

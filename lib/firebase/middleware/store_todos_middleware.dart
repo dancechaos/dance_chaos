@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/actions/actions.dart';
+import 'package:dance_chaos/app/entity/location_info_entity.dart';
 import 'package:dance_chaos/app/entity/profile_entity.dart';
 import 'package:dance_chaos/app/entity/todo_entity.dart';
 import 'package:dance_chaos/app/repo/location_repository.dart';
@@ -17,6 +18,7 @@ import 'package:dance_chaos/models/models.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:dance_chaos/models/profile_actions.dart';
 import 'package:dance_chaos/selectors/selectors.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> createStoreTodosMiddleware(
@@ -40,6 +42,9 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
     ),
     TypedMiddleware<AppState, ChangeLocationAction>(
       _changeLocation(locationRepository),
+    ),
+    TypedMiddleware<AppState, ListenForMapChangesAction>(
+      _listenForMapChanges(locationRepository),
     ),
     TypedMiddleware<AppState, ProfileChangedAction>(
       _profileChanged(userRepository, profileRepository),
@@ -144,6 +149,28 @@ void Function(
       print('changeLocation profile: ${action.profile}, location (lat,long): (${action.location?.latitude}, ${action.location?.longitude}) ');
       locationRepository.updateLocation(store.state.locationInfo?.toEntity());
     }
+  };
+}
+
+StreamSubscription<List<LocationInfoEntity>> _locationInfoChangedStreamSubscription;
+
+void Function(
+    Store<AppState> store,
+    ListenForMapChangesAction action,
+    NextDispatcher next,
+    ) _listenForMapChanges (
+    LocationRepository locationRepository,
+    ) {
+  return (store, action, next) {
+    next(action);
+
+    LatLng location = LatLng(store.state.locationInfo.location.latitude, store.state.locationInfo.location.longitude);
+    _locationInfoChangedStreamSubscription?.cancel();
+    _locationInfoChangedStreamSubscription = null;
+    // Listen for changes to this profile
+    _locationInfoChangedStreamSubscription = locationRepository.locationChanges(location).listen((listLocationInfoEntity) {
+      action.onMapChange(listLocationInfoEntity);
+    });
   };
 }
 
@@ -281,6 +308,8 @@ void _updateLocationTracking(Store<AppState> store, UserRepository userRepositor
       locationStreamSubscription = null;
       store.dispatch(ChangeLocationAction(store.state.profile, null));
       break;
+    default:
+      // Ignore
   }
 }
 

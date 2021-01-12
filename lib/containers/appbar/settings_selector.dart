@@ -43,8 +43,8 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      onSettingsSelected: (Settings) {
-        store.dispatch(UpdateSettingsAction(Settings));
+      onSettingsSelected: (settings) {
+        store.dispatch(UpdateSettingsAction(settings));
       },
       settingsActions: store.state.settingsActions,
     );

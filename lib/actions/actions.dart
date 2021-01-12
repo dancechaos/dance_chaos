@@ -146,6 +146,13 @@ class ChangeLocationAction {
   }
 }
 
+class ListenForMapChangesAction {
+  final Function onMapChange;
+
+  ListenForMapChangesAction(this.onMapChange);
+
+}
+
 class SignInAction {
   final String email;
   final String password;

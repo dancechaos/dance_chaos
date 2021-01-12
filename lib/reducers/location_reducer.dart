@@ -8,5 +8,5 @@ final locationReducer = combineReducers<LocationInfo>([
 ]);
 
 LocationInfo _changeLocationAction(LocationInfo locationInfo, ChangeLocationAction action) {
-    return LocationInfo(id: action.profile.id, location: action.location);
+    return LocationInfo(id: action.profile.id, displayName: action.profile.displayName, location: action.location);
 }
