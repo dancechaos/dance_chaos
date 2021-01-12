@@ -29,14 +29,12 @@ class FireMapState extends State<FireMap> {
   GoogleMapController mapController;
 
   FirebaseFirestore firestore = FirestoreProfileRepository.firestore();
-  Geoflutterfire geo = Geoflutterfire();
 
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId selectedMarker;
 
   // Stateful Data
   BehaviorSubject<double> radius = BehaviorSubject.seeded(100.0);
-  Stream<dynamic> query;
 
   CameraPosition currentCameraPosition;
   double currentZoom = 17;
@@ -70,17 +68,17 @@ class FireMapState extends State<FireMap> {
           onCameraIdle: _onCameraIdle,
       ),
      Positioned(
-          bottom: 50,
-          right: 10,
+          top: 30,
+          right: 30,
           child:
           FlatButton(
             child: Icon(Icons.pin_drop, color: Colors.white),
             color: Colors.green,
-            onPressed: _addGeoPoint
+//            onPressed: _addGeoPoint
           )
       ),
       Positioned(
-        bottom: 50,
+        top: 30,
         left: 10,
         child: Slider(
           min: 100.0,
@@ -154,50 +152,6 @@ class FireMapState extends State<FireMap> {
     }
   }
 
-  // Set GeoLocation Data
-  Future<DocumentReference> _addGeoPoint() async {
-    GeoFirePoint point = geo.point(latitude: currentCameraPosition.target.latitude, longitude: currentCameraPosition.target.longitude);
-    return firestore.collection('locations').add({
-      LocationInfoEntity.POSITION: point.data,
-      LocationInfoEntity.DISPLAY_NAME: 'Yay I can be queried!'
-    });
-  }
-
-  void _updateMarkers(List<DocumentSnapshot> documentList) {
-    print(documentList);
-    markers.clear();
-    documentList.forEach((DocumentSnapshot document) {
-      Map<String, dynamic> data = document.data();
-        GeoPoint pos = data[LocationInfoEntity.POSITION]['geopoint'];
-        double distance = data['distance'];
-        _addMarker(pos, document.id, data[LocationInfoEntity.DISPLAY_NAME], snippet: distance.toString());
-    });
-  }
-
-  void _addMarker(GeoPoint pos, String markerIdVal, String title, {String snippet}) {
-    final MarkerId markerId = MarkerId(markerIdVal);
-
-    final Marker marker = Marker(
-      markerId: markerId,
-      position: LatLng(
-        pos.latitude,
-        pos.longitude,
-      ),
-      infoWindow: InfoWindow(title: title, snippet: snippet),
-      onTap: () {
-        _onMarkerTapped(markerId);
-      },
-      onDragEnd: (LatLng position) {
-        _onMarkerDragEnd(markerId, position);
-      },
-      // icon: BitmapDescriptor.fromAssetImage(asset: 'abc'),
-    );
-
-    setState(() {
-      markers[markerId] = marker;
-    });
-  }
-
   void _onMarkerTapped(MarkerId markerId) {
     final Marker tappedMarker = markers[markerId];
     if (tappedMarker != null) {
@@ -246,17 +200,18 @@ class FireMapState extends State<FireMap> {
 
   _startQuery() async {
     Store<AppState> store = StoreProvider.of<AppState>(context, listen: false);
-    store.dispatch(ListenForMapChangesAction(updateMarkers));
+    store.dispatch(ListenForMapChangesAction(_updateMarkers));
   }
-  void updateMarkers(List<LocationInfoEntity> documentList) {
+
+  void _updateMarkers(List<LocationInfoEntity> documentList) {
     print(documentList);
     markers.clear();
     documentList.forEach((LocationInfoEntity document) {
-      onMapChange(document);
+      _onMapChange(document);
     });
   }
 
-  void onMapChange(LocationInfoEntity locationInfoEntity) {
+  void _onMapChange(LocationInfoEntity locationInfoEntity) {
     final MarkerId markerId = MarkerId(locationInfoEntity.id);
 
     final Marker marker = Marker(
