@@ -28,13 +28,9 @@ class FireMapState extends State<FireMap> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   MarkerId selectedMarker;
 
-  // Stateful Data
-  BehaviorSubject<double> radius = BehaviorSubject.seeded(100.0);
-
   CameraPosition currentCameraPosition;
-  double currentZoom = 17;
-
-  final defaultLocation = LatLng(53.814167, -3.050278);
+  double currentZoom = LocationInfo.INITIAL_ZOOM;
+  double radiusKm = LocationInfo.INITIAL_RADIUS_KM;  // Initial radius
 
   @override
   void initState() {
@@ -79,8 +75,8 @@ class FireMapState extends State<FireMap> {
           min: 100.0,
           max: 500.0,
           divisions: 4,
-          value: radius.value,
-          label: 'Radius ${radius.value}km',
+          value: radiusKm,
+          label: 'Radius ${radiusKm} km',
           activeColor: Colors.green,
           inactiveColor: Colors.green.withOpacity(0.2),
           onChanged: _updateQuery,
@@ -111,7 +107,7 @@ class FireMapState extends State<FireMap> {
         widget.locationInfo.location.longitude) :
     widget.profile.homeLocation != null ? LatLng(
         widget.profile.homeLocation.latitude,
-        widget.profile.homeLocation.longitude) : defaultLocation;
+        widget.profile.homeLocation.longitude) : LocationInfo.DEFAULT_LOCATION;
   }
 
     bool _checkCameraPosition() {
@@ -243,8 +239,11 @@ class FireMapState extends State<FireMap> {
       currentZoom = zoom;
 
       setState(() {
-        radius.add(value);
+        radiusKm = value;
       });
+
+      Store<AppState> store = StoreProvider.of<AppState>(context, listen: false);
+      store.dispatch(SetRadiusAction(value));
   }
 
   @override

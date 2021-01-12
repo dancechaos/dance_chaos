@@ -150,7 +150,12 @@ class ListenForMapChangesAction {
   final Function onMapChange;
 
   ListenForMapChangesAction(this.onMapChange);
+}
 
+class SetRadiusAction {
+  final double radiusKm;
+
+  SetRadiusAction(this.radiusKm);
 }
 
 class SignInAction {

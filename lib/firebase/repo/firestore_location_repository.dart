@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/app/entity/location_info_entity.dart';
 import 'package:dance_chaos/app/entity/utility.dart';
 import 'package:dance_chaos/app/repo/location_repository.dart';
+import 'package:dance_chaos/models/location_info.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rxdart/rxdart.dart';
@@ -58,7 +59,12 @@ class FirestoreLocationRepository implements LocationRepository {
 
   Geoflutterfire geo = Geoflutterfire();
   // Stateful Data
-  BehaviorSubject<double> radius = BehaviorSubject.seeded(100.0);
+  BehaviorSubject<double> radius = BehaviorSubject.seeded(LocationInfo.INITIAL_RADIUS_KM);
+
+  @override
+  void setRadius(double radiusKm) {
+    radius.add(radiusKm);
+  }
 
   @override
   Stream<List<LocationInfoEntity>> locationChanges(LatLng location) {

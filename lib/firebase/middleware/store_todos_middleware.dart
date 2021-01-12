@@ -46,6 +46,9 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
     TypedMiddleware<AppState, ListenForMapChangesAction>(
       _listenForMapChanges(locationRepository),
     ),
+    TypedMiddleware<AppState, SetRadiusAction>(
+      _setRadiusAction(locationRepository),
+    ),
     TypedMiddleware<AppState, ProfileChangedAction>(
       _profileChanged(userRepository, profileRepository),
     ),
@@ -171,6 +174,20 @@ void Function(
     _locationInfoChangedStreamSubscription = locationRepository.locationChanges(location).listen((listLocationInfoEntity) {
       action.onMapChange(listLocationInfoEntity);
     });
+  };
+}
+
+void Function(
+    Store<AppState> store,
+    SetRadiusAction action,
+    NextDispatcher next,
+    ) _setRadiusAction (
+    LocationRepository locationRepository,
+    ) {
+  return (store, action, next) {
+    next(action);
+
+    locationRepository.setRadius(action.radiusKm);
   };
 }
 
