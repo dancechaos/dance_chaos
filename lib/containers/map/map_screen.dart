@@ -43,9 +43,6 @@ class FireMapState extends State<FireMap> {
 
   final defaultLocation = LatLng(53.814167, -3.050278);
 
-  // Location radius Subscription
-  StreamSubscription subscription;
-
   @override
   void initState() {
     // Move map to new location
@@ -283,28 +280,6 @@ class FireMapState extends State<FireMap> {
     });
   }
 
-  _xstartQuery() async {
-    // Get map location
-    double lat = currentCameraPosition.target.latitude;
-    double lng = currentCameraPosition.target.longitude;
-
-    // Make a reference to firestore
-    var ref = firestore.collection('locations');
-//          .where('name', isEqualTo: 'darshan');
-    GeoFirePoint center = geo.point(latitude: lat, longitude: lng);
-
-    // subscribe to query
-    subscription?.cancel();
-    subscription = radius.switchMap((rad) {
-      return geo.collection(collectionRef: ref).within(
-        center: center,
-        radius: rad,
-        field: LocationInfoEntity.POSITION,
-        strictMode: true,
-      );
-    }).listen(_updateMarkers);
-  }
-
   _updateQuery(value) {
       final zoomMap = {
           100.0: 17.0,
@@ -324,7 +299,6 @@ class FireMapState extends State<FireMap> {
 
   @override
   dispose() {
-    subscription?.cancel();
     super.dispose();
   }
 
