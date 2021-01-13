@@ -37,11 +37,6 @@ class TodoEntity {
     };
   }
 
-  @override
-  String toString() {
-    return 'TodoEntity{$COMPLETE: $complete, $TASK: $task, $NOTE: $note, $ID: $id}';
-  }
-
   static TodoEntity fromJson(String id, Map<String, Object> json) {
     return TodoEntity(
       id: id ?? json[ID] as String,
@@ -49,5 +44,10 @@ class TodoEntity {
       note: json[NOTE] as String,
       complete: json[COMPLETE] as bool,
     );
+  }
+
+  @override
+  String toString() {
+    return 'TodoEntity{$COMPLETE: $complete, $TASK: $task, $NOTE: $note, $ID: $id}';
   }
 }
