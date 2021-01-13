@@ -30,7 +30,7 @@ class FileStorage implements TodosRepository {
     final string = await file.readAsString();
     final json = JsonDecoder().convert(string);
     final todos = (json['todos'])
-        .map<TodoEntity>((todo) => TodoEntity.fromJson(todo))
+        .map<TodoEntity>((todo) => TodoEntity.fromJson(todo[TodoEntity.ID], todo))
         .toList();
 
     return todos;

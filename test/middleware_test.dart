@@ -152,9 +152,9 @@ void main() {
     });
 
     test('should clear the completed todos from the repository', () {
-      final todoA = Todo('A');
-      final todoB = Todo('B', complete: true);
-      final todoC = Todo('C', complete: true);
+      final todoA = Todo(note: 'A');
+      final todoB = Todo(note: 'B', complete: true);
+      final todoC = Todo(note: 'C', complete: true);
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
@@ -175,8 +175,8 @@ void main() {
     });
 
     test('should inform the repository to toggle all todos active', () {
-      final todoA = Todo('A', complete: true);
-      final todoB = Todo('B', complete: true);
+      final todoA = Todo(note: 'A', complete: true);
+      final todoB = Todo(note: 'B', complete: true);
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
@@ -199,8 +199,8 @@ void main() {
     });
 
     test('should inform the repository to toggle all todos complete', () {
-      final todoA = Todo('A');
-      final todoB = Todo('B', complete: true);
+      final todoA = Todo(note: 'A');
+      final todoB = Todo(note: 'B', complete: true);
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();

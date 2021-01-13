@@ -19,7 +19,7 @@ class AddTodo extends StatelessWidget {
       converter: (Store<AppState> store) {
         return (task, note) {
           store.dispatch(AddNewTodoAction(Todo(
-            task,
+            task: task,
             note: note,
           )));
         };

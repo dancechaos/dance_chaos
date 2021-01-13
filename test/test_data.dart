@@ -14,7 +14,7 @@ class TestData {
   static UserEntity userEntity = UserEntity(id: profileId, email: TestData.email, isAnonymous: false);
   static Profile profile = Profile(profileId, email: TestData.email, isAnonymous: false);
   static ProfileEntity profileEntity = ProfileEntity(id: profileId, email: TestData.email, isAnonymous: false);
-  static TodoEntity todoEntity = TodoEntity('A', '1', '2', false);
+  static TodoEntity todoEntity = TodoEntity(task: 'A', id: '1', note: '2', complete: false);
   static Duration durationFiveSeconds = Duration(seconds: 5);
-  static Todo todo = Todo('A', id: '1', note: '2', complete: false);
+  static Todo todo = Todo(task: 'A', id: '1', note: '2', complete: false);
 }

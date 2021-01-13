@@ -10,12 +10,12 @@ import 'package:test/test.dart';
 void main() {
   group('Selectors', () {
     test('should list the active todos', () {
-      final todoA = Todo('a');
-      final todoB = Todo('b');
+      final todoA = Todo(note: 'a');
+      final todoB = Todo(note: 'b');
       final todos = [
         todoA,
         todoB,
-        Todo('c', complete: true),
+        Todo(note: 'c', complete: true),
       ];
 
       expect(activeTodosSelector(todos), [todoA, todoB]);
@@ -23,19 +23,19 @@ void main() {
 
     test('should calculate the number of active todos', () {
       final todos = [
-        Todo('a'),
-        Todo('b'),
-        Todo('c', complete: true),
+        Todo(note: 'a'),
+        Todo(note: 'b'),
+        Todo(note: 'c', complete: true),
       ];
 
       expect(numActiveSelector(todos), 2);
     });
 
     test('should list the completed todos', () {
-      final todo = Todo('c', complete: true);
+      final todo = Todo(note: 'c', complete: true);
       final todos = [
-        Todo('a'),
-        Todo('b'),
+        Todo(note: 'a'),
+        Todo(note: 'b'),
         todo,
       ];
 
@@ -44,9 +44,9 @@ void main() {
 
     test('should calculate the number of completed todos', () {
       final todos = [
-        Todo('a'),
-        Todo('b'),
-        Todo('c', complete: true),
+        Todo(note: 'a'),
+        Todo(note: 'b'),
+        Todo(note: 'c', complete: true),
       ];
 
       expect(numCompletedSelector(todos), 1);
@@ -54,18 +54,18 @@ void main() {
 
     test('should return all todos if the VisibilityFilter is all', () {
       final todos = [
-        Todo('a'),
-        Todo('b'),
-        Todo('c', complete: true),
+        Todo(note: 'a'),
+        Todo(note: 'b'),
+        Todo(note: 'c', complete: true),
       ];
 
       expect(filteredTodosSelector(todos, VisibilityFilter.all), todos);
     });
 
     test('should return active todos if the VisibilityFilter is active', () {
-      final todo1 = Todo('a');
-      final todo2 = Todo('b');
-      final todo3 = Todo('c', complete: true);
+      final todo1 = Todo(note: 'a');
+      final todo2 = Todo(note: 'b');
+      final todo3 = Todo(note: 'c', complete: true);
       final todos = [
         todo1,
         todo2,
@@ -80,9 +80,9 @@ void main() {
 
     test('should return completed todos if the VisibilityFilter is completed',
         () {
-      final todo1 = Todo('a');
-      final todo2 = Todo('b');
-      final todo3 = Todo('c', complete: true);
+      final todo1 = Todo(note: 'a');
+      final todo2 = Todo(note: 'b');
+      final todo3 = Todo(note: 'c', complete: true);
       final todos = [
         todo1,
         todo2,
@@ -93,9 +93,9 @@ void main() {
     });
 
     test('should return an Optional todo based on id', () {
-      final todo1 = Todo('a', id: '1');
-      final todo2 = Todo('b');
-      final todo3 = Todo('c', complete: true);
+      final todo1 = Todo(note: 'a', id: '1');
+      final todo2 = Todo(note: 'b');
+      final todo3 = Todo(note: 'c', complete: true);
       final todos = [
         todo1,
         todo2,
@@ -106,9 +106,9 @@ void main() {
     });
 
     test('should return an absent Optional if the id is not found', () {
-      final todo1 = Todo('a', id: '1');
-      final todo2 = Todo('b');
-      final todo3 = Todo('c', complete: true);
+      final todo1 = Todo(note: 'a', id: '1');
+      final todo2 = Todo(note: 'b');
+      final todo3 = Todo(note: 'c', complete: true);
       final todos = [
         todo1,
         todo2,

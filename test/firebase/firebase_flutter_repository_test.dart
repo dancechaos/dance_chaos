@@ -38,7 +38,7 @@ void main() {
       final profileRepo = FirestoreProfileRepository(firestore: firestore);
       final profile = ProfileEntity(id: '1000', displayName: 'Test User');
       final repository = FirestoreReactiveTodosRepository();
-      final todo = TodoEntity('A', '1', '', true);
+      final todo = TodoEntity(task: 'A', id: '1', note: '', complete: true);
 
       when(firestore.collection(FirestoreReactiveTodosRepository.path))
           .thenReturn(collection);
@@ -56,7 +56,7 @@ void main() {
       final profileRepo = FirestoreProfileRepository(firestore: firestore);
       final profile = ProfileEntity(id: '1000', displayName: 'Test User');
       final repository = FirestoreReactiveTodosRepository();
-      final todo = TodoEntity('A', '1', '', true);
+      final todo = TodoEntity(task: 'A', id: '1', note: '', complete: true);
 
       when(firestore.collection(FirestoreReactiveTodosRepository.path))
           .thenReturn(collection);
@@ -68,7 +68,7 @@ void main() {
     });
 
     test('should listen for updates to the collection', () {
-      final todo = TodoEntity('A', '1', '', true);
+      final todo = TodoEntity(task: 'A', id: '1', note: '', complete: true);
       final firestore = MockFirestore();
       final collection = MockCollectionReference();
       final snapshot = MockQuerySnapshot();

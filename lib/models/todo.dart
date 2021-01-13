@@ -13,13 +13,13 @@ class Todo {
   final String note;
   final String task;
 
-  Todo(this.task, {this.complete = false, String note = '', String id})
+  Todo({@required this.task, this.complete = false, String note = '', String id})
       : note = note ?? '',
         id = id ?? Uuid().generateV4();
 
   Todo copyWith({bool complete, String id, String note, String task}) {
     return Todo(
-      task ?? this.task,
+      task: task ?? this.task,
       complete: complete ?? this.complete,
       id: id ?? this.id,
       note: note ?? this.note,
@@ -46,12 +46,12 @@ class Todo {
   }
 
   TodoEntity toEntity() {
-    return TodoEntity(task, id, note, complete);
+    return TodoEntity(id: id, task: task, note: note, complete: complete);
   }
 
   static Todo fromEntity(TodoEntity entity) {
     return Todo(
-      entity.task,
+      task: entity.task,
       complete: entity.complete ?? false,
       note: entity.note,
       id: entity.id ?? Uuid().generateV4(),

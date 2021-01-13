@@ -12,9 +12,9 @@ import 'package:test/test.dart';
 void main() {
   group('State Reducer', () {
     test('should load todos into store', () {
-      final todo1 = Todo('a');
-      final todo2 = Todo('b');
-      final todo3 = Todo('c', complete: true);
+      final todo1 = Todo(note: 'a');
+      final todo2 = Todo(note: 'b');
+      final todo3 = Todo(note: 'c', complete: true);
       final todos = [
         todo1,
         todo2,

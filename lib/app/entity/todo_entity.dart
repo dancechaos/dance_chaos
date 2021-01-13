@@ -3,12 +3,17 @@
 // in the LICENSE file.
 
 class TodoEntity {
-  final bool complete;
   final String id;
-  final String note;
   final String task;
+  final String note;
+  final bool complete;
 
-  TodoEntity(this.task, this.id, this.note, this.complete);
+  static const ID = 'id';
+  static const TASK = 'task';
+  static const NOTE = 'note';
+  static const COMPLETE = 'complete';
+
+  TodoEntity({this.id, this.task, this.note, this.complete});
 
   @override
   int get hashCode =>
@@ -29,7 +34,7 @@ class TodoEntity {
       'complete': complete,
       'task': task,
       'note': note,
-      'id': id,
+//      'id': id,
     };
   }
 
@@ -38,12 +43,12 @@ class TodoEntity {
     return 'TodoEntity{complete: $complete, task: $task, note: $note, id: $id}';
   }
 
-  static TodoEntity fromJson(Map<String, Object> json) {
+  static TodoEntity fromJson(String id, Map<String, Object> json) {
     return TodoEntity(
-      json['task'] as String,
-      json['id'] as String,
-      json['note'] as String,
-      json['complete'] as bool,
+      id: id ?? json['id'] as String,
+      task: json['task'] as String,
+      note: json['note'] as String,
+      complete: json['complete'] as bool,
     );
   }
 }

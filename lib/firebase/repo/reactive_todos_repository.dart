@@ -32,10 +32,10 @@ class FirestoreReactiveTodosRepository implements ReactiveTodosRepository {
     return FirestoreProfileRepository.firestore().collection(FirestoreProfileRepository.path).doc(profileId).collection(path).snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
         return TodoEntity(
-          doc['task'],
-          doc.id,
-          doc['note'] ?? '',
-          doc['complete'] ?? false,
+          id: doc.id,
+          task: doc['task'],
+          note: doc['note'] ?? '',
+          complete: doc['complete'] ?? false,
         );
       }).toList();
     });
