@@ -31,24 +31,23 @@ class TodoEntity {
 
   Map<String, Object> toJson() {
     return {
-      'complete': complete,
-      'task': task,
-      'note': note,
-//      'id': id,
+      COMPLETE: complete,
+      TASK: task,
+      NOTE: note,
     };
   }
 
   @override
   String toString() {
-    return 'TodoEntity{complete: $complete, task: $task, note: $note, id: $id}';
+    return 'TodoEntity{$COMPLETE: $complete, $TASK: $task, $NOTE: $note, $ID: $id}';
   }
 
   static TodoEntity fromJson(String id, Map<String, Object> json) {
     return TodoEntity(
-      id: id ?? json['id'] as String,
-      task: json['task'] as String,
-      note: json['note'] as String,
-      complete: json['complete'] as bool,
+      id: id ?? json[ID] as String,
+      task: json[TASK] as String,
+      note: json[NOTE] as String,
+      complete: json[COMPLETE] as bool,
     );
   }
 }
