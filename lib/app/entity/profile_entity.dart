@@ -48,7 +48,7 @@ class ProfileEntity extends UserEntity {
   int get hashCode => super.hashCode ^ birthdate.hashCode ^ tracking.hashCode ^ homeLocation.hashCode;
 
   Map<String, Object> toJson() {
-    Map<String, Object> map = {ID: id};
+    Map<String, Object> map = {}; //{ID: id};
     Utility.addToMap(map, DISPLAY_NAME, displayName);
     Utility.addToMap(map, 'photoUrl', photoUrl);
     Utility.addToMap(map, 'phoneNumber', phoneNumber);

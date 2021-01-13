@@ -37,7 +37,7 @@ class LocationInfoEntity {
   }
 
   Map<String, dynamic> toJson() {
-    Map<String, Object> map = {ID: id};
+    Map<String, Object> map = {}; //{ID: id};
     Utility.addToMap(map, POSITION, geo.point(latitude: location.latitude, longitude: location.longitude).data);
     Utility.addToMap(map, DISPLAY_NAME, displayName);
     return map;
