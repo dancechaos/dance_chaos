@@ -20,6 +20,14 @@ class ArchSampleKeys {
   static final todoItemTask = (String id) => Key('TodoItem__${id}__Task');
   static final todoItemNote = (String id) => Key('TodoItem__${id}__Note');
 
+  // DanceProfile
+  static const danceProfileList = Key('__danceProfileList__');
+  static const danceProfilesLoading = Key('__danceProfilesLoading__');
+  static final danceProfileItem = (String id) => Key('DanceProfileItem__$id');
+  static final danceProfileItemCheckbox = (String id) => Key('DanceProfileItem__${id}__Checkbox');
+  static final danceProfileItemTask = (String id) => Key('DanceProfileItem__${id}__Task');
+  static final danceProfileItemNote = (String id) => Key('DanceProfileItem__${id}__Note');
+
   // Tabs
   static const tabs = Key('__tabs__');
   static const todoTab = Key('__todoTab__');

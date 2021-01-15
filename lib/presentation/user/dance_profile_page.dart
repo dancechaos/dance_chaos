@@ -16,20 +16,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'dance_profile_list.dart';
-import 'dance_profile_page.dart';
-
-class ProfilePage extends StatefulWidget {
+class DanceProfilePage extends StatefulWidget {
   final Profile profile;
 
-  ProfilePage({Key key, this.profile})
+  DanceProfilePage({Key key, this.profile})
       : super(key: key ?? ArchSampleKeys.editProfileScreen);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _DanceProfilePageState createState() => _DanceProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _DanceProfilePageState extends State<DanceProfilePage> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _birthdateController = TextEditingController();
@@ -195,52 +192,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                   return null;
                 },
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    // _lights = true;
-                  });
-                },
-                child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: _photoUrl != null ? NetworkImage(_photoUrl) : AssetImage("assets/images/person.jpg"),
-                      ),
-                      ElevatedButton.icon(
-                        label: Text(localizations.editImage),
-                        icon:  Icon(Icons.arrow_forward),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute<void>(builder: (_) => ProfilePage(profile: widget.profile)));
-                        },
-                      ),
-                    ]
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    // _lights = true;
-                  });
-                },
-                child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: AssetImage("assets/images/person.jpg"),
-                      ),
-                      ElevatedButton.icon(
-                        label: Text(localizations.editDanceProfile),
-                        icon:  Icon(Icons.arrow_forward),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute<void>(builder: (_) => DanceProfileList(danceProfiles: widget.profile.danceProfileList,)));
-                        },
-                      ),
-                    ]
-                ),
               ),
             ],
           ),

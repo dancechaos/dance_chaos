@@ -181,7 +181,7 @@ class _RegisterOrSignInPageState extends State<RegisterOrSignInPage> {
 
   // Example code for registration.
   Future<UserCredential> _register() async {
-    await FirebaseUserRepository.auth()
+    await FirestoreUserRepository.auth()
         .createUserWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
@@ -191,7 +191,7 @@ class _RegisterOrSignInPageState extends State<RegisterOrSignInPage> {
         return _register();  // Retry
       }
       if (error is FirebaseAuthException && error.code == 'email-already-in-use') {
-        FirebaseUserRepository.auth().signInWithEmailAndPassword(
+        FirestoreUserRepository.auth().signInWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         ).timeout(Utility.timeoutDefault).catchError((error) {
@@ -302,7 +302,7 @@ class _RegisterOrSignInPageState extends State<RegisterOrSignInPage> {
       final AuthCredential credential = FacebookAuthProvider.credential(
         _tokenController.text,
       );
-      final UserCredential userCredential = (await FirebaseUserRepository.auth().signInWithCredential(
+      final UserCredential userCredential = (await FirestoreUserRepository.auth().signInWithCredential(
           credential));
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -327,7 +327,7 @@ class _RegisterOrSignInPageState extends State<RegisterOrSignInPage> {
       if (kIsWeb) {
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
         userCredential =
-        await FirebaseUserRepository.auth().signInWithPopup(googleProvider);
+        await FirestoreUserRepository.auth().signInWithPopup(googleProvider);
       } else {
         final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
         final GoogleSignInAuthentication googleAuth =
@@ -338,7 +338,7 @@ class _RegisterOrSignInPageState extends State<RegisterOrSignInPage> {
           idToken: googleAuth.idToken,
         );
         userCredential =
-        await FirebaseUserRepository.auth().signInWithCredential(googleAuthCredential);
+        await FirestoreUserRepository.auth().signInWithCredential(googleAuthCredential);
       }
 
       final user = userCredential.user;

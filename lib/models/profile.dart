@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/app/entity/profile_entity.dart';
 import 'package:dance_chaos/app/entity/user_entity.dart';
+import 'package:dance_chaos/models/dance_profile.dart';
 import 'package:dance_chaos/models/profile_actions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +22,17 @@ class Profile {
   final Timestamp birthdate;
   final TrackingState tracking;
   final GeoPoint homeLocation;
+  final List<DanceProfile> danceProfileList;
 
-  const Profile(this.id, {this.displayName, this.photoUrl, this.email, this.phoneNumber, isAnonymous, this.birthdate, tracking, this.homeLocation}) :
+  static const Profile noProfile = Profile('0', isAnonymous: true);  // No profile (note: This is not an anonymous profile)
+  static const List<DanceProfile> danceProfileNotLoaded = const [];  // Not loaded yet
+
+  const Profile(this.id, {this.displayName, this.photoUrl, this.email, this.phoneNumber, isAnonymous, this.birthdate, tracking, this.homeLocation, danceProfileList}) :
         this.isAnonymous = isAnonymous ?? (displayName == null) && (phoneNumber == null) && (email == null) && (photoUrl == null) && (birthdate == null) && (homeLocation == null),
-        this.tracking = tracking ?? TrackingState.trackingOff;
+        this.tracking = tracking ?? TrackingState.trackingOff,
+        this.danceProfileList = danceProfileList ?? danceProfileNotLoaded;
 
-  Profile copyWith({String id, String displayName, String photoUrl, String email, String phoneNumber, bool isAnonymous, Timestamp birthdate, TrackingState tracking, GeoPoint location}) {
+  Profile copyWith({String id, String displayName, String photoUrl, String email, String phoneNumber, bool isAnonymous, Timestamp birthdate, TrackingState tracking, GeoPoint location, List<DanceProfile> danceProfileList}) {
     return Profile(
       id ?? this.id,
       displayName: displayName ?? this.displayName,
@@ -37,14 +43,13 @@ class Profile {
       birthdate: birthdate ?? this.birthdate,
       homeLocation: homeLocation ?? this.homeLocation,
       tracking: tracking ?? this.tracking,
+      danceProfileList: danceProfileList ?? this.danceProfileList,
     );
   }
 
-  static const Profile noProfile = Profile('0', isAnonymous: true);  // No profile (note: This is not an anonymous profile)
-
   @override
   int get hashCode =>
-      id.hashCode ^ displayName.hashCode ^ photoUrl.hashCode ^ email.hashCode ^ phoneNumber.hashCode ^ isAnonymous.hashCode ^ birthdate.hashCode ^ tracking.hashCode ^ homeLocation.hashCode;
+      id.hashCode ^ displayName.hashCode ^ photoUrl.hashCode ^ email.hashCode ^ phoneNumber.hashCode ^ isAnonymous.hashCode ^ birthdate.hashCode ^ tracking.hashCode ^ homeLocation.hashCode ^ danceProfileList.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -59,11 +64,12 @@ class Profile {
           isAnonymous == other.isAnonymous &&
           tracking == other.tracking &&
           birthdate == other.birthdate &&
-          homeLocation == other.homeLocation;
+          homeLocation == other.homeLocation &&
+          danceProfileList == other.danceProfileList;
 
   @override
   String toString() {
-    return 'Profile{id: $id, displayName: $displayName, photoUrl: $photoUrl, email: $email, phoneNumber: $phoneNumber, isAnonymous: $isAnonymous, birthdate: $birthdate, tracking, $tracking, homeLocation, $homeLocation)}';
+    return 'Profile{id: $id, displayName: $displayName, photoUrl: $photoUrl, email: $email, phoneNumber: $phoneNumber, isAnonymous: $isAnonymous, birthdate: $birthdate, tracking, $tracking, homeLocation, $homeLocation, danceProfileList: $danceProfileList)}';
   }
 
   ProfileEntity toEntity() {
@@ -93,7 +99,8 @@ class Profile {
   isAnonymous = user.isAnonymous,
   birthdate = null,
   homeLocation = null,
-  tracking = TrackingState.trackingOff;
+  tracking = TrackingState.trackingOff,
+  danceProfileList = danceProfileNotLoaded;
 
   Color getTrackingColor({TrackingState tracking, bool isAnonymous}) {
     isAnonymous ??= this.isAnonymous;

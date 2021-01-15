@@ -12,10 +12,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:location/location.dart';
 
-class FirebaseUserRepository implements UserRepository {
+class FirestoreUserRepository implements UserRepository {
   static FirebaseAuth _auth;
 
-  FirebaseUserRepository({FirebaseAuth auth}) {
+  FirestoreUserRepository({FirebaseAuth auth}) {
     _auth = auth;
   }
 

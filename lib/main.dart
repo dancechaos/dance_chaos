@@ -17,6 +17,7 @@ import 'package:redux/redux.dart';
 import 'app/core/localization.dart';
 import 'app/core/routes.dart';
 import 'app/core/theme.dart';
+import 'app/repo/dance_profile_repository.dart';
 import 'app/repo/location_repository.dart';
 import 'app/repo/profile_repository.dart';
 import 'app/repo/reactive_repository.dart';
@@ -24,6 +25,7 @@ import 'app/repo/user_repository.dart';
 import 'containers/map/map_screen.dart';
 import 'containers/todo/add_todo.dart';
 import 'firebase/middleware/store_todos_middleware.dart';
+import 'firebase/repo/firestore_dance_profile_repository.dart';
 import 'firebase/repo/firestore_location_repository.dart';
 import 'firebase/repo/reactive_todos_repository.dart';
 import 'firebase/repo/firestore_profile_repository.dart';
@@ -43,6 +45,7 @@ class DanceChaosApp extends StatelessWidget {
     ReactiveTodosRepository todosRepository,
     UserRepository userRepository,
     ProfileRepository profileRepository,
+    DanceProfileRepository danceProfileRepository,
     LocationRepository locationRepository,
     bool useLocalFirebaseEmulator = false,
   })  : store = Store<AppState>(
@@ -50,8 +53,9 @@ class DanceChaosApp extends StatelessWidget {
           initialState: AppState.loading(),
           middleware: createStoreTodosMiddleware(
             todosRepository ?? FirestoreReactiveTodosRepository(),
-            userRepository ?? FirebaseUserRepository(),
+            userRepository ?? FirestoreUserRepository(),
             profileRepository ?? FirestoreProfileRepository(useLocalFirebaseEmulator: useLocalFirebaseEmulator),
+              danceProfileRepository ?? FirestoreDanceProfileRepository(),
             locationRepository ?? FirestoreLocationRepository(),
           ),
         ),

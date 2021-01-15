@@ -6,13 +6,16 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/actions/actions.dart';
+import 'package:dance_chaos/app/entity/dance_profile_entity.dart';
 import 'package:dance_chaos/app/entity/location_info_entity.dart';
 import 'package:dance_chaos/app/entity/profile_entity.dart';
 import 'package:dance_chaos/app/entity/todo_entity.dart';
+import 'package:dance_chaos/app/repo/dance_profile_repository.dart';
 import 'package:dance_chaos/app/repo/location_repository.dart';
 import 'package:dance_chaos/app/repo/profile_repository.dart';
 import 'package:dance_chaos/app/repo/reactive_repository.dart';
 import 'package:dance_chaos/app/repo/user_repository.dart';
+import 'package:dance_chaos/models/dance_profile.dart';
 import 'package:dance_chaos/models/location_info.dart';
 import 'package:dance_chaos/models/models.dart';
 import 'package:dance_chaos/models/profile.dart';
@@ -25,6 +28,7 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
   ReactiveTodosRepository todosRepository,
   UserRepository userRepository,
   ProfileRepository profileRepository,
+  DanceProfileRepository danceProfileRepository,
   LocationRepository locationRepository,
 ) {
   return [
@@ -53,7 +57,7 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
       _profileChanged(userRepository, profileRepository),
     ),
     TypedMiddleware<AppState, ConnectToDataSourceAction>(
-      _connectToDataSource(todosRepository),
+      _connectToDataSource(todosRepository, danceProfileRepository),
     ),
     TypedMiddleware<AppState, AddNewTodoAction>(
       _addNewTodo(todosRepository),
@@ -246,6 +250,7 @@ void Function(
     NextDispatcher next,
     ) _connectToDataSource (
     ReactiveTodosRepository repository,
+    DanceProfileRepository danceProfileRepository,
     ) {
   return (store, action, next) {
     next(action);
@@ -256,8 +261,18 @@ void Function(
         store.dispatch(LoadTodosAction(todos.map(Todo.fromEntity).toList()));
       });
     } else {
-      store.dispatch(LoadTodosAction(List<Todo>()));  // Empty list for anonymous user
+      store.dispatch(LoadTodosAction(List<Todo>.empty()));  // Empty list for anonymous user
     }
+
+    danceProfilesStreamSubscription?.cancel();
+    if (store.state.profile != null && store.state.profile != Profile.noProfile) {
+      danceProfilesStreamSubscription = danceProfileRepository.danceProfiles(store.state.profile.id).listen((danceProfiles) {
+        store.dispatch(LoadDanceProfilesAction(danceProfiles.map(DanceProfile.fromEntity).toList()));
+      });
+    } else {
+      store.dispatch(LoadDanceProfilesAction(List<DanceProfile>.empty()));  // Empty list for anonymous user
+    }
+
   };
 }
 
@@ -331,6 +346,7 @@ void _updateLocationTracking(Store<AppState> store, UserRepository userRepositor
 }
 
 StreamSubscription<List<TodoEntity>> todosStreamSubscription;
+StreamSubscription<List<DanceProfileEntity>> danceProfilesStreamSubscription;
 
 void Function(
   Store<AppState> store,

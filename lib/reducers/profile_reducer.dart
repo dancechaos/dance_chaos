@@ -3,6 +3,7 @@
 // in the LICENSE file.
 
 import 'package:dance_chaos/actions/actions.dart';
+import 'package:dance_chaos/models/dance_profile.dart';
 import 'package:dance_chaos/models/models.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:dance_chaos/models/profile_actions.dart';
@@ -12,6 +13,7 @@ final profileReducer = combineReducers<Profile>([
   TypedReducer<Profile, ProfileChangedAction>(_profileChangedAction),
   TypedReducer<Profile, ExecuteProfileAction>(_executeProfileAction),
   TypedReducer<Profile, UpdateProfileAction>(_updateProfileAction),
+  TypedReducer<Profile, LoadDanceProfilesAction>(_setLoadedDanceProfiles),
 ]);
 
 Profile _profileChangedAction(Profile profile, ProfileChangedAction action) {
@@ -34,5 +36,10 @@ Profile _updateProfileAction(Profile profile, UpdateProfileAction action) {
       birthdate: action.updatedProfile.birthdate,
       location: action.updatedProfile.homeLocation,
       tracking: action.updatedProfile.tracking,
+  );
+}
+Profile _setLoadedDanceProfiles(Profile profile, LoadDanceProfilesAction action) {
+  return action.danceProfiles == null ? profile : profile.copyWith(
+    danceProfileList: action.danceProfiles,
   );
 }

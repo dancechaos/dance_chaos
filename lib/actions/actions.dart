@@ -4,6 +4,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/app/entity/user_entity.dart';
+import 'package:dance_chaos/models/dance_profile.dart';
 import 'package:dance_chaos/models/models.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:dance_chaos/models/profile_actions.dart';
@@ -63,6 +64,17 @@ class AddNewTodoAction {
   @override
   String toString() {
     return 'AddTodoAction{todo: $todo}';
+  }
+}
+
+class LoadDanceProfilesAction {
+  final List<DanceProfile> danceProfiles;
+
+  LoadDanceProfilesAction(this.danceProfiles);
+
+  @override
+  String toString() {
+    return 'LoadDanceProfilesAction{todos: $danceProfiles}';
   }
 }
 

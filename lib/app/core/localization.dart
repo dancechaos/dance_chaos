@@ -214,6 +214,13 @@ class ArchSampleLocalizations {
     locale: locale.toString(),
   );
 
+  String get editDanceProfile => Intl.message(
+    'Edit Dance Profile',
+    name: 'editDanceProfile',
+    args: [],
+    locale: locale.toString(),
+  );
+
   String get registration => Intl.message(
     'Registration',
     name: 'registration',
