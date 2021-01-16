@@ -1,15 +1,19 @@
 import 'package:dance_chaos/app/core/keys.dart';
+import 'package:dance_chaos/app/core/localization.dart';
 import 'package:dance_chaos/containers/tabs/app_loading.dart';
+import 'package:dance_chaos/models/app_state.dart';
 import 'package:dance_chaos/models/dance_profile.dart';
 import 'package:dance_chaos/presentation/loading_indicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 import 'dance_profile_item.dart';
 
 class DanceProfileList extends StatelessWidget {
   final List<DanceProfile> danceProfiles;
-  final Function(DanceProfile, bool) onCheckboxChanged;
+  final Function(DanceProfile, String) onCheckboxChanged;
   final Function(DanceProfile) onRemove;
   final Function(DanceProfile) onUndoRemove;
 
@@ -21,13 +25,41 @@ class DanceProfileList extends StatelessWidget {
     @required this.onUndoRemove,
   }) : super(key: key);
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return AppLoading(builder: (context, loading) {
+  //     return loading
+  //         ? LoadingIndicator(key: ArchSampleKeys.danceProfilesLoading)
+  //         : _buildListView();
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return AppLoading(builder: (context, loading) {
-      return loading
-          ? LoadingIndicator(key: ArchSampleKeys.danceProfilesLoading)
-          : _buildListView();
-    });
+    final localizations = ArchSampleLocalizations.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    Store store = StoreProvider.of<AppState>(context, listen: false);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(localizations.editDanceProfile),
+      ),
+      body: AppLoading(builder: (context, loading) {
+        return loading
+            ? LoadingIndicator(key: ArchSampleKeys.danceProfilesLoading)
+            : _buildListView();
+      }),
+      floatingActionButton: FloatingActionButton(
+      key:
+      ArchSampleKeys.saveProfileFab,
+      tooltip: localizations.saveChanges,
+      child: Icon(Icons.arrow_back),
+      onPressed: () {
+        Navigator.pop(context);
+      }
+      // },
+    ),
+    );
   }
 
   ListView _buildListView() {

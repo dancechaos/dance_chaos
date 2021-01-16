@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class DanceProfileItem extends StatelessWidget {
   final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final ValueChanged<bool> onCheckboxChanged;
+  final ValueChanged<String> onCheckboxChanged;
   final DanceProfile danceProfile;
 
   DanceProfileItem({
@@ -23,15 +23,25 @@ class DanceProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Dismissible(
       key: ArchSampleKeys.danceProfileItem(danceProfile.id),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
-        leading: Checkbox(
-          key: ArchSampleKeys.danceProfileItemCheckbox(danceProfile.id),
-          value: true, //todo.complete,
+        leading: DropdownButton<String>(
+          value: danceProfile.danceCode,
+          icon: Icon(Icons.arrow_downward),
+          iconSize: 24,
+          elevation: 16,
+          style: textTheme.headline5,
+          underline: Container(
+            height: 2,
+            color: textTheme.headline5.decorationColor,
+          ),
           onChanged: onCheckboxChanged,
+          items: dropdownMenuItems(),
         ),
         title: Hero(
           tag: '${danceProfile.id}__heroTag',
@@ -54,4 +64,23 @@ class DanceProfileItem extends StatelessWidget {
       ),
     );
   }
+
+  List<DropdownMenuItem<String>> dropdownMenuItems() {
+    List<DropdownMenuItem<String>> dropdownMenuItems = List.empty(growable: true);
+    menuItemsMap.forEach((key, value) {
+      dropdownMenuItems.add(DropdownMenuItem(
+        value: key,
+        child: Text(value)
+      ));
+    });
+    return dropdownMenuItems;
+  }
+
+  final Map<String, String> menuItemsMap = {
+    '': '---Select Dance Style---',
+    'IC': 'Cha Cha - International',
+    'IW': 'Waltz - International',
+    'AC': 'Cha Cha - American',
+    'AW': 'Waltz - American',
+  };
 }

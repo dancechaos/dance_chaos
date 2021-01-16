@@ -8,14 +8,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/app/core/keys.dart';
 import 'package:dance_chaos/app/core/localization.dart';
+import 'package:dance_chaos/app/core/routes.dart';
 import 'package:dance_chaos/app/entity/utility.dart';
+import 'package:dance_chaos/containers/appbar/extra_actions_container.dart';
+import 'package:dance_chaos/containers/appbar/profile_selector.dart';
+import 'package:dance_chaos/containers/appbar/settings_selector.dart';
+import 'package:dance_chaos/containers/tabs/tab_selector.dart';
+import 'package:dance_chaos/containers/todo/filtered_todos.dart';
 import 'package:dance_chaos/models/app_state.dart';
+import 'package:dance_chaos/models/app_tab.dart';
 import 'package:dance_chaos/models/profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
+import '../../localization.dart';
 import 'dance_profile_list.dart';
 import 'dance_profile_page.dart';
 
@@ -236,7 +244,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         icon:  Icon(Icons.arrow_forward),
                         onPressed: () {
                           Navigator.of(context).push(
-                              MaterialPageRoute<void>(builder: (_) => DanceProfileList(danceProfiles: widget.profile.danceProfileList,)));
+                              MaterialPageRoute<void>(builder: (_) => DanceProfileList(danceProfiles: widget.profile.danceProfileList)));
                         },
                       ),
                     ]

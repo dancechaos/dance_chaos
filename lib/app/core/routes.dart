@@ -8,5 +8,6 @@ class ArchSampleRoutes {
   static final profile = '/profile';
   static final register = '/register';
   static final signIn = '/signin';
+  static final danceProfile = 'danceProfile';
 //  static final maps = '/maps';
 }

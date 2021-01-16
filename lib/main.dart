@@ -7,6 +7,7 @@ import 'package:dance_chaos/localization.dart';
 import 'package:dance_chaos/models/models.dart';
 import 'package:dance_chaos/models/profile_actions.dart';
 import 'package:dance_chaos/presentation/home_screen.dart';
+import 'package:dance_chaos/presentation/user/dance_profile_list.dart';
 import 'package:dance_chaos/presentation/user/profile_page.dart';
 import 'package:dance_chaos/presentation/user/register_or_signin_page.dart';
 import 'package:dance_chaos/reducers/app_state_reducer.dart';
@@ -81,6 +82,7 @@ class DanceChaosApp extends StatelessWidget {
           ArchSampleRoutes.profile: (context) => ProfilePage(profile: store.state.profile),
           ArchSampleRoutes.register: (context) => RegisterOrSignInPage(authScreen: AuthScreenType.register),
           ArchSampleRoutes.signIn: (context) => RegisterOrSignInPage(authScreen: AuthScreenType.signIn,),
+//          ArchSampleRoutes.danceProfile: (context) => DanceProfileList(danceProfiles: store.state.profile.danceProfileList),
 //          ArchSampleRoutes.maps: (context) => FireMap(profile: store.state.profile),
         },
       ),
