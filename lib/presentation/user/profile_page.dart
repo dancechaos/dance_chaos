@@ -8,24 +8,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/app/core/keys.dart';
 import 'package:dance_chaos/app/core/localization.dart';
-import 'package:dance_chaos/app/core/routes.dart';
 import 'package:dance_chaos/app/entity/utility.dart';
-import 'package:dance_chaos/containers/appbar/extra_actions_container.dart';
-import 'package:dance_chaos/containers/appbar/profile_selector.dart';
-import 'package:dance_chaos/containers/appbar/settings_selector.dart';
-import 'package:dance_chaos/containers/tabs/tab_selector.dart';
-import 'package:dance_chaos/containers/todo/filtered_todos.dart';
 import 'package:dance_chaos/models/app_state.dart';
-import 'package:dance_chaos/models/app_tab.dart';
 import 'package:dance_chaos/models/profile.dart';
+import 'package:dance_chaos/models/profile_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../localization.dart';
 import 'dance_profile_list.dart';
-import 'dance_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final Profile profile;
@@ -47,10 +39,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   String _photoUrl;
   Timestamp _birthdate;
+  Gender _gender;
   GeoPoint _location;
 
   void initState() {
     super.initState();
+    Store store = StoreProvider.of<AppState>(context, listen: false);
+
+    _gender = store.state.profile.gender ?? Gender.unspecified;
 
     _displayNameController.text = widget.profile?.displayName ?? '';
     _displayNameController.addListener(() {
@@ -203,6 +199,55 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                   return null;
                 },
+              ),
+              Column(
+                children: <Widget>[
+                  ListTile(
+                    title: const Text('Male'),
+                    leading: Radio(
+                      value: Gender.male,
+                      groupValue: _gender,
+                      onChanged: (value) {
+                        setState(() {
+                          store.dispatch(UpdateProfileAction(
+                              Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
+                                gender: Gender.male,
+                              )));
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Female'),
+                    leading: Radio(
+                      value: Gender.female,
+                      groupValue: _gender,
+                      onChanged: (value) {
+                        setState(() {
+                          store.dispatch(UpdateProfileAction(
+                              Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
+                                gender: Gender.female,
+                              )));
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Not specified'),
+                    leading: Radio(
+                      value: Gender.unspecified,
+                      groupValue: _gender,
+                      onChanged: (value) {
+                        setState(() {
+                          store.dispatch(UpdateProfileAction(
+                              Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
+                                gender: Gender.unspecified,
+                              )));
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
               GestureDetector(
                 onTap: () {

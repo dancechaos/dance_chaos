@@ -9,3 +9,9 @@ enum ProfileAction { signIn, register, signOut, editProfile, trackingOff, tracki
 enum UserSignInStatus { signedOut, processing, signedIn, error }
 
 enum AuthScreenType { signIn, register }
+
+enum Gender {
+  male,
+  female,
+  unspecified,
+}

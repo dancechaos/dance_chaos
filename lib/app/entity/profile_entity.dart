@@ -1,7 +1,3 @@
-// Copyright 2018 The Flutter Architecture Sample Authors. All rights reserved.
-// Use of this source code is governed by the MIT license that can be found
-// in the LICENSE file.
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos/app/entity/user_entity.dart';
 import 'package:dance_chaos/app/entity/utility.dart';
@@ -10,13 +6,23 @@ import 'package:flutter/cupertino.dart';
 
 class ProfileEntity extends UserEntity {
   final Timestamp birthdate;
+  final Gender gender;
   final TrackingState tracking;
   final GeoPoint homeLocation;
 
   static const ID = 'id';
   static const DISPLAY_NAME = 'displayName';
+  static const PHOTO_URL = 'photoUrl';
+  static const PHONE_NUMBER = 'phoneNumber';
+  static const EMAIL = 'email';
+  static const IS_ANONYMOUS = 'isAnonymous';
+  static const PROVIDER_ID = 'providerId';
+  static const BIRTHDATE = 'birthdate';
+  static const GENDER = 'gender';
+  static const TRACKING = 'tracking';
+  static const HOME_LOCATION = 'homeLocation';
 
-  ProfileEntity({@required id, displayName, photoUrl, email, phoneNumber, isAnonymous, providerId, this.birthdate, this.tracking, this.homeLocation})
+  ProfileEntity({@required id, displayName, photoUrl, email, phoneNumber, isAnonymous, providerId, this.birthdate, this.gender, this.tracking, this.homeLocation})
     :
     super(
       id: id,
@@ -42,23 +48,24 @@ class ProfileEntity extends UserEntity {
           tracking == other.tracking &&
           providerId == other.providerId &&
           birthdate == other.birthdate &&
+          gender == other.gender &&
           homeLocation == other.homeLocation;
 
   @override
-  int get hashCode => super.hashCode ^ birthdate.hashCode ^ tracking.hashCode ^ homeLocation.hashCode;
+  int get hashCode => super.hashCode ^ birthdate.hashCode ^ gender.hashCode ^ tracking.hashCode ^ homeLocation.hashCode;
 
   Map<String, Object> toJson() {
     Map<String, Object> map = {}; //{ID: id};
     Utility.addToMap(map, DISPLAY_NAME, displayName);
-    Utility.addToMap(map, 'photoUrl', photoUrl);
-    Utility.addToMap(map, 'phoneNumber', phoneNumber);
-    Utility.addToMap(map, 'email', email);
-    Utility.addToMap(map, 'isAnonymous', isAnonymous);
-    Utility.addToMap(map, 'birthdate', birthdate);
-    Utility.addToMap(map, 'tracking', tracking.toString());
-    Utility.addToMap(map, 'providerId', providerId);
-    Utility.addToMap(map, 'displayName', displayName);
-    Utility.addToMap(map, 'homeLocation', homeLocation);
+    Utility.addToMap(map, PHOTO_URL, photoUrl);
+    Utility.addToMap(map, PHONE_NUMBER, phoneNumber);
+    Utility.addToMap(map, EMAIL, email);
+    Utility.addToMap(map, IS_ANONYMOUS, isAnonymous);
+    Utility.addToMap(map, BIRTHDATE, birthdate);
+    Utility.addToMap(map, GENDER, gender == Gender.unspecified ? null : gender.toString());
+    Utility.addToMap(map, TRACKING, tracking.toString());
+    Utility.addToMap(map, PROVIDER_ID, providerId);
+    Utility.addToMap(map, HOME_LOCATION, homeLocation);
     return map;
   }
 
@@ -66,14 +73,15 @@ class ProfileEntity extends UserEntity {
     return ProfileEntity(
       id: id ?? json[ID] as String,
       displayName: json[DISPLAY_NAME] as String,
-      photoUrl: json['photoUrl'] as String,
-      phoneNumber: json['phoneNumber'] as String,
-      email: json['email'] as String,
-      isAnonymous: json['isAnonymous'] as bool,
-      birthdate: json['birthdate'] as Timestamp,
-      homeLocation: json['homeLocation'] as GeoPoint,
-      providerId: json['providerId'] as String,
-      tracking: getTrackingFromString(json['tracking']),
+      photoUrl: json[PHOTO_URL] as String,
+      phoneNumber: json[PHONE_NUMBER] as String,
+      email: json[EMAIL] as String,
+      isAnonymous: json[IS_ANONYMOUS] as bool,
+      birthdate: json[BIRTHDATE] as Timestamp,
+      gender: getGenderFromString(json[GENDER]),
+      homeLocation: json[HOME_LOCATION] as GeoPoint,
+      providerId: json[PROVIDER_ID] as String,
+      tracking: getTrackingFromString(json[TRACKING]),
     );
   }
 
@@ -85,9 +93,16 @@ class ProfileEntity extends UserEntity {
           .trackingOff;
   }
 
+  static Gender getGenderFromString(String gender) {
+    return
+      (Gender.male.toString() == gender) ? Gender
+          .male : (Gender.female.toString() ==
+          gender) ? Gender.female : Gender.unspecified;
+  }
+
   @override
   String toString() {
-    return 'ProfileEntity{id: $id, $DISPLAY_NAME: $displayName, photoUrl: $photoUrl, phoneNumber: $phoneNumber, email: $email, isAnonymous: $isAnonymous, birthdate: $birthdate, providerID: $providerId, tracking: $tracking, homeLocation: $homeLocation}';
+    return 'ProfileEntity{$ID: $id, $DISPLAY_NAME: $displayName, $PHOTO_URL: $photoUrl, $PHONE_NUMBER: $phoneNumber, $EMAIL: $email, $IS_ANONYMOUS: $isAnonymous, $BIRTHDATE: $birthdate, $GENDER: gender, $PROVIDER_ID: $providerId, $TRACKING: $tracking, $HOME_LOCATION: $homeLocation}';
   }
 
 }

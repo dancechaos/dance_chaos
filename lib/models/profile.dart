@@ -20,6 +20,7 @@ class Profile {
   final String phoneNumber;
   final bool isAnonymous;
   final Timestamp birthdate;
+  final Gender gender;
   final TrackingState tracking;
   final GeoPoint homeLocation;
   final List<DanceProfile> danceProfileList;
@@ -27,12 +28,12 @@ class Profile {
   static const Profile noProfile = Profile('0', isAnonymous: true);  // No profile (note: This is not an anonymous profile)
   static const List<DanceProfile> danceProfileNotLoaded = const [];  // Not loaded yet
 
-  const Profile(this.id, {this.displayName, this.photoUrl, this.email, this.phoneNumber, isAnonymous, this.birthdate, tracking, this.homeLocation, danceProfileList}) :
+  const Profile(this.id, {this.displayName, this.photoUrl, this.email, this.phoneNumber, isAnonymous, this.birthdate, this.gender, tracking, this.homeLocation, danceProfileList}) :
         this.isAnonymous = isAnonymous ?? (displayName == null) && (phoneNumber == null) && (email == null) && (photoUrl == null) && (birthdate == null) && (homeLocation == null),
         this.tracking = tracking ?? TrackingState.trackingOff,
         this.danceProfileList = danceProfileList ?? danceProfileNotLoaded;
 
-  Profile copyWith({String id, String displayName, String photoUrl, String email, String phoneNumber, bool isAnonymous, Timestamp birthdate, TrackingState tracking, GeoPoint location, List<DanceProfile> danceProfileList}) {
+  Profile copyWith({String id, String displayName, String photoUrl, String email, String phoneNumber, bool isAnonymous, Timestamp birthdate, String gender, TrackingState tracking, GeoPoint location, List<DanceProfile> danceProfileList}) {
     return Profile(
       id ?? this.id,
       displayName: displayName ?? this.displayName,
@@ -41,6 +42,7 @@ class Profile {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       isAnonymous: isAnonymous ?? this.isAnonymous,
       birthdate: birthdate ?? this.birthdate,
+      gender: gender ?? this.gender,
       homeLocation: homeLocation ?? this.homeLocation,
       tracking: tracking ?? this.tracking,
       danceProfileList: danceProfileList ?? this.danceProfileList,
@@ -49,7 +51,7 @@ class Profile {
 
   @override
   int get hashCode =>
-      id.hashCode ^ displayName.hashCode ^ photoUrl.hashCode ^ email.hashCode ^ phoneNumber.hashCode ^ isAnonymous.hashCode ^ birthdate.hashCode ^ tracking.hashCode ^ homeLocation.hashCode ^ danceProfileList.hashCode;
+      id.hashCode ^ displayName.hashCode ^ photoUrl.hashCode ^ email.hashCode ^ phoneNumber.hashCode ^ isAnonymous.hashCode ^ birthdate.hashCode ^ gender.hashCode ^ tracking.hashCode ^ homeLocation.hashCode ^ danceProfileList.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -64,16 +66,17 @@ class Profile {
           isAnonymous == other.isAnonymous &&
           tracking == other.tracking &&
           birthdate == other.birthdate &&
+          gender == other.gender &&
           homeLocation == other.homeLocation &&
           danceProfileList == other.danceProfileList;
 
   @override
   String toString() {
-    return 'Profile{id: $id, displayName: $displayName, photoUrl: $photoUrl, email: $email, phoneNumber: $phoneNumber, isAnonymous: $isAnonymous, birthdate: $birthdate, tracking, $tracking, homeLocation, $homeLocation, danceProfileList: $danceProfileList)}';
+    return 'Profile{id: $id, displayName: $displayName, photoUrl: $photoUrl, email: $email, phoneNumber: $phoneNumber, isAnonymous: $isAnonymous, birthdate: $birthdate, gender: gender, tracking, $tracking, homeLocation, $homeLocation, danceProfileList: $danceProfileList)}';
   }
 
   ProfileEntity toEntity() {
-    return ProfileEntity(id: id, displayName: displayName, photoUrl: photoUrl, email: email, phoneNumber: phoneNumber, isAnonymous: isAnonymous, birthdate: birthdate, tracking: tracking, homeLocation: homeLocation);
+    return ProfileEntity(id: id, displayName: displayName, photoUrl: photoUrl, email: email, phoneNumber: phoneNumber, isAnonymous: isAnonymous, birthdate: birthdate, gender: gender, tracking: tracking, homeLocation: homeLocation);
   } // Note: ProfileSignInStatus is ephemeral
 
   static Profile fromEntity(UserEntity entity, {UserSignInStatus userSignInStatus = UserSignInStatus.signedOut, Exception lastException}) {
@@ -85,6 +88,7 @@ class Profile {
       phoneNumber: entity.phoneNumber,
       isAnonymous: entity.isAnonymous ?? (entity.displayName == '' || entity.displayName == null),
       birthdate: entity is ProfileEntity ? entity.birthdate : null,
+      gender: entity is ProfileEntity ? entity.gender : null,
       homeLocation: entity is ProfileEntity ? entity.homeLocation : null,
       tracking: entity is ProfileEntity ? entity.tracking : TrackingState.trackingOff,
     );
@@ -98,6 +102,7 @@ class Profile {
   photoUrl = user.photoURL,
   isAnonymous = user.isAnonymous,
   birthdate = null,
+  gender = null,
   homeLocation = null,
   tracking = TrackingState.trackingOff,
   danceProfileList = danceProfileNotLoaded;
