@@ -185,7 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       context: context,
                       initialDate: _birthdate != null ? _birthdate.toDate() : DateTime.now(),
                       firstDate: DateTime(1900),
-                      lastDate: DateTime(2021));
+                      lastDate: DateTime(2099));
                   if (picked != null && picked != _birthdate?.toDate()) {
                     setState(() {
                       _birthdate = Timestamp.fromDate(picked);
