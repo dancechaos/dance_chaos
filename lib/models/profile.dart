@@ -28,10 +28,10 @@ class Profile {
   static const Profile noProfile = Profile('0', isAnonymous: true);  // No profile (note: This is not an anonymous profile)
   static const List<DanceProfile> danceProfileNotLoaded = const [];  // Not loaded yet
 
-  const Profile(this.id, {this.displayName, this.photoUrl, this.email, this.phoneNumber, isAnonymous, this.birthdate, this.gender, tracking, this.homeLocation, danceProfileList}) :
-        this.isAnonymous = isAnonymous ?? (displayName == null) && (phoneNumber == null) && (email == null) && (photoUrl == null) && (birthdate == null) && (homeLocation == null),
-        this.tracking = tracking ?? TrackingState.trackingOff,
-        this.danceProfileList = danceProfileList ?? danceProfileNotLoaded;
+  const Profile(this.id, {this.displayName, this.photoUrl, this.email, this.phoneNumber, this.isAnonymous, this.birthdate, this.gender, this.tracking, this.homeLocation, this.danceProfileList});
+        // this.isAnonymous = isAnonymous ?? (displayName == null) && (phoneNumber == null) && (email == null) && (photoUrl == null) && (birthdate == null) && (homeLocation == null),
+        // this.tracking = tracking ?? TrackingState.trackingOff,
+        // this.danceProfileList = danceProfileList ?? danceProfileNotLoaded;
 
   Profile copyWith({String id, String displayName, String photoUrl, String email, String phoneNumber, bool isAnonymous, Timestamp birthdate, String gender, TrackingState tracking, GeoPoint location, List<DanceProfile> danceProfileList}) {
     return Profile(
@@ -86,11 +86,11 @@ class Profile {
       photoUrl: entity.photoUrl,
       email: entity.email,
       phoneNumber: entity.phoneNumber,
-      isAnonymous: entity.isAnonymous ?? (entity.displayName == '' || entity.displayName == null),
+      isAnonymous: entity.isAnonymous,
       birthdate: entity is ProfileEntity ? entity.birthdate : null,
       gender: entity is ProfileEntity ? entity.gender : null,
       homeLocation: entity is ProfileEntity ? entity.homeLocation : null,
-      tracking: entity is ProfileEntity ? entity.tracking : TrackingState.trackingOff,
+      tracking: entity is ProfileEntity ? entity.tracking : null,
     );
   }
 

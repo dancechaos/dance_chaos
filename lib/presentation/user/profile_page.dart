@@ -211,7 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         setState(() {
                           store.dispatch(UpdateProfileAction(
                               Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
-                                gender: Gender.male,
+                                gender: _gender = Gender.male,
                               )));
                         });
                       },
@@ -226,7 +226,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         setState(() {
                           store.dispatch(UpdateProfileAction(
                               Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
-                                gender: Gender.female,
+                                gender: _gender = Gender.female,
                               )));
                         });
                       },
@@ -241,7 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         setState(() {
                           store.dispatch(UpdateProfileAction(
                               Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
-                                gender: Gender.unspecified,
+                                gender: _gender = Gender.unspecified,
                               )));
                         });
                       },

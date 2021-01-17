@@ -62,8 +62,8 @@ class ProfileEntity extends UserEntity {
     Utility.addToMap(map, EMAIL, email);
     Utility.addToMap(map, IS_ANONYMOUS, isAnonymous);
     Utility.addToMap(map, BIRTHDATE, birthdate);
-    Utility.addToMap(map, GENDER, gender == null || gender == Gender.unspecified ? null : gender.toString());
-    Utility.addToMap(map, TRACKING, tracking.toString());
+    Utility.addToMap(map, GENDER, gender == null ? null : gender.toString());
+    Utility.addToMap(map, TRACKING, tracking == null ? null : tracking.toString());
     Utility.addToMap(map, PROVIDER_ID, providerId);
     Utility.addToMap(map, HOME_LOCATION, homeLocation);
     return map;
@@ -76,7 +76,7 @@ class ProfileEntity extends UserEntity {
       photoUrl: json[PHOTO_URL] as String,
       phoneNumber: json[PHONE_NUMBER] as String,
       email: json[EMAIL] as String,
-      isAnonymous: json[IS_ANONYMOUS] as bool,
+      isAnonymous: json[IS_ANONYMOUS] is String ? json[IS_ANONYMOUS] == 'true' ? true : false : json[IS_ANONYMOUS] as bool,
       birthdate: json[BIRTHDATE] as Timestamp,
       gender: getGenderFromString(json[GENDER]),
       homeLocation: json[HOME_LOCATION] as GeoPoint,

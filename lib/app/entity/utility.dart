@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dance_chaos/models/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
@@ -24,8 +23,9 @@ class Utility {
   }
 
   static Map<String, Object> addToMap(Map<String, Object> map, String field, value) {
-    if (value != null)
+    if (value != null) {
       map[field] = value;
+    }
     return map;
   }
 
