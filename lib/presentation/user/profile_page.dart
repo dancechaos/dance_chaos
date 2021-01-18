@@ -200,51 +200,42 @@ class _ProfilePageState extends State<ProfilePage> {
                   return null;
                 },
               ),
-              Column(
+              Row(
                 children: <Widget>[
-                  ListTile(
-                    title: const Text('Male'),
-                    leading: Radio(
-                      value: Gender.male,
-                      groupValue: _gender,
-                      onChanged: (value) {
-                        setState(() {
-                          store.dispatch(UpdateProfileAction(
-                              Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
-                                gender: _gender = Gender.male,
-                              )));
-                        });
-                      },
+                  Flexible(child:
+                    ListTile(
+                      title: const Text('Male'),
+                      leading: Radio(
+                        value: Gender.male,
+                        groupValue: _gender,
+                        toggleable: true,
+                        onChanged: (value) {
+                          setState(() {
+                            store.dispatch(UpdateProfileAction(
+                                Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
+                                  gender: _gender = Gender.male != _gender ? Gender.male: Gender.unspecified,
+                                )));
+                          });
+                        },
+                      ),
                     ),
                   ),
-                  ListTile(
-                    title: const Text('Female'),
-                    leading: Radio(
-                      value: Gender.female,
-                      groupValue: _gender,
-                      onChanged: (value) {
-                        setState(() {
-                          store.dispatch(UpdateProfileAction(
-                              Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
-                                gender: _gender = Gender.female,
-                              )));
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('Not specified'),
-                    leading: Radio(
-                      value: Gender.unspecified,
-                      groupValue: _gender,
-                      onChanged: (value) {
-                        setState(() {
-                          store.dispatch(UpdateProfileAction(
-                              Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
-                                gender: _gender = Gender.unspecified,
-                              )));
-                        });
-                      },
+                  Flexible(child:
+                    ListTile(
+                      title: const Text('Female'),
+                      leading: Radio(
+                        value: Gender.female,
+                        groupValue: _gender,
+                        toggleable: true,
+                        onChanged: (value) {
+                          setState(() {
+                            store.dispatch(UpdateProfileAction(
+                                Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : widget.profile.id,
+                                  gender: _gender = Gender.female != _gender ? Gender.female: Gender.unspecified,
+                                )));
+                          });
+                        },
+                      ),
                     ),
                   ),
                 ],
