@@ -204,7 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: <Widget>[
                   Flexible(child:
                     ListTile(
-                      title: const Text('Male'),
+                      title: Text(localizations.male),
                       leading: Radio(
                         value: Gender.male,
                         groupValue: _gender,
@@ -222,7 +222,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Flexible(child:
                     ListTile(
-                      title: const Text('Female'),
+                      title: Text(localizations.female),
                       leading: Radio(
                         value: Gender.female,
                         groupValue: _gender,

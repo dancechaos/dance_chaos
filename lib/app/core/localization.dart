@@ -186,6 +186,27 @@ class ArchSampleLocalizations {
     locale: locale.toString(),
   );
 
+  String get gender => Intl.message(
+    'Gender (Private - will not be shared or displayed)',
+    name: 'gender',
+    args: [],
+    locale: locale.toString(),
+  );
+
+  String get male => Intl.message(
+    'Male',
+    name: 'male',
+    args: [],
+    locale: locale.toString(),
+  );
+
+  String get female => Intl.message(
+    'Female',
+    name: 'female',
+    args: [],
+    locale: locale.toString(),
+  );
+
   String get emptyBirthdateError => Intl.message(
     'Birthdate must be entered',
     name: 'emptyBirthdateError',
