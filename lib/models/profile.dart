@@ -23,12 +23,13 @@ class Profile {
   final Gender gender;
   final TrackingState tracking;
   final GeoPoint homeLocation;
+  final PartnerRole partnerRole;
   final List<DanceProfile> danceProfileList;
 
   static const Profile noProfile = Profile('0', isAnonymous: true);  // No profile (note: This is not an anonymous profile)
   static const List<DanceProfile> danceProfileNotLoaded = const [];  // Not loaded yet
 
-  const Profile(this.id, {this.displayName, this.photoUrl, this.email, this.phoneNumber, this.isAnonymous, this.birthdate, this.gender, this.tracking, this.homeLocation, this.danceProfileList});
+  const Profile(this.id, {this.displayName, this.photoUrl, this.email, this.phoneNumber, this.isAnonymous, this.birthdate, this.gender, this.tracking, this.homeLocation, this.partnerRole, this.danceProfileList});
         // this.isAnonymous = isAnonymous ?? (displayName == null) && (phoneNumber == null) && (email == null) && (photoUrl == null) && (birthdate == null) && (homeLocation == null),
         // this.tracking = tracking ?? TrackingState.trackingOff,
         // this.danceProfileList = danceProfileList ?? danceProfileNotLoaded;
@@ -45,13 +46,14 @@ class Profile {
       gender: gender ?? this.gender,
       homeLocation: homeLocation ?? this.homeLocation,
       tracking: tracking ?? this.tracking,
+      partnerRole: partnerRole ?? this.partnerRole,
       danceProfileList: danceProfileList ?? this.danceProfileList,
     );
   }
 
   @override
   int get hashCode =>
-      id.hashCode ^ displayName.hashCode ^ photoUrl.hashCode ^ email.hashCode ^ phoneNumber.hashCode ^ isAnonymous.hashCode ^ birthdate.hashCode ^ gender.hashCode ^ tracking.hashCode ^ homeLocation.hashCode ^ danceProfileList.hashCode;
+      id.hashCode ^ displayName.hashCode ^ photoUrl.hashCode ^ email.hashCode ^ phoneNumber.hashCode ^ isAnonymous.hashCode ^ birthdate.hashCode ^ gender.hashCode ^ tracking.hashCode ^ homeLocation.hashCode ^ partnerRole.hashCode ^ danceProfileList.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -68,15 +70,16 @@ class Profile {
           birthdate == other.birthdate &&
           gender == other.gender &&
           homeLocation == other.homeLocation &&
+          partnerRole == other.partnerRole &&
           danceProfileList == other.danceProfileList;
 
   @override
   String toString() {
-    return 'Profile{id: $id, displayName: $displayName, photoUrl: $photoUrl, email: $email, phoneNumber: $phoneNumber, isAnonymous: $isAnonymous, birthdate: $birthdate, gender: gender, tracking, $tracking, homeLocation, $homeLocation, danceProfileList: $danceProfileList)}';
+    return 'Profile{id: $id, displayName: $displayName, photoUrl: $photoUrl, email: $email, phoneNumber: $phoneNumber, isAnonymous: $isAnonymous, birthdate: $birthdate, gender: gender, tracking, $tracking, homeLocation, $homeLocation, partnerRole: $partnerRole, danceProfileList: $danceProfileList)}';
   }
 
   ProfileEntity toEntity() {
-    return ProfileEntity(id: id, displayName: displayName, photoUrl: photoUrl, email: email, phoneNumber: phoneNumber, isAnonymous: isAnonymous, birthdate: birthdate, gender: gender, tracking: tracking, homeLocation: homeLocation);
+    return ProfileEntity(id: id, displayName: displayName, photoUrl: photoUrl, email: email, phoneNumber: phoneNumber, isAnonymous: isAnonymous, birthdate: birthdate, gender: gender, tracking: tracking, partnerRole: partnerRole, homeLocation: homeLocation);
   } // Note: ProfileSignInStatus is ephemeral
 
   static Profile fromEntity(UserEntity entity, {UserSignInStatus userSignInStatus = UserSignInStatus.signedOut, Exception lastException}) {
@@ -90,6 +93,7 @@ class Profile {
       birthdate: entity is ProfileEntity ? entity.birthdate : null,
       gender: entity is ProfileEntity ? entity.gender : null,
       homeLocation: entity is ProfileEntity ? entity.homeLocation : null,
+      partnerRole: entity is ProfileEntity ? entity.partnerRole : null,
       tracking: entity is ProfileEntity ? entity.tracking : null,
     );
   }
@@ -105,6 +109,7 @@ class Profile {
   gender = null,
   homeLocation = null,
   tracking = TrackingState.trackingOff,
+  partnerRole = null,
   danceProfileList = danceProfileNotLoaded;
 
   Color getTrackingColor({TrackingState tracking, bool isAnonymous}) {

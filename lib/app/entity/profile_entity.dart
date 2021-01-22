@@ -8,6 +8,7 @@ class ProfileEntity extends UserEntity {
   final Timestamp birthdate;
   final Gender gender;
   final TrackingState tracking;
+  final PartnerRole partnerRole;
   final GeoPoint homeLocation;
 
   static const ID = 'id';
@@ -20,9 +21,10 @@ class ProfileEntity extends UserEntity {
   static const BIRTHDATE = 'birthdate';
   static const GENDER = 'gender';
   static const TRACKING = 'tracking';
+  static const PARTNER_ROLE = 'partnerRole';
   static const HOME_LOCATION = 'homeLocation';
 
-  ProfileEntity({@required id, displayName, photoUrl, email, phoneNumber, isAnonymous, providerId, this.birthdate, this.gender, this.tracking, this.homeLocation})
+  ProfileEntity({@required id, displayName, photoUrl, email, phoneNumber, isAnonymous, providerId, this.birthdate, this.gender, this.tracking, this.partnerRole, this.homeLocation})
     :
     super(
       id: id,
@@ -49,10 +51,11 @@ class ProfileEntity extends UserEntity {
           providerId == other.providerId &&
           birthdate == other.birthdate &&
           gender == other.gender &&
+          partnerRole == other.partnerRole &&
           homeLocation == other.homeLocation;
 
   @override
-  int get hashCode => super.hashCode ^ birthdate.hashCode ^ gender.hashCode ^ tracking.hashCode ^ homeLocation.hashCode;
+  int get hashCode => super.hashCode ^ birthdate.hashCode ^ gender.hashCode ^ tracking.hashCode ^ partnerRole.hashCode ^ homeLocation.hashCode;
 
   Map<String, Object> toJson() {
     Map<String, Object> map = {}; //{ID: id};
@@ -65,6 +68,7 @@ class ProfileEntity extends UserEntity {
     Utility.addToMap(map, GENDER, gender == null ? null : gender.toString());
     Utility.addToMap(map, TRACKING, tracking == null ? null : tracking.toString());
     Utility.addToMap(map, PROVIDER_ID, providerId);
+    Utility.addToMap(map, PARTNER_ROLE, partnerRole == null ? null : partnerRole.toString());
     Utility.addToMap(map, HOME_LOCATION, homeLocation);
     return map;
   }
@@ -81,6 +85,7 @@ class ProfileEntity extends UserEntity {
       gender: getGenderFromString(json[GENDER]),
       homeLocation: json[HOME_LOCATION] as GeoPoint,
       providerId: json[PROVIDER_ID] as String,
+      partnerRole: getPartnerRoleFromString(json[PARTNER_ROLE]),
       tracking: getTrackingFromString(json[TRACKING]),
     );
   }
@@ -100,9 +105,17 @@ class ProfileEntity extends UserEntity {
           gender) ? Gender.female : Gender.unspecified;
   }
 
+  static PartnerRole getPartnerRoleFromString(String partnerRole) {
+    return
+      (PartnerRole.lead.toString() == partnerRole) ? PartnerRole
+          .lead : (PartnerRole.follow.toString() ==
+          partnerRole) ? PartnerRole.follow : (PartnerRole.both.toString() ==
+          partnerRole) ? PartnerRole.both : null;
+  }
+
   @override
   String toString() {
-    return 'ProfileEntity{$ID: $id, $DISPLAY_NAME: $displayName, $PHOTO_URL: $photoUrl, $PHONE_NUMBER: $phoneNumber, $EMAIL: $email, $IS_ANONYMOUS: $isAnonymous, $BIRTHDATE: $birthdate, $GENDER: gender, $PROVIDER_ID: $providerId, $TRACKING: $tracking, $HOME_LOCATION: $homeLocation}';
+    return 'ProfileEntity{$ID: $id, $DISPLAY_NAME: $displayName, $PHOTO_URL: $photoUrl, $PHONE_NUMBER: $phoneNumber, $EMAIL: $email, $IS_ANONYMOUS: $isAnonymous, $BIRTHDATE: $birthdate, $GENDER: gender, $PROVIDER_ID: $providerId, $TRACKING: $tracking, $PARTNER_ROLE: $partnerRole, $HOME_LOCATION: $homeLocation}';
   }
 
 }

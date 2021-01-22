@@ -11,3 +11,7 @@ enum Gender {
   female,
   unspecified,
 }
+
+enum PartnerRole {
+  lead, follow, both
+}

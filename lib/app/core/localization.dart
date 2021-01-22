@@ -207,6 +207,27 @@ class ArchSampleLocalizations {
     locale: locale.toString(),
   );
 
+  String get lead => Intl.message(
+    'Lead',
+    name: 'lead',
+    args: [],
+    locale: locale.toString(),
+  );
+
+  String get follow => Intl.message(
+    'Follow',
+    name: 'follow',
+    args: [],
+    locale: locale.toString(),
+  );
+
+  String get both => Intl.message(
+    'Both',
+    name: 'both',
+    args: [],
+    locale: locale.toString(),
+  );
+
   String get emptyBirthdateError => Intl.message(
     'Birthdate must be entered',
     name: 'emptyBirthdateError',
