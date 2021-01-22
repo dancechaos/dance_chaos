@@ -73,24 +73,31 @@ class _DanceProfilePageState extends State<DanceProfileList> {
     );
   }
 
-  ListView _buildListView() {
-    return ListView.builder(
-      key: ArchSampleKeys.danceProfileList,
-      itemCount: widget.danceProfiles.length,
-      itemBuilder: (BuildContext context, int index) {
-        final danceProfile = widget.danceProfiles[index];
+  Widget _buildListView() {
+    return
+      ListView(
+        children: <Widget>[
+          ListView.builder(
+            key: ArchSampleKeys.danceProfileList,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: widget.danceProfiles.length,
+            itemBuilder: (BuildContext context, int index) {
+              final danceProfile = widget.danceProfiles[index];
 
-        return DanceProfileItem(
-          danceProfile: danceProfile,
-          onDismissed: (direction) {
-            _removeDanceProfile(context, danceProfile);
-          },
-          onTap: () => _onDanceProfileTap(context, danceProfile),
-          onCheckboxChanged: (complete) {
-            widget.onCheckboxChanged(danceProfile, complete);
-          },
-        );
-      },
+              return DanceProfileItem(
+                danceProfile: danceProfile,
+                onDismissed: (direction) {
+                  _removeDanceProfile(context, danceProfile);
+                },
+                onTap: () => _onDanceProfileTap(context, danceProfile),
+                onCheckboxChanged: (complete) {
+                  widget.onCheckboxChanged(danceProfile, complete);
+                },
+              );
+            },
+          )
+        ]
     );
   }
 

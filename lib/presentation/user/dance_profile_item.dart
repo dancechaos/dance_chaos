@@ -25,13 +25,18 @@ class DanceProfileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
+    String danceCode = danceProfile.danceCode;
+    if (menuItemsMap[danceProfile.danceCode] == null) {
+      danceCode = '';
+    }
+
     return Dismissible(
       key: ArchSampleKeys.danceProfileItem(danceProfile.id),
       onDismissed: onDismissed,
       child: ListTile(
         onTap: onTap,
         leading: DropdownButton<String>(
-          value: danceProfile.danceCode,
+          value: danceCode,
           icon: Icon(Icons.arrow_downward),
           iconSize: 24,
           elevation: 16,
