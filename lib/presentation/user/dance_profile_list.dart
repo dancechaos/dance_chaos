@@ -11,7 +11,11 @@ import 'package:redux/redux.dart';
 
 import 'dance_profile_item.dart';
 
-class DanceProfileList extends StatelessWidget {
+enum PartnerRole {
+  lead, follow, both
+}
+
+class DanceProfileList extends StatefulWidget {
   final List<DanceProfile> danceProfiles;
   final Function(DanceProfile, String) onCheckboxChanged;
   final Function(DanceProfile) onRemove;
@@ -24,6 +28,13 @@ class DanceProfileList extends StatelessWidget {
     @required this.onRemove,
     @required this.onUndoRemove,
   }) : super(key: key);
+
+  @override
+  _DanceProfilePageState createState() => _DanceProfilePageState();
+}
+
+class _DanceProfilePageState extends State<DanceProfileList> {
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // @override
   // Widget build(BuildContext context) {
@@ -65,9 +76,9 @@ class DanceProfileList extends StatelessWidget {
   ListView _buildListView() {
     return ListView.builder(
       key: ArchSampleKeys.danceProfileList,
-      itemCount: danceProfiles.length,
+      itemCount: widget.danceProfiles.length,
       itemBuilder: (BuildContext context, int index) {
-        final danceProfile = danceProfiles[index];
+        final danceProfile = widget.danceProfiles[index];
 
         return DanceProfileItem(
           danceProfile: danceProfile,
@@ -76,7 +87,7 @@ class DanceProfileList extends StatelessWidget {
           },
           onTap: () => _onDanceProfileTap(context, danceProfile),
           onCheckboxChanged: (complete) {
-            onCheckboxChanged(danceProfile, complete);
+            widget.onCheckboxChanged(danceProfile, complete);
           },
         );
       },
@@ -84,7 +95,7 @@ class DanceProfileList extends StatelessWidget {
   }
 
   void _removeDanceProfile(BuildContext context, DanceProfile danceProfile) {
-    onRemove(danceProfile);
+    widget.onRemove(danceProfile);
 
     // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     //     duration: Duration(seconds: 2),
