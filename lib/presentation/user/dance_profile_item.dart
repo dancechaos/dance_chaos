@@ -19,6 +19,7 @@ class DanceProfileItem extends StatelessWidget {
     @required this.onTap,
     @required this.onCheckboxChanged,
     @required this.danceProfile,
+    @required this.menuItemsMap,
   });
 
   @override
@@ -81,11 +82,5 @@ class DanceProfileItem extends StatelessWidget {
     return dropdownMenuItems;
   }
 
-  final Map<String, String> menuItemsMap = {
-    '': '---Select Dance Style---',
-    'IC': 'Cha Cha - International',
-    'IW': 'Waltz - International',
-    'AC': 'Cha Cha - American',
-    'AW': 'Waltz - American',
-  };
+  final Map<dynamic, dynamic> menuItemsMap;
 }

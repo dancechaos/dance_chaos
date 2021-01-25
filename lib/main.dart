@@ -56,7 +56,7 @@ class DanceChaosApp extends StatelessWidget {
             todosRepository ?? FirestoreReactiveTodosRepository(),
             userRepository ?? FirestoreUserRepository(),
             profileRepository ?? FirestoreProfileRepository(useLocalFirebaseEmulator: useLocalFirebaseEmulator),
-              danceProfileRepository ?? FirestoreDanceProfileRepository(),
+            danceProfileRepository ?? FirestoreDanceProfileRepository(),
             locationRepository ?? FirestoreLocationRepository(),
           ),
         ),

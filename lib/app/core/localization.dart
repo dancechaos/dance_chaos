@@ -228,6 +228,20 @@ class ArchSampleLocalizations {
     locale: locale.toString(),
   );
 
+  String get loading => Intl.message(
+    '--Loading--',
+    name: 'loading',
+    args: [],
+    locale: locale.toString(),
+  );
+
+  String get selectDance => Intl.message(
+    '---Select Dance Style---',
+    name: 'selectDance',
+    args: [],
+    locale: locale.toString(),
+  );
+
   String get emptyBirthdateError => Intl.message(
     'Birthdate must be entered',
     name: 'emptyBirthdateError',

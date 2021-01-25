@@ -3,6 +3,7 @@
 // in the LICENSE file.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dance_chaos/app/entity/dances_entity.dart';
 import 'package:dance_chaos/app/entity/user_entity.dart';
 import 'package:dance_chaos/models/dance_profile.dart';
 import 'package:dance_chaos/models/models.dart';
@@ -96,7 +97,22 @@ class UpdateProfileAction {
 
   @override
   String toString() {
-    return 'UpdateTodoAction{updatedProfile: $updatedProfile}';
+    return 'UpdateProfileAction{updatedProfile: $updatedProfile}';
+  }
+}
+
+typedef void OnDancesUpdated(DancesEntity dancesEntity);
+
+class UpdateDancesAction {
+  final String languageCode;
+  final String countryCode;
+  final OnDancesUpdated onDancesUpdated;
+
+  UpdateDancesAction(this.languageCode, this.countryCode, this.onDancesUpdated);
+
+  @override
+  String toString() {
+    return 'UpdateDancesAction{}';
   }
 }
 

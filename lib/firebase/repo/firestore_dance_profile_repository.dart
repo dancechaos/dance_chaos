@@ -3,13 +3,19 @@
 // in the LICENSE file.
 
 import 'dart:async';
+import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/app/entity/dance_profile_entity.dart';
+import 'package:dance_chaos/app/entity/dances_entity.dart';
+import 'package:dance_chaos/app/entity/utility.dart';
 import 'package:dance_chaos/app/repo/dance_profile_repository.dart';
 
 import 'firestore_profile_repository.dart';
 
 class FirestoreDanceProfileRepository implements DanceProfileRepository {
   static const String path = 'danceprofile';
+  static const String dancesPath = 'dance';
+
+  int _retryCounter = 0;
 
   FirestoreDanceProfileRepository() : super();
 
@@ -50,4 +56,41 @@ class FirestoreDanceProfileRepository implements DanceProfileRepository {
         .doc(danceProfile.id)
         .update(danceProfile.toJson());
   }
+
+  @override
+  Future<DancesEntity> getDances(String languageCode, String countryCode, OnDancesUpdated onDancesUpdated) async {
+    String code = languageCode ?? '';
+    if (countryCode != null)
+      code = code + '_' + countryCode;
+    return FirestoreProfileRepository.firestore().collection(dancesPath).doc(code)
+        .get()
+        .timeout(Utility.timeoutDefault)
+        .catchError((error) {
+      print('getDances error: $error');
+      if ((Utility.isTimeoutError(error)) &&
+          (_retryCounter++ <= Utility.retriesDefault)) {
+        print('getDances Retry counter, $_retryCounter');
+        return getDances(languageCode, countryCode, onDancesUpdated); // Retry
+      }
+      throw error;
+    }).whenComplete(() {
+      print('getDances complete');
+      _retryCounter = 0;
+    }).then((doc) {
+      print('getDances success');
+      if (doc.exists) {
+        DancesEntity dancesEntity = DancesEntity.fromJson(code, doc.data());
+        onDancesUpdated(dancesEntity);
+        return dancesEntity;
+      } else { // If not found, try less strict version
+        if (languageCode != null)
+          return getDances(languageCode, null, onDancesUpdated);
+        else if (code != null)
+          return getDances(null, null, onDancesUpdated);
+        else
+          throw 'No default dance map';
+      }
+    });
+  }
+
 }

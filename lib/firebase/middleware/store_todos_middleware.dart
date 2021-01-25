@@ -74,6 +74,9 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
     TypedMiddleware<AppState, UpdateProfileAction>(
       _updateProfile(profileRepository),
     ),
+    TypedMiddleware<AppState, UpdateDancesAction>(
+      _updateDances(danceProfileRepository),
+    ),
     TypedMiddleware<AppState, ToggleAllAction>(
       _toggleAll(todosRepository),
     ),
@@ -287,6 +290,20 @@ void Function(
     next(action);
 
     profileRepository.updateProfile(action.updatedProfile.toEntity());
+  };
+}
+
+void Function(
+    Store<AppState> store,
+    UpdateDancesAction action,
+    NextDispatcher next,
+    ) _updateDances (
+    DanceProfileRepository danceProfileRepository,
+    ) {
+  return (store, action, next) {
+    next(action);
+
+    danceProfileRepository.getDances(action.languageCode, action.countryCode, action.onDancesUpdated);
   };
 }
 

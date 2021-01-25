@@ -1,6 +1,7 @@
 import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/app/core/keys.dart';
 import 'package:dance_chaos/app/core/localization.dart';
+import 'package:dance_chaos/app/entity/dances_entity.dart';
 import 'package:dance_chaos/containers/tabs/app_loading.dart';
 import 'package:dance_chaos/models/app_state.dart';
 import 'package:dance_chaos/models/dance_profile.dart';
@@ -46,10 +47,14 @@ class _DanceProfilePageState extends State<DanceProfileList> {
   //   });
   // }
 
+  DancesEntity dancesEntity;
+
   @override
   void initState() {
     super.initState();
     Store store = StoreProvider.of<AppState>(context, listen: false);
+
+    store.dispatch(UpdateDancesAction('en', 'US', onDancesUpdated));
 
     _partnerRole = store.state.profile.partnerRole;
     if (_partnerRole == null)
@@ -57,7 +62,17 @@ class _DanceProfilePageState extends State<DanceProfileList> {
         : store.state.profile.gender == Gender.female ? PartnerRole.follow : null;
   }
 
-    @override
+  onDancesUpdated(DancesEntity dancesEntity) {
+//    final localizations = ArchSampleLocalizations.of(context);  // Note: I'm note sure why I can't call this here
+    setState(() {
+      if (dancesEntity.dances[''] == null) {  // Note: This should exist in the list (this code is here for safety)
+        dancesEntity.dances[''] = '---Select Dance Style---';//localizations.selectDance;
+      }
+      this.dancesEntity = dancesEntity;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localizations = ArchSampleLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
@@ -89,6 +104,9 @@ class _DanceProfilePageState extends State<DanceProfileList> {
     final localizations = ArchSampleLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
     Store store = StoreProvider.of<AppState>(context, listen: false);
+    final Map<dynamic, dynamic> menuItemsMapLoading = {
+      '': localizations.loading,
+    };
 
     return
       ListView(
@@ -170,6 +188,7 @@ class _DanceProfilePageState extends State<DanceProfileList> {
                 onCheckboxChanged: (complete) {
                   widget.onCheckboxChanged(danceProfile, complete);
                 },
+                menuItemsMap: dancesEntity?.dances ?? menuItemsMapLoading,
               );
             },
           )
