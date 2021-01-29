@@ -39,7 +39,7 @@ class Range {
   final int from;
   final int to;
 
-  static const int MIN_FROM = 0;
+  static const int MIN_FROM = 1;
   static const int MAX_TO = 10;
   static const Range RANGE_ALL = Range(MIN_FROM, MAX_TO);
 
@@ -56,5 +56,17 @@ class Range {
               runtimeType == other.runtimeType &&
               from == other.from &&
               to == other.to;
+
+  static Map rangeToMap(Range range) {
+    if (range == null)
+      return null;
+    return {
+      RANGE_FROM: range.from,
+      RANGE_TO: range.to,
+    };
+  }
+
+  static const RANGE_FROM = 'from';
+  static const RANGE_TO = 'to';
 
 }

@@ -35,7 +35,7 @@ class DanceProfileEntity {
     Utility.addToMap(map, DANCE_CODE, danceCode);
     Utility.addToMap(map, NOTE, note);
     Utility.addToMap(map, LEVEL, level);
-    Utility.addToMap(map, RANGE, range);
+    Utility.addToMap(map, RANGE, Range.rangeToMap(range));
     return map;
   }
 
@@ -45,7 +45,7 @@ class DanceProfileEntity {
       danceCode: json[DANCE_CODE] as String,
       note: json[NOTE] as String,
       level: json[LEVEL] as int,
-      range: json[RANGE] == null ? null : Range(json[RANGE]['from'] as int, json[RANGE]['to'] as int),
+      range: json[RANGE] == null ? null : Range(json[RANGE][Range.RANGE_FROM] as int, json[RANGE][Range.RANGE_TO] as int),
     );
   }
 

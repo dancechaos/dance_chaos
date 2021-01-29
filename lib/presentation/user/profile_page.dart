@@ -280,7 +280,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         icon:  Icon(Icons.arrow_forward),
                         onPressed: () {
                           Navigator.of(context).push(
-                              MaterialPageRoute<void>(builder: (_) => DanceProfileList(danceProfiles: widget.profile.danceProfileList)));
+                              MaterialPageRoute<void>(builder: (_) => DanceProfileList(profile: widget.profile, danceProfiles: widget.profile.danceProfileList)));
                         },
                       ),
                     ]

@@ -22,11 +22,14 @@ class ArchSampleKeys {
 
   // DanceProfile
   static const danceProfileList = Key('__danceProfileList__');
+  static const danceProfileAdd = Key('__danceProfileAdd__');
   static const danceProfilesLoading = Key('__danceProfilesLoading__');
   static final danceProfileItem = (String id) => Key('DanceProfileItem__$id');
   static final danceProfileItemCheckbox = (String id) => Key('DanceProfileItem__${id}__Checkbox');
   static final danceProfileItemTask = (String id) => Key('DanceProfileItem__${id}__Task');
   static final danceProfileItemNote = (String id) => Key('DanceProfileItem__${id}__Note');
+  static final danceProfileLevel = (String id) => Key('DanceProfileItem__${id}__Level');
+  static final danceProfileRange = (String id) => Key('DanceProfileItem__${id}__Range');
 
   // Tabs
   static const tabs = Key('__tabs__');

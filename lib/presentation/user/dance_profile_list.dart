@@ -12,25 +12,33 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:dance_chaos/app/entity/utility.dart';
 
 import 'dance_profile_item.dart';
 
 class DanceProfileList extends StatefulWidget {
+  final Profile profile;
   final List<DanceProfile> danceProfiles;
-  final Function(DanceProfile, String) onCheckboxChanged;
+  final Function(DanceProfile, String) onDropdownChanged;
+  final Function(DanceProfile, RangeValues) onRangeChanged;
+  final Function(DanceProfile, double) onLevelChanged;
   final Function(DanceProfile) onRemove;
   final Function(DanceProfile) onUndoRemove;
 
   DanceProfileList({
     Key key,
+    @required this.profile,
     @required this.danceProfiles,
-    @required this.onCheckboxChanged,
+    @required this.onDropdownChanged,
+    @required this.onRangeChanged,
+    @required this.onLevelChanged,
     @required this.onRemove,
     @required this.onUndoRemove,
   }) : super(key: key);
 
   @override
   _DanceProfilePageState createState() => _DanceProfilePageState();
+
 }
 
 class _DanceProfilePageState extends State<DanceProfileList> {
@@ -54,12 +62,26 @@ class _DanceProfilePageState extends State<DanceProfileList> {
     super.initState();
     Store store = StoreProvider.of<AppState>(context, listen: false);
 
-    store.dispatch(UpdateDancesAction('en', 'US', onDancesUpdated));
+    store.dispatch(UpdateDancesAction('en', 'US', onDancesUpdated));  // todo(don) i18n
 
     _partnerRole = store.state.profile.partnerRole;
     if (_partnerRole == null)
       _partnerRole = store.state.profile.gender == Gender.male ? PartnerRole.lead
         : store.state.profile.gender == Gender.female ? PartnerRole.follow : null;
+
+  }
+
+  void dropdownChange(Profile profile, DanceProfile danceProfile, String code) {
+    print('profile:  $danceProfile, code: $code');
+  }
+
+  void rangeChange(Profile profile, DanceProfile danceProfile,
+      RangeValues rangeValues) {
+    print('profile:  $danceProfile, rangeValues: $rangeValues');
+    // widget.onRangeChanged(danceProfile, values);
+    // setState(() {
+    // _currentRangeValues = values;
+    // });
   }
 
   onDancesUpdated(DancesEntity dancesEntity) {
@@ -115,22 +137,22 @@ class _DanceProfilePageState extends State<DanceProfileList> {
           Row(
             children: <Widget>[
               Flexible(child:
-              ListTile(
-                horizontalTitleGap: 0,  //ListTileTheme.horizontalTitleGap,
-                title: Text(localizations.lead),
-                leading: Radio(
-                  value: PartnerRole.lead,
-                  groupValue: _partnerRole,
-                  onChanged: (value) {
-                    setState(() {
-                      store.dispatch(UpdateProfileAction(
-                          Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : store.state.profile.id,
-                            partnerRole: _partnerRole = PartnerRole.lead,
-                          )));
-                    });
-                  },
+                ListTile(
+                  horizontalTitleGap: 0,  //ListTileTheme.horizontalTitleGap,
+                  title: Text(localizations.lead),
+                  leading: Radio(
+                    value: PartnerRole.lead,
+                    groupValue: _partnerRole,
+                    onChanged: (value) {
+                      setState(() {
+                        store.dispatch(UpdateProfileAction(
+                            Profile(store.state.profile.id != Profile.noProfile.id ? store.state.profile.id : store.state.profile.id,
+                              partnerRole: _partnerRole = PartnerRole.lead,
+                            )));
+                      });
+                    },
+                  ),
                 ),
-              ),
               ),
               Flexible(
                 child:  ListTile(
@@ -177,21 +199,62 @@ class _DanceProfilePageState extends State<DanceProfileList> {
             physics: NeverScrollableScrollPhysics(),
             itemCount: widget.danceProfiles.length,
             itemBuilder: (BuildContext context, int index) {
+              final profile = widget.profile;
               final danceProfile = widget.danceProfiles[index];
 
               return DanceProfileItem(
+                profile: profile,
                 danceProfile: danceProfile,
                 onDismissed: (direction) {
                   _removeDanceProfile(context, danceProfile);
                 },
                 onTap: () => _onDanceProfileTap(context, danceProfile),
-                onCheckboxChanged: (complete) {
-                  widget.onCheckboxChanged(danceProfile, complete);
+                onDropdownChanged: (danceCode) {
+                  DanceProfile changedDanceProfile = danceProfile.copyWith(danceCode: danceCode);
+                  store.dispatch(UpdateDanceProfileAction(profile.id, changedDanceProfile));
+                },
+                onRangeChanged: (rangeValues) {
+                  DanceProfile changedDanceProfile = danceProfile.copyWith(range: Range(rangeValues.start.round().toInt(), rangeValues.end.round().toInt()));
+                  store.dispatch(UpdateDanceProfileAction(profile.id, changedDanceProfile));
+                },
+                onLevelChanged: (level) {
+                  DanceProfile changedDanceProfile = danceProfile.copyWith(level: level.round().toInt());
+                  store.dispatch(UpdateDanceProfileAction(profile.id, changedDanceProfile));
                 },
                 menuItemsMap: dancesEntity?.dances ?? menuItemsMapLoading,
               );
             },
-          )
+          ),
+
+          ListView.builder(
+            key: ArchSampleKeys.danceProfileAdd,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: 1,
+            itemBuilder: (BuildContext context, int index) {
+              final danceProfile = DanceProfile(id: '', danceCode: '');
+
+              return DanceProfileItem(
+                danceProfile: danceProfile,
+                onDismissed: (direction) {
+                  // Ignore - Can't delete the new - blank entry
+                },
+                onTap: () => _onDanceProfileTap(context, danceProfile),
+                onDropdownChanged: (complete) {
+                  widget.onDropdownChanged(danceProfile, complete);
+                },
+                onLevelChanged: (value) {
+                  widget.onLevelChanged(danceProfile, value);
+                },
+                onRangeChanged: (values) {
+                  widget.onRangeChanged(danceProfile, values);
+                },
+                menuItemsMap: dancesEntity?.dances ?? menuItemsMapLoading,
+              );
+            },
+          ),
+
+
         ]
     );
   }

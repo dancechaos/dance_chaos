@@ -74,6 +74,9 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
     TypedMiddleware<AppState, UpdateProfileAction>(
       _updateProfile(profileRepository),
     ),
+    TypedMiddleware<AppState, UpdateDanceProfileAction>(
+      _updateDanceProfile(danceProfileRepository),
+    ),
     TypedMiddleware<AppState, UpdateDancesAction>(
       _updateDances(danceProfileRepository),
     ),
@@ -276,6 +279,20 @@ void Function(
       store.dispatch(LoadDanceProfilesAction(List<DanceProfile>.empty()));  // Empty list for anonymous user
     }
 
+  };
+}
+
+void Function(
+    Store<AppState> store,
+    UpdateDanceProfileAction action,
+    NextDispatcher next,
+    ) _updateDanceProfile (
+    DanceProfileRepository danceProfileRepository,
+    ) {
+  return (store, action, next) {
+    next(action);
+
+    danceProfileRepository.updateDanceProfile(action.profileId, action.updatedDanceProfile.toEntity());
   };
 }
 
