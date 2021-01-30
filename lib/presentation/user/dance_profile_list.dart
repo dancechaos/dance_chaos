@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dance_chaos/actions/actions.dart';
 import 'package:dance_chaos/app/core/keys.dart';
 import 'package:dance_chaos/app/core/localization.dart';
@@ -44,6 +46,8 @@ class DanceProfileList extends StatefulWidget {
 class _DanceProfilePageState extends State<DanceProfileList> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  List<DanceProfile> danceProfiles;
+
   PartnerRole _partnerRole;
 
   // @override
@@ -69,6 +73,29 @@ class _DanceProfilePageState extends State<DanceProfileList> {
       _partnerRole = store.state.profile.gender == Gender.male ? PartnerRole.lead
         : store.state.profile.gender == Gender.female ? PartnerRole.follow : null;
 
+    danceProfiles = widget.profile.danceProfileList;
+
+    subscription = StoreProvider.of<AppState>(context, listen: false).onChange.listen(render);
+  }
+
+  StreamSubscription<AppState> subscription;
+
+  @override
+  void dispose() {
+    // Clean up
+    subscription.cancel();
+
+    super.dispose();
+  }
+
+  void render(AppState appState) {
+    if (danceProfiles.length != appState.profile.danceProfileList.length) {
+      setState(() {
+        danceProfiles = appState.profile.danceProfileList;
+        // widget.danceProfiles = appState.profile.danceProfileList;
+        // print ('id: ${store.state.profile.id}');  // Show registration controls
+      });
+    }
   }
 
   void dropdownChange(Profile profile, DanceProfile danceProfile, String code) {
@@ -197,12 +224,13 @@ class _DanceProfilePageState extends State<DanceProfileList> {
             key: ArchSampleKeys.danceProfileList,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: widget.danceProfiles.length,
+            itemCount: danceProfiles.length,
             itemBuilder: (BuildContext context, int index) {
               final profile = widget.profile;
-              final danceProfile = widget.danceProfiles[index];
+              final danceProfile = danceProfiles[index];
 
               return DanceProfileItem(
+                key: ArchSampleKeys.danceProfileItemWidget(danceProfile.id),
                 profile: profile,
                 danceProfile: danceProfile,
                 onDismissed: (direction) {
@@ -235,19 +263,25 @@ class _DanceProfilePageState extends State<DanceProfileList> {
               final danceProfile = DanceProfile(id: '', danceCode: '');
 
               return DanceProfileItem(
+                key: ArchSampleKeys.danceProfileItemWidget(DanceProfileItem.NO_DANCE_CODE),
                 danceProfile: danceProfile,
                 onDismissed: (direction) {
                   // Ignore - Can't delete the new - blank entry
                 },
                 onTap: () => _onDanceProfileTap(context, danceProfile),
-                onDropdownChanged: (complete) {
-                  widget.onDropdownChanged(danceProfile, complete);
+                onDropdownChanged: (danceCode) {
+                  DanceProfile changedDanceProfile = DanceProfile(danceCode: danceCode);
+                  store.dispatch(AddDanceProfileAction(widget.profile.id, changedDanceProfile));
                 },
-                onLevelChanged: (value) {
-                  widget.onLevelChanged(danceProfile, value);
+                onRangeChanged: (rangeValues) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Select dance before entering range"),
+                  ));
                 },
-                onRangeChanged: (values) {
-                  widget.onRangeChanged(danceProfile, values);
+                onLevelChanged: (level) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Select dance before entering level"),
+                  ));
                 },
                 menuItemsMap: dancesEntity?.dances ?? menuItemsMapLoading,
               );

@@ -79,6 +79,18 @@ class LoadDanceProfilesAction {
   }
 }
 
+class AddDanceProfileAction {
+  final String profileId;
+  final DanceProfile updatedDanceProfile;
+
+  AddDanceProfileAction(this.profileId, this.updatedDanceProfile);
+
+  @override
+  String toString() {
+    return 'AddDanceProfileAction{profileId: $profileId, danceProfile: $updatedDanceProfile}';
+  }
+}
+
 class UpdateDanceProfileAction {
   final String profileId;
   final DanceProfile updatedDanceProfile;

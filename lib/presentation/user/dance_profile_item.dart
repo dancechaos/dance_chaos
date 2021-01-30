@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:dance_chaos/app/entity/utility.dart';
 
 class DanceProfileItem extends StatefulWidget {
-  static RangeValues DEFAULT_RANGE_VALUES = RangeValues(Range.MIN_FROM.toDouble(), Range.MAX_TO.toDouble());
   static const String NO_DANCE_CODE = '';
 
   final DismissDirectionCallback onDismissed;
@@ -36,51 +35,48 @@ class DanceProfileItem extends StatefulWidget {
 
   @override
   _DanceProfileItemState createState() {
-    RangeValues _currentRangeValues = DEFAULT_RANGE_VALUES;
-    if (danceProfile.range != null)
-      _currentRangeValues = RangeValues(danceProfile.range.from.toDouble(), danceProfile.range.to.toDouble());
-
-    double _level = danceProfile.level == null ? 5.0 : danceProfile.level.toDouble();
-
-    String _danceCode = danceProfile.danceCode;
-
-    return _DanceProfileItemState(_danceCode, _level, _currentRangeValues);
+    return _DanceProfileItemState();
   }
+
 }
 
   /// This is the private State class that goes with MyStatefulWidget.
   class _DanceProfileItemState extends State<DanceProfileItem> {
 
-  _DanceProfileItemState(this._danceCode, this._level, this._currentRangeValues) : super();
+  String _danceCode;
+  RangeValues _currentRangeValues;
+  double _level;
+
+  static RangeValues DEFAULT_RANGE_VALUES = RangeValues(Range.MIN_FROM.toDouble(), Range.MAX_TO.toDouble());
+
+  _DanceProfileItemState() : super();
 
   @override
   void initState() {
     super.initState();
-  }
 
-  String _danceCode;
-  RangeValues _currentRangeValues;
-  double _level;
+    _currentRangeValues = DEFAULT_RANGE_VALUES;
+    if (widget.danceProfile.range != null)
+      _currentRangeValues = RangeValues(widget.danceProfile.range.from.toDouble(), widget.danceProfile.range.to.toDouble());
+
+    _level = widget.danceProfile.level == null ? 5.0 : widget.danceProfile.level.toDouble();
+
+    _danceCode = widget.danceProfile.danceCode;
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-
-
-    // if (menuItemsMap[danceProfile.danceCode] == null) {
-    //   _danceCode = NO_DANCE_CODE;
-    // }
-
-
-
     return Dismissible(
       key: ArchSampleKeys.danceProfileItem(widget.danceProfile.id),
       onDismissed: widget.onDismissed,
       child: ListTile(
-        onTap: widget.onTap,
+          key: ArchSampleKeys.danceProfileTile(widget.danceProfile.id),
+          onTap: widget.onTap,
           title:
         DropdownButton<String>(
+          key: ArchSampleKeys.danceProfileDropdown(widget.danceProfile.id),
           value: widget.menuItemsMap[_danceCode] == null ? '' : _danceCode,
           icon: Icon(Icons.arrow_downward),
           iconSize: 24,
@@ -114,6 +110,7 @@ class DanceProfileItem extends StatefulWidget {
         Column(
             children: <Widget>[
               SliderTheme(
+                key: ArchSampleKeys.danceProfileLevelTheme(widget.danceProfile.id),
                 data: SliderTheme.of(context).copyWith(
                   activeTrackColor: Colors.red,
                   inactiveTrackColor: Colors.red,
@@ -139,13 +136,15 @@ class DanceProfileItem extends StatefulWidget {
                     setState(() {
                       _level = value;
                     });
+                  },
+                  onChangeEnd: (double value) {
                     widget.onLevelChanged(value);
                   },
                 ),
               ),
           SliderTheme(
+            key: ArchSampleKeys.danceProfileRangeTheme(widget.danceProfile.id),
                 data: SliderTheme.of(context).copyWith(
-
                   // activeTrackColor: Colors.transparent,
                   // inactiveTrackColor: Colors.transparent,
                   // trackShape: RectangularSliderTrackShape(),
@@ -172,6 +171,8 @@ class DanceProfileItem extends StatefulWidget {
                     setState(() {
                       _currentRangeValues = values;
                     });
+                  },
+                  onChangeEnd:  (RangeValues values) {
                     widget.onRangeChanged(values);
                   },
                 ),

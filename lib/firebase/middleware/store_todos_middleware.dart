@@ -74,6 +74,9 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
     TypedMiddleware<AppState, UpdateProfileAction>(
       _updateProfile(profileRepository),
     ),
+    TypedMiddleware<AppState, AddDanceProfileAction>(
+      _addDanceProfile(danceProfileRepository),
+    ),
     TypedMiddleware<AppState, UpdateDanceProfileAction>(
       _updateDanceProfile(danceProfileRepository),
     ),
@@ -284,6 +287,20 @@ void Function(
 
 void Function(
     Store<AppState> store,
+    AddDanceProfileAction action,
+    NextDispatcher next,
+    ) _addDanceProfile (
+    DanceProfileRepository danceProfileRepository,
+    ) {
+  return (store, action, next) {
+    next(action);
+
+    danceProfileRepository.addNewDanceProfile(action.profileId, action.updatedDanceProfile.toEntity());
+  };
+}
+
+void Function(
+    Store<AppState> store,
     UpdateDanceProfileAction action,
     NextDispatcher next,
     ) _updateDanceProfile (
@@ -298,20 +315,6 @@ void Function(
 
 void Function(
     Store<AppState> store,
-    UpdateProfileAction action,
-    NextDispatcher next,
-    ) _updateProfile (
-    ProfileRepository profileRepository,
-    ) {
-  return (store, action, next) {
-    next(action);
-
-    profileRepository.updateProfile(action.updatedProfile.toEntity());
-  };
-}
-
-void Function(
-    Store<AppState> store,
     UpdateDancesAction action,
     NextDispatcher next,
     ) _updateDances (
@@ -321,6 +324,20 @@ void Function(
     next(action);
 
     danceProfileRepository.getDances(action.languageCode, action.countryCode, action.onDancesUpdated);
+  };
+}
+
+void Function(
+    Store<AppState> store,
+    UpdateProfileAction action,
+    NextDispatcher next,
+    ) _updateProfile (
+    ProfileRepository profileRepository,
+    ) {
+  return (store, action, next) {
+    next(action);
+
+    profileRepository.updateProfile(action.updatedProfile.toEntity());
   };
 }
 
