@@ -21,6 +21,8 @@ jobs:
     name: Ubuntu build
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./dance_chaos
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,6 +33,7 @@ jobs:
           node-version: "12"
       - name: Install Firebase Emulator Suite
         run: npm install -g firebase-tools
+        working-directory: ${{env.working-directory}}
 
       # Runs the Super-Linter action
 #      - name: Run Super-Linter
@@ -48,10 +51,13 @@ jobs:
 #          echo test, and deploy your project.
 
       - run: flutter config --enable-web
+        working-directory: ${{env.working-directory}}
 
       - run: flutter pub get
+        working-directory: ${{env.working-directory}}
       - name: Test app
         run: flutter test --coverage
+        working-directory: ${{env.working-directory}}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
@@ -60,9 +66,13 @@ jobs:
 #      - run: flutter build apk --target-platform android-arm,android-arm64,android-x64 --split-per-abi
 
       - run: flutter build web
+        working-directory: ${{env.working-directory}}
       - run: npm -version
+        working-directory: ${{env.working-directory}}
       - run: firebase --version
+        working-directory: ${{env.working-directory}}
       - run: firebase deploy --token "${{ secrets.FIREBASE_LOGIN_TOKEN }}"
+        working-directory: ${{env.working-directory}}
 
   drive_ios:
     #creates a build matrix for your jobs
@@ -73,6 +83,8 @@ jobs:
           - "Android X86 on Mac"
       fail-fast: false
     runs-on: macos-latest
+    env:
+      working-directory: ./dance_chaos
     timeout-minutes: 30
     #Identifies any jobs that must complete successfully before this job will run.
 #    needs: test
@@ -86,6 +98,7 @@ jobs:
           java-version: '8'
       - name: Install Firebase Emulator Suite
         run: npm install -g firebase-tools
+        working-directory: ${{env.working-directory}}
       - uses: subosito/flutter-action@v1
         with:
           channel: beta # Needed to build web version
@@ -99,9 +112,13 @@ jobs:
           script: flutter drive --target=test_driver/app.dart
 
       - run: firebase --version
+        working-directory: ${{env.working-directory}}
       - run: flutter --version
+        working-directory: ${{env.working-directory}}
       - run: java -version
+        working-directory: ${{env.working-directory}}
       - run: firebase emulators:exec --import=./seed --token "${{ secrets.FIREBASE_LOGIN_TOKEN }}" --debug "flutter drive --target=test_driver/app_local_emulator.dart"
+        working-directory: ${{env.working-directory}}
 
 #  emulator_test:
 #    name: Run all tests using Firebase Emulator Suite
