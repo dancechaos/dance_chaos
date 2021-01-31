@@ -102,6 +102,17 @@ class UpdateDanceProfileAction {
     return 'UpdateDanceProfileAction{profileId: $profileId, danceProfile: $updatedDanceProfile}';
   }
 }
+class DeleteDanceProfileAction {
+  final String profileId;
+  final List<String> idList;
+
+  DeleteDanceProfileAction(this.profileId, this.idList);
+
+  @override
+  String toString() {
+    return 'DeleteDanceProfileAction{profileId: $profileId, danceProfile: $idList}';
+  }
+}
 
 class ExecuteProfileAction {
   final ProfileAction profileAction;

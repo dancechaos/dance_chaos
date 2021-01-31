@@ -80,6 +80,9 @@ List<Middleware<AppState>> createStoreTodosMiddleware(
     TypedMiddleware<AppState, UpdateDanceProfileAction>(
       _updateDanceProfile(danceProfileRepository),
     ),
+    TypedMiddleware<AppState, DeleteDanceProfileAction>(
+      _deleteDanceProfile(danceProfileRepository),
+    ),
     TypedMiddleware<AppState, UpdateDancesAction>(
       _updateDances(danceProfileRepository),
     ),
@@ -310,6 +313,20 @@ void Function(
     next(action);
 
     danceProfileRepository.updateDanceProfile(action.profileId, action.updatedDanceProfile.toEntity());
+  };
+}
+
+void Function(
+    Store<AppState> store,
+    DeleteDanceProfileAction action,
+    NextDispatcher next,
+    ) _deleteDanceProfile (
+    DanceProfileRepository danceProfileRepository,
+    ) {
+  return (store, action, next) {
+    next(action);
+
+    danceProfileRepository.deleteDanceProfile(action.profileId, action.idList);
   };
 }
 

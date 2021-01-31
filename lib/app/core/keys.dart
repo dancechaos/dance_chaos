@@ -28,13 +28,16 @@ class ArchSampleKeys {
   static final danceProfileTile = (String id) => Key('DanceProfileItem__${id}__Tile');
   static final danceProfileDropdown = (String id) => Key('DanceProfileItem__${id}__Dropdown');
   static final danceProfileItemCheckbox = (String id) => Key('DanceProfileItem__${id}__Checkbox');
-  static final danceProfileItemTask = (String id) => Key('DanceProfileItem__${id}__Task');
+  static final danceProfileLevelText = (String id) => Key('DanceProfileItem__${id}__LevelText');
+  static final danceProfileRangeText = (String id) => Key('DanceProfileItem__${id}__RangeText');
+  static final danceProfileDeleteButton = (String id) => Key('DanceProfileItem__${id}__Task');
   static final danceProfileItemNote = (String id) => Key('DanceProfileItem__${id}__Note');
   static final danceProfileLevel = (String id) => Key('DanceProfileItem__${id}__Level');
   static final danceProfileRange = (String id) => Key('DanceProfileItem__${id}__Range');
   static final danceProfileLevelTheme = (String id) => Key('DanceProfileItem__${id}__LevelTheme');
   static final danceProfileRangeTheme = (String id) => Key('DanceProfileItem__${id}__RangeTheme');
   static final danceProfileItemWidget = (String id) => Key('DanceProfileItem__${id}__Widget');
+  static final danceProfileColumn = (String id) => Key('DanceProfileItem__${id}__Column');
 
   // Tabs
   static const tabs = Key('__tabs__');

@@ -74,7 +74,34 @@ class DanceProfileItem extends StatefulWidget {
       child: ListTile(
           key: ArchSampleKeys.danceProfileTile(widget.danceProfile.id),
           onTap: widget.onTap,
-          title:
+//           leading:
+//           Container(
+//             width: 40,//MediaQuery.of(context).size.width,
+// //            height: 90,
+//             child: Column(
+//               children: <Widget>[
+//                 Container(
+//                   width: 40,
+//                   height: 29,
+//                   child: Text(
+//                     'Level: $_level',
+//                     key: ArchSampleKeys.danceProfileLevelText(widget.danceProfile.id),
+//                     style: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.redAccent),
+//                   ),
+//                 ),
+//                 Container(
+//                   width: 40,
+//                   height: 28,
+//                   child:                 Text(
+//                     'Range: from ${_currentRangeValues.start}, to: ${_currentRangeValues.end}',
+//                     key: ArchSampleKeys.danceProfileRangeText(widget.danceProfile.id),
+//                     style: Theme.of(context).textTheme.bodyText1.copyWith(color: Colors.blueAccent),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+      title:
         DropdownButton<String>(
           key: ArchSampleKeys.danceProfileDropdown(widget.danceProfile.id),
           value: widget.menuItemsMap[_danceCode] == null ? '' : _danceCode,
@@ -94,20 +121,9 @@ class DanceProfileItem extends StatefulWidget {
           },
           items: dropdownMenuItems(),
         ),
-        //   leading:
-        // Hero(
-        //   tag: '${danceProfile.id}__heroTag',
-        //   child: Container(
-        //     width: 20,//MediaQuery.of(context).size.width,
-        //     child: Text(
-        //       'test', //todo.task,
-        //       key: ArchSampleKeys.danceProfileItemTask(danceProfile.id),
-        //       style: Theme.of(context).textTheme.headline6,
-        //     ),
-        //   ),
-        // ),
         subtitle:
         Column(
+          key: ArchSampleKeys.danceProfileColumn(widget.danceProfile.id),
             children: <Widget>[
               SliderTheme(
                 key: ArchSampleKeys.danceProfileLevelTheme(widget.danceProfile.id),
@@ -185,7 +201,17 @@ class DanceProfileItem extends StatefulWidget {
                 endIndent: 0,
               ),
              ]
-        )
+        ),
+        trailing: Container(
+          width: 20,//MediaQuery.of(context).size.width,
+          child: IconButton(
+            key: ArchSampleKeys.danceProfileDeleteButton(widget.danceProfile.id),
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              widget.onDismissed(DismissDirection.horizontal);
+            },
+          ),
+        ),
         // Text(
         //   'test', //todo.note,
         //   key: ArchSampleKeys.danceProfileItemNote(danceProfile.id),

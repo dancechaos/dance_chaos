@@ -234,7 +234,7 @@ class _DanceProfilePageState extends State<DanceProfileList> {
                 profile: profile,
                 danceProfile: danceProfile,
                 onDismissed: (direction) {
-                  _removeDanceProfile(context, danceProfile);
+                  store.dispatch(DeleteDanceProfileAction(profile.id, [danceProfile.id]));
                 },
                 onTap: () => _onDanceProfileTap(context, danceProfile),
                 onDropdownChanged: (danceCode) {
@@ -266,7 +266,9 @@ class _DanceProfilePageState extends State<DanceProfileList> {
                 key: ArchSampleKeys.danceProfileItemWidget(DanceProfileItem.NO_DANCE_CODE),
                 danceProfile: danceProfile,
                 onDismissed: (direction) {
-                  // Ignore - Can't delete the new - blank entry
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Can't delete an empty item"),
+                  ));
                 },
                 onTap: () => _onDanceProfileTap(context, danceProfile),
                 onDropdownChanged: (danceCode) {
@@ -291,22 +293,6 @@ class _DanceProfilePageState extends State<DanceProfileList> {
 
         ]
     );
-  }
-
-  void _removeDanceProfile(BuildContext context, DanceProfile danceProfile) {
-    widget.onRemove(danceProfile);
-
-    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     duration: Duration(seconds: 2),
-    //     content: Text(
-    //       ArchSampleLocalizations.of(context).danceProfileDeleted(danceProfile.task),
-    //       maxLines: 1,
-    //       overflow: TextOverflow.ellipsis,
-    //     ),
-    //     action: SnackBarAction(
-    //       label: ArchSampleLocalizations.of(context).undo,
-    //       onPressed: () => onUndoRemove(danceProfile),
-    //     )));
   }
 
   void _onDanceProfileTap(BuildContext context, DanceProfile danceProfile) {
