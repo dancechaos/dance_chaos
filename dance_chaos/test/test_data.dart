@@ -1,8 +1,8 @@
-import 'package:dance_chaos/app/entity/profile_entity.dart';
-import 'package:dance_chaos/app/entity/todo_entity.dart';
-import 'package:dance_chaos/app/entity/user_entity.dart';
-import 'package:dance_chaos/models/profile.dart';
-import 'package:dance_chaos/models/todo.dart';
+import 'package:dance_chaos_data/app/entity/profile_entity.dart';
+import 'package:dance_chaos_data/app/entity/todo_entity.dart';
+import 'package:dance_chaos_data/app/entity/user_entity.dart';
+import 'package:dance_chaos_data/models/profile.dart';
+import 'package:dance_chaos_data/models/todo.dart';
 
 class TestData {
   static String email = 'don@donandann.com';

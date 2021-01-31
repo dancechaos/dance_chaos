@@ -4,14 +4,14 @@
 
 import 'dart:async';
 
-import 'package:dance_chaos/actions/actions.dart';
-import 'package:dance_chaos/app/entity/todo_entity.dart';
-import 'package:dance_chaos/app/repo/location_repository.dart';
-import 'package:dance_chaos/app/repo/profile_repository.dart';
-import 'package:dance_chaos/app/repo/reactive_repository.dart';
-import 'package:dance_chaos/app/repo/user_repository.dart';
-import 'package:dance_chaos/firebase/middleware/store_todos_middleware.dart';
-import 'package:dance_chaos/models/models.dart';
+import 'package:dance_chaos_data/actions/actions.dart';
+import 'package:dance_chaos_data/app/entity/todo_entity.dart';
+import 'package:dance_chaos_data/app/repo/location_repository.dart';
+import 'package:dance_chaos_data/app/repo/profile_repository.dart';
+import 'package:dance_chaos_data/app/repo/reactive_repository.dart';
+import 'package:dance_chaos_data/app/repo/user_repository.dart';
+import 'package:dance_chaos_data/firebase/middleware/store_todos_middleware.dart';
+import 'package:dance_chaos_data/models/models.dart';
 import 'package:dance_chaos/reducers/app_state_reducer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mockito/mockito.dart';

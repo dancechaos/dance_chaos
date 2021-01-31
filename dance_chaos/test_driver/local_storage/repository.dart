@@ -5,8 +5,8 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:dance_chaos/app/entity/todo_entity.dart';
-import 'package:dance_chaos/app/repo/todos_repository.dart';
+import 'package:dance_chaos_data/app/entity/todo_entity.dart';
+import 'package:dance_chaos_data/app/repo/todos_repository.dart';
 import 'package:meta/meta.dart';
 import 'web_client.dart';
 

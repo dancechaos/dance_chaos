@@ -4,9 +4,8 @@
 
 import 'dart:async';
 
-import 'package:dance_chaos/app/entity/todo_entity.dart';
-import 'package:dance_chaos/app/repo/todos_repository.dart';
-
+import 'package:dance_chaos_data/app/entity/todo_entity.dart';
+import 'package:dance_chaos_data/app/repo/todos_repository.dart';
 
 /// A class that is meant to represent a Client that would be used to call a Web
 /// Service. It is responsible for fetching and persisting Todos to and from the

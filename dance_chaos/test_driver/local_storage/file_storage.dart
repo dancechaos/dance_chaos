@@ -6,8 +6,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dance_chaos/app/entity/todo_entity.dart';
-import 'package:dance_chaos/app/repo/todos_repository.dart';
+import 'package:dance_chaos_data/app/entity/todo_entity.dart';
+import 'package:dance_chaos_data/app/repo/todos_repository.dart';
 
 
 /// Loads and saves a List of Todos using a text file stored on the device.

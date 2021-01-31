@@ -2,8 +2,8 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:dance_chaos/models/models.dart';
-import 'package:dance_chaos/selectors/selectors.dart';
+import 'package:dance_chaos_data/models/models.dart';
+import 'package:dance_chaos_data/selectors/selectors.dart';
 import 'package:quiver/core.dart';
 import 'package:test/test.dart';
 
