@@ -2,9 +2,9 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:dance_chaos/actions/actions.dart';
-import 'package:dance_chaos/app/core/keys.dart';
-import 'package:dance_chaos/models/models.dart';
+import 'package:dance_chaos_data/actions/actions.dart';
+import 'package:dance_chaos_data/app/core/keys.dart';
+import 'package:dance_chaos_data/models/models.dart';
 import 'package:dance_chaos/presentation/todo/add_edit_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';

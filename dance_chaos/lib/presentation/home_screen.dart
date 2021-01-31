@@ -2,9 +2,9 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:dance_chaos/app/core/keys.dart';
-import 'package:dance_chaos/app/core/localization.dart';
-import 'package:dance_chaos/app/core/routes.dart';
+import 'package:dance_chaos_data/app/core/keys.dart';
+import 'package:dance_chaos_data/app/core/localization.dart';
+import 'package:dance_chaos_data/app/core/routes.dart';
 import 'package:dance_chaos/containers/appbar/extra_actions_container.dart';
 import 'package:dance_chaos/containers/appbar/filter_selector.dart';
 import 'package:dance_chaos/containers/appbar/profile_selector.dart';
@@ -15,7 +15,7 @@ import 'package:dance_chaos/containers/tabs/stats.dart';
 import 'package:dance_chaos/containers/tabs/tab_selector.dart';
 import 'package:dance_chaos/containers/todo/filtered_todos.dart';
 import 'package:dance_chaos/localization.dart';
-import 'package:dance_chaos/models/models.dart';
+import 'package:dance_chaos_data/models/models.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {

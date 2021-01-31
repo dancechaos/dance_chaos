@@ -2,11 +2,11 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:dance_chaos/actions/actions.dart';
-import 'package:dance_chaos/app/core/routes.dart';
-import 'package:dance_chaos/models/models.dart';
-import 'package:dance_chaos/models/profile.dart';
-import 'package:dance_chaos/models/profile_actions.dart';
+import 'package:dance_chaos_data/actions/actions.dart';
+import 'package:dance_chaos_data/app/core/routes.dart';
+import 'package:dance_chaos_data/models/models.dart';
+import 'package:dance_chaos_data/models/profile.dart';
+import 'package:dance_chaos_data/models/profile_actions.dart';
 import 'package:dance_chaos/presentation/appbar/profile_button.dart';
 import 'package:dance_chaos/presentation/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';

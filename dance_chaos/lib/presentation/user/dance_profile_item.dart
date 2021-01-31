@@ -2,12 +2,12 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:dance_chaos/app/core/keys.dart';
-import 'package:dance_chaos/models/dance_profile.dart';
-import 'package:dance_chaos/models/models.dart';
+import 'package:dance_chaos_data/app/core/keys.dart';
+import 'package:dance_chaos_data/models/dance_profile.dart';
+import 'package:dance_chaos_data/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:dance_chaos/app/entity/utility.dart';
+import 'package:dance_chaos_data/app/entity/utility.dart';
 
 class DanceProfileItem extends StatefulWidget {
   static const String NO_DANCE_CODE = '';

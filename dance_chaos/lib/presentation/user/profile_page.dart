@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dance_chaos/actions/actions.dart';
-import 'package:dance_chaos/app/core/keys.dart';
-import 'package:dance_chaos/app/core/localization.dart';
-import 'package:dance_chaos/app/entity/utility.dart';
-import 'package:dance_chaos/models/app_state.dart';
-import 'package:dance_chaos/models/profile.dart';
-import 'package:dance_chaos/models/profile_actions.dart';
+import 'package:dance_chaos_data/actions/actions.dart';
+import 'package:dance_chaos_data/app/core/keys.dart';
+import 'package:dance_chaos_data/app/core/localization.dart';
+import 'package:dance_chaos_data/app/entity/utility.dart';
+import 'package:dance_chaos_data/models/app_state.dart';
+import 'package:dance_chaos_data/models/profile.dart';
+import 'package:dance_chaos_data/models/profile_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';

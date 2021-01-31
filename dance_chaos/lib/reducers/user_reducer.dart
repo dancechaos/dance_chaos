@@ -1,6 +1,6 @@
-import 'package:dance_chaos/actions/actions.dart';
+import 'package:dance_chaos_data/actions/actions.dart';
 import 'package:redux/redux.dart';
-import 'package:dance_chaos/models/user_info.dart';
+import 'package:dance_chaos_data/models/user_info.dart';
 
 final userReducer = combineReducers<UserInfo>([
   TypedReducer<UserInfo, UpdateUserSignInStatusAction>(_updateUserSignInStatusAction),

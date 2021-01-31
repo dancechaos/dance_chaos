@@ -3,8 +3,8 @@
 // in the LICENSE file.
 
 import 'package:dance_chaos/containers/map/map_screen.dart';
-import 'package:dance_chaos/models/location_info.dart';
-import 'package:dance_chaos/models/models.dart';
+import 'package:dance_chaos_data/models/location_info.dart';
+import 'package:dance_chaos_data/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';

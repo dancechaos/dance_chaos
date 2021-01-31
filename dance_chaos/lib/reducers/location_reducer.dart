@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dance_chaos/actions/actions.dart';
-import 'package:dance_chaos/models/location_info.dart';
+import 'package:dance_chaos_data/actions/actions.dart';
+import 'package:dance_chaos_data/models/location_info.dart';
 import 'package:redux/redux.dart';
 
 final locationReducer = combineReducers<LocationInfo>([

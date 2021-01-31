@@ -2,12 +2,25 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:dance_chaos/actions/actions.dart';
+import 'package:dance_chaos_data/actions/actions.dart';
 import 'package:dance_chaos/localization.dart';
-import 'package:dance_chaos/models/models.dart';
-import 'package:dance_chaos/models/profile_actions.dart';
+import 'package:dance_chaos_data/app/core/localization.dart';
+import 'package:dance_chaos_data/app/core/routes.dart';
+import 'package:dance_chaos_data/app/core/theme.dart';
+import 'package:dance_chaos_data/app/repo/dance_profile_repository.dart';
+import 'package:dance_chaos_data/app/repo/location_repository.dart';
+import 'package:dance_chaos_data/app/repo/profile_repository.dart';
+import 'package:dance_chaos_data/app/repo/reactive_repository.dart';
+import 'package:dance_chaos_data/app/repo/user_repository.dart';
+import 'package:dance_chaos_data/firebase/middleware/store_todos_middleware.dart';
+import 'package:dance_chaos_data/firebase/repo/firestore_dance_profile_repository.dart';
+import 'package:dance_chaos_data/firebase/repo/firestore_location_repository.dart';
+import 'package:dance_chaos_data/firebase/repo/firestore_profile_repository.dart';
+import 'package:dance_chaos_data/firebase/repo/reactive_todos_repository.dart';
+import 'package:dance_chaos_data/firebase/repo/user_repository.dart';
+import 'package:dance_chaos_data/models/models.dart';
+import 'package:dance_chaos_data/models/profile_actions.dart';
 import 'package:dance_chaos/presentation/home_screen.dart';
-import 'package:dance_chaos/presentation/user/dance_profile_list.dart';
 import 'package:dance_chaos/presentation/user/profile_page.dart';
 import 'package:dance_chaos/presentation/user/register_or_signin_page.dart';
 import 'package:dance_chaos/reducers/app_state_reducer.dart';
@@ -15,22 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'app/core/localization.dart';
-import 'app/core/routes.dart';
-import 'app/core/theme.dart';
-import 'app/repo/dance_profile_repository.dart';
-import 'app/repo/location_repository.dart';
-import 'app/repo/profile_repository.dart';
-import 'app/repo/reactive_repository.dart';
-import 'app/repo/user_repository.dart';
-import 'containers/map/map_screen.dart';
 import 'containers/todo/add_todo.dart';
-import 'firebase/middleware/store_todos_middleware.dart';
-import 'firebase/repo/firestore_dance_profile_repository.dart';
-import 'firebase/repo/firestore_location_repository.dart';
-import 'firebase/repo/reactive_todos_repository.dart';
-import 'firebase/repo/firestore_profile_repository.dart';
-import 'firebase/repo/user_repository.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

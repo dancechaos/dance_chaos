@@ -2,9 +2,9 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:dance_chaos/app/core/keys.dart';
-import 'package:dance_chaos/app/core/localization.dart';
-import 'package:dance_chaos/models/settings_actions.dart';
+import 'package:dance_chaos_data/app/core/keys.dart';
+import 'package:dance_chaos_data/app/core/localization.dart';
+import 'package:dance_chaos_data/models/settings_actions.dart';
 import 'package:flutter/material.dart';
 
 class SettingsButton extends StatelessWidget {

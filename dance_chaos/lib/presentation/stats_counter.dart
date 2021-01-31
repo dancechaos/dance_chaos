@@ -2,8 +2,8 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:dance_chaos/app/core/keys.dart';
-import 'package:dance_chaos/app/core/localization.dart';
+import 'package:dance_chaos_data/app/core/keys.dart';
+import 'package:dance_chaos_data/app/core/localization.dart';
 import 'package:dance_chaos/containers/tabs/app_loading.dart';
 import 'package:dance_chaos/presentation/loading_indicator.dart';
 import 'package:flutter/cupertino.dart';

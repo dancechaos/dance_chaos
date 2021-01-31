@@ -1,9 +1,8 @@
-import 'package:dance_chaos/actions/actions.dart';
-import 'package:dance_chaos/app/entity/location_info_entity.dart';
-import 'package:dance_chaos/firebase/repo/firestore_profile_repository.dart';
-import 'package:dance_chaos/models/app_state.dart';
-import 'package:dance_chaos/models/location_info.dart';
-import 'package:dance_chaos/models/profile.dart';
+import 'package:dance_chaos_data/actions/actions.dart';
+import 'package:dance_chaos_data/app/entity/location_info_entity.dart';
+import 'package:dance_chaos_data/models/app_state.dart';
+import 'package:dance_chaos_data/models/location_info.dart';
+import 'package:dance_chaos_data/models/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

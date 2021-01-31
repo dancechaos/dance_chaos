@@ -2,7 +2,7 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:dance_chaos/models/models.dart';
+import 'package:dance_chaos_data/models/models.dart';
 
 typedef TodoAdder = void Function(Todo todo);
 
