@@ -5,7 +5,9 @@
 import 'dart:async';
 
 import 'package:dance_chaos_data/actions/actions.dart';
+import 'package:dance_chaos_data/app/entity/dance_profile_entity.dart';
 import 'package:dance_chaos_data/app/entity/todo_entity.dart';
+import 'package:dance_chaos_data/app/repo/dance_profile_repository.dart';
 import 'package:dance_chaos_data/app/repo/location_repository.dart';
 import 'package:dance_chaos_data/app/repo/profile_repository.dart';
 import 'package:dance_chaos_data/app/repo/reactive_repository.dart';
@@ -26,6 +28,8 @@ class MockUserRepository extends Mock implements UserRepository {}
 
 class MockProfileRepository extends Mock implements ProfileRepository {}
 
+class MockDanceProfileRepository extends Mock implements DanceProfileRepository {}
+
 class MockLocationRepository extends Mock implements LocationRepository {}
 
 class MockMiddleware extends Mock implements MiddlewareClass<AppState> {}
@@ -43,12 +47,13 @@ void main() {
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
+      final danceProfileRepository = MockDanceProfileRepository();
       final locationRepository = MockLocationRepository();
       final captor = MockMiddleware();
       final store = Store<AppState>(
         appReducer,
         initialState: AppState.loading(),
-        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, locationRepository)
+        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, danceProfileRepository, locationRepository)
           ..add(captor),
       );
 
@@ -80,11 +85,12 @@ void main() {
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
+      final danceProfileRepository = MockDanceProfileRepository();
       final locationRepository = MockLocationRepository();
       final store = Store<AppState>(
         appReducer,
         initialState: AppState.loading(),
-        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, locationRepository)
+        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, danceProfileRepository, locationRepository)
           // ..add(captor), // Note" I do not add the captor because I want the store to change to reflect the new user
       );
 
@@ -94,6 +100,8 @@ void main() {
           .thenAnswer((_) => Stream.fromIterable([TestData.userEntity]));
       when(profileRepository.profileChanges(any))
           .thenAnswer((_) => Stream.fromIterable([TestData.profileEntity]));
+      when(danceProfileRepository.danceProfiles(any))
+          .thenAnswer((_) => Stream.fromIterable([[TestData.danceProfileEntity]]));
       when(todosRepository.todos(TestData.profileId))
           .thenAnswer((_) => Stream.fromIterable([[TestData.todoEntity]]));
 
@@ -115,22 +123,26 @@ void main() {
     test('should convert entities to todos', () async {
       // ignore: close_sinks
       final controller = StreamController<List<TodoEntity>>(sync: true);
+      final danceProfileController = StreamController<List<DanceProfileEntity>>(sync: true);
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
+      final danceProfileRepository = MockDanceProfileRepository();
       final locationRepository = MockLocationRepository();
       final captor = MockMiddleware();
       final store = Store<AppState>(
         appReducer,
         initialState: AppState.loading(),
-        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, locationRepository)
+        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, danceProfileRepository, locationRepository)
 //          ..add(captor),
       );
 
       when(todosRepository.todos(TestData.profileId)).thenAnswer((_) => controller.stream);
+      when(danceProfileRepository.danceProfiles(TestData.profileId)).thenAnswer((_) => danceProfileController.stream);
 
       store.dispatch(ProfileChangedAction(Profile.fromEntity(TestData.profileEntity)));
       controller.add([TestData.todo.toEntity()]);
+      danceProfileController.add([TestData.danceProfileEntity]);
 
       expect(store.state.todos.length, 1);
       expect(store.state.todos[0].toEntity(), TestData.todoEntity);
@@ -140,11 +152,12 @@ void main() {
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
+      final danceProfileRepository = MockDanceProfileRepository();
       final locationRepository = MockLocationRepository();
       final store = Store<AppState>(
         appReducer,
         initialState: AppState.loading(),
-        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, locationRepository),
+        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, danceProfileRepository, locationRepository),
       );
 
       store.dispatch(AddNewTodoAction(TestData.todo));
@@ -158,6 +171,7 @@ void main() {
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
+      final danceProfileRepository = MockDanceProfileRepository();
       final locationRepository = MockLocationRepository();
       final store = Store<AppState>(
         appReducer,
@@ -166,7 +180,7 @@ void main() {
           todoB,
           todoC,
         ]),
-        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, locationRepository),
+        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, danceProfileRepository, locationRepository),
       );
 
       store.dispatch(ClearCompletedAction());
@@ -180,6 +194,7 @@ void main() {
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
+      final danceProfileRepository = MockDanceProfileRepository();
       final locationRepository = MockLocationRepository();
       final store = Store<AppState>(
         appReducer,
@@ -187,7 +202,7 @@ void main() {
           todoA,
           todoB,
         ]),
-        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, locationRepository),
+        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, danceProfileRepository, locationRepository),
       );
 
       store.dispatch(ToggleAllAction());
@@ -204,6 +219,7 @@ void main() {
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
+      final danceProfileRepository = MockDanceProfileRepository();
       final locationRepository = MockLocationRepository();
       final store = Store<AppState>(
         appReducer,
@@ -211,7 +227,7 @@ void main() {
           todoA,
           todoB,
         ]),
-        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, locationRepository),
+        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, danceProfileRepository, locationRepository),
       );
 
       store.dispatch(ToggleAllAction());
@@ -225,11 +241,12 @@ void main() {
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
+      final danceProfileRepository = MockDanceProfileRepository();
       final locationRepository = MockLocationRepository();
       final store = Store<AppState>(
         appReducer,
         initialState: AppState(todos: [TestData.todo]),
-        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, locationRepository),
+        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, danceProfileRepository, locationRepository),
       );
 
       store.dispatch(UpdateTodoAction(TestData.todo.id, update));
@@ -241,11 +258,12 @@ void main() {
       final todosRepository = MockReactiveTodosRepository();
       final userRepository = MockUserRepository();
       final profileRepository = MockProfileRepository();
+      final danceProfileRepository = MockDanceProfileRepository();
       final locationRepository = MockLocationRepository();
       final store = Store<AppState>(
         appReducer,
         initialState: AppState(todos: [TestData.todo]),
-        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, locationRepository),
+        middleware: createStoreTodosMiddleware(todosRepository, userRepository, profileRepository, danceProfileRepository, locationRepository),
       );
 
       store.dispatch(DeleteTodoAction(TestData.todo.id));
