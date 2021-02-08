@@ -59,7 +59,7 @@ class DanceProfileItem extends StatefulWidget {
     if (widget.danceProfile.range != null)
       _currentRangeValues = RangeValues(widget.danceProfile.range.from.toDouble(), widget.danceProfile.range.to.toDouble());
 
-    _level = widget.danceProfile.level == null ? 5.0 : widget.danceProfile.level.toDouble();
+    _level = widget.danceProfile.level == null ? Range.DEFAULT_LEVEL : widget.danceProfile.level.toDouble();
 
     _danceCode = widget.danceProfile.danceCode;
   }

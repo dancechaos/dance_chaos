@@ -141,9 +141,9 @@ class Profile {
     Map danceProfileMap = {};
     danceProfileList.forEach((danceProfile) {
       danceProfileMap[danceProfile.danceCode] = {
-        DanceProfileEntity.LEVEL: danceProfile.level,
-        Range.RANGE_FROM: danceProfile?.range?.from,
-        Range.RANGE_TO: danceProfile?.range?.to,
+        DanceProfileEntity.LEVEL: danceProfile.level ?? Range.MIN_FROM,
+        Range.RANGE_FROM: danceProfile?.range?.from ?? Range.MIN_FROM,
+        Range.RANGE_TO: danceProfile?.range?.to ?? Range.MAX_TO,
       };
     });
     return danceProfileMap;

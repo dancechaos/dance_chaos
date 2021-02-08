@@ -63,6 +63,7 @@ class Range {
   static const int MIN_FROM = 1;
   static const int MAX_TO = 10;
   static const Range RANGE_ALL = Range(MIN_FROM, MAX_TO);
+  static const double DEFAULT_LEVEL = 5.0;
 
   const Range(this.from, this.to);
 
