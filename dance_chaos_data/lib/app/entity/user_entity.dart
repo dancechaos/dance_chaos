@@ -4,6 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 
+@immutable
 class UserEntity {
   final String id;
   final String displayName;

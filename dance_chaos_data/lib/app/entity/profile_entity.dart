@@ -4,6 +4,7 @@ import 'package:dance_chaos_data/app/entity/utility.dart';
 import 'package:dance_chaos_data/models/profile_actions.dart';
 import 'package:flutter/cupertino.dart';
 
+@immutable
 class ProfileEntity extends UserEntity {
   final Timestamp birthdate;
   final Gender gender;

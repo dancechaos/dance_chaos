@@ -1,5 +1,7 @@
 import 'package:dance_chaos_data/app/entity/utility.dart';
+import 'package:flutter/cupertino.dart';
 
+@immutable
 class DancesEntity {
   final String id;
   final Map dances;
