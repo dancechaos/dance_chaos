@@ -32,6 +32,27 @@ class Utility {
   static final Duration timeoutDefault = Duration(seconds: 10);
 
   static final int retriesDefault = 3;
+
+  // Modified from foundation code to compare Map trees
+  static bool mapEquals(Map a, Map b) {
+    if (a == null)
+      return b == null;
+    if (b == null || a.length != b.length)
+      return false;
+    if (identical(a, b))
+      return true;
+    for (final key in a.keys) {
+      if (!b.containsKey(key))
+        return false;
+      if (b[key] is Map && a[key] is Map) {
+        if (!mapEquals(b[key], a[key]))
+          return false;
+      } else if (b[key] != a[key])
+        return false;
+    }
+    return true;
+  }
+
 }
 
 @immutable

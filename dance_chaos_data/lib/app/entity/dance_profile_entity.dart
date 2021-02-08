@@ -11,7 +11,7 @@ class DanceProfileEntity {
   static const DANCE_CODE = 'danceCode';
   static const NOTE = 'note';
   static const LEVEL = 'level';
-  static const RANGE = 'range';
+//  static const RANGE = 'range';
 
   const DanceProfileEntity({this.id, this.danceCode, this.note, this.level, this.range = Range.RANGE_ALL});
 
@@ -35,7 +35,9 @@ class DanceProfileEntity {
     Utility.addToMap(map, DANCE_CODE, danceCode);
     Utility.addToMap(map, NOTE, note);
     Utility.addToMap(map, LEVEL, level);
-    Utility.addToMap(map, RANGE, Range.rangeToMap(range));
+    // Utility.addToMap(map, RANGE, Range.rangeToMap(range));
+    Utility.addToMap(map, Range.RANGE_FROM, range?.from);
+    Utility.addToMap(map, Range.RANGE_TO, range?.to);
     return map;
   }
 
@@ -45,12 +47,12 @@ class DanceProfileEntity {
       danceCode: json[DANCE_CODE] as String,
       note: json[NOTE] as String,
       level: json[LEVEL] as int,
-      range: json[RANGE] == null ? null : Range(json[RANGE][Range.RANGE_FROM] as int, json[RANGE][Range.RANGE_TO] as int),
+      range: json[Range.RANGE_FROM] == null && json[Range.RANGE_TO] == null ? null : Range(json[Range.RANGE_FROM] == null ? Range.MIN_FROM : json[Range.RANGE_FROM] as int, json[Range.RANGE_TO] == null ? Range.MAX_TO : json[Range.RANGE_TO] as int),
     );
   }
 
   @override
   String toString() {
-    return 'DanceProfileEntity{$ID: $id, $LEVEL: $level, $DANCE_CODE: $danceCode, $NOTE: $note, $RANGE: $range}';
+    return 'DanceProfileEntity{$ID: $id, $LEVEL: $level, $DANCE_CODE: $danceCode, $NOTE: $note, ${Range.RANGE_FROM}: ${range?.from}, ${Range.RANGE_TO}: ${range?.to}';
   }
 }

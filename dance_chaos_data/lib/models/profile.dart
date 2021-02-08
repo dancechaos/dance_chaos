@@ -2,14 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dance_chaos_data/app/entity/profile_entity.dart';
 import 'package:dance_chaos_data/app/entity/user_entity.dart';
 import 'package:dance_chaos_data/models/dance_profile.dart';
+import 'package:dance_chaos_data/app/entity/dance_profile_entity.dart';
 import 'package:dance_chaos_data/models/profile_actions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-
-// Copyright 2018 The Flutter Architecture Sample Authors. All rights reserved.
-// Use of this source code is governed by the MIT license that can be found
-// in the LICENSE file.
+import 'package:dance_chaos_data/app/entity/utility.dart';
 
 @immutable
 class Profile {
@@ -135,5 +133,19 @@ class Profile {
       default:
         return null;
     }
+  }
+
+  Map danceProfileMap() {
+    if (danceProfileList == null)
+      return null;
+    Map danceProfileMap = {};
+    danceProfileList.forEach((danceProfile) {
+      danceProfileMap[danceProfile.danceCode] = {
+        DanceProfileEntity.LEVEL: danceProfile.level,
+        Range.RANGE_FROM: danceProfile?.range?.from,
+        Range.RANGE_TO: danceProfile?.range?.to,
+      };
+    });
+    return danceProfileMap;
   }
 }

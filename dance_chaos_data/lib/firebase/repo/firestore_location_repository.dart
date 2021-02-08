@@ -75,7 +75,7 @@ class FirestoreLocationRepository implements LocationRepository {
       return geo.collection(collectionRef: getCollection()).within(
         center: center,
         radius: rad,
-        field: LocationInfoEntity.POSITION,
+        field: LocationInfoEntity.LOCATION,
         strictMode: true,
       );
     }));

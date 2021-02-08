@@ -1,7 +1,3 @@
-// Copyright 2018 The Flutter Architecture Sample Authors. All rights reserved.
-// Use of this source code is governed by the MIT license that can be found
-// in the LICENSE file.
-
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -153,6 +149,20 @@ void Function(
   };
 }
 
+Timestamp lastTimerTimestamp;
+Timer locationTimer;
+
+const int REFRESH_TIME_IN_SECONDS = 1 * 60;  // 15 Minutes
+const timerDuration = const Duration(seconds: REFRESH_TIME_IN_SECONDS);
+
+Timer _resetTimer(LocationRepository locationRepository) {
+  locationTimer?.cancel();
+  lastTimerTimestamp = Timestamp.now();
+  return locationTimer = new Timer(timerDuration, () {
+    _changeLocation(locationRepository);
+  });
+}
+
 void Function(
     Store<AppState> store,
     ChangeLocationAction action,
@@ -164,9 +174,10 @@ void Function(
     LocationInfo initialLocation = store.state.locationInfo;
     next(action);
 
-    if (initialLocation != store.state.locationInfo) {  // User location changed, now update my location in the shared repo
+    if (initialLocation != store.state.locationInfo) {// || store.state.locationInfo.timestamp.seconds > lastTimerTimestamp.seconds + REFRESH_TIME_IN_SECONDS) {  // User location changed, now update my location in the shared repo
       print('changeLocation profile: ${action.profile}, location (lat,long): (${action.location?.latitude}, ${action.location?.longitude}) ');
       locationRepository.updateLocation(store.state.locationInfo?.toEntity());
+      _resetTimer(locationRepository);  // Update this again if location has not changed in 15 minutes.
     }
   };
 }
@@ -398,7 +409,9 @@ void _updateLocationTracking(Store<AppState> store, UserRepository userRepositor
       userRepository.getCurrentLocation().then((geoPoint) { // Get initial position (and init location service)
         locationStreamSubscription?.cancel();
         locationStreamSubscription = userRepository.locationChanges().listen((geoPoint) { // Start listening
-          store.dispatch(ChangeLocationAction(store.state.profile, geoPoint));  // Device move event
+          if (store.state.locationInfo.location != geoPoint || store.state.locationInfo.timestamp.seconds < lastTimerTimestamp.seconds + REFRESH_TIME_IN_SECONDS) {
+            store.dispatch(ChangeLocationAction(store.state.profile, geoPoint)); // Device move event
+          }
         });
         store.dispatch(ChangeLocationAction(store.state.profile, geoPoint));  // Set initial location
       });

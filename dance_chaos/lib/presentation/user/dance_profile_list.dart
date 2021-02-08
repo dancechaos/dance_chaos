@@ -20,7 +20,6 @@ import 'dance_profile_item.dart';
 
 class DanceProfileList extends StatefulWidget {
   final Profile profile;
-  final List<DanceProfile> danceProfiles;
   final Function(DanceProfile, String) onDropdownChanged;
   final Function(DanceProfile, RangeValues) onRangeChanged;
   final Function(DanceProfile, double) onLevelChanged;
@@ -30,7 +29,6 @@ class DanceProfileList extends StatefulWidget {
   DanceProfileList({
     Key key,
     @required this.profile,
-    @required this.danceProfiles,
     @required this.onDropdownChanged,
     @required this.onRangeChanged,
     @required this.onLevelChanged,
@@ -73,7 +71,8 @@ class _DanceProfilePageState extends State<DanceProfileList> {
       _partnerRole = store.state.profile.gender == Gender.male ? PartnerRole.lead
         : store.state.profile.gender == Gender.female ? PartnerRole.follow : null;
 
-    danceProfiles = widget.profile.danceProfileList;
+    // danceProfiles = widget.profile.danceProfileList;
+    danceProfiles = store.state.profile.danceProfileList;
 
     subscription = StoreProvider.of<AppState>(context, listen: false).onChange.listen(render);
   }
