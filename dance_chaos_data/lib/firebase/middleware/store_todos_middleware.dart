@@ -174,7 +174,7 @@ void Function(
     LocationInfo initialLocation = store.state.locationInfo;
     next(action);
 
-    if (initialLocation != store.state.locationInfo) {// || store.state.locationInfo.timestamp.seconds > lastTimerTimestamp.seconds + REFRESH_TIME_IN_SECONDS) {  // User location changed, now update my location in the shared repo
+    if (initialLocation != store.state.locationInfo || store.state.locationInfo.timestamp.seconds > lastTimerTimestamp.seconds + REFRESH_TIME_IN_SECONDS) {  // User location changed, now update my location in the shared repo
       print('changeLocation profile: ${action.profile}, location (lat,long): (${action.location?.latitude}, ${action.location?.longitude}) ');
       locationRepository.updateLocation(store.state.locationInfo?.toEntity());
       _resetTimer(locationRepository);  // Update this again if location has not changed in 15 minutes.
