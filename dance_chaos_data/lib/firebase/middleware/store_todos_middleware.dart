@@ -152,7 +152,7 @@ void Function(
 Timestamp lastTimerTimestamp;
 Timer locationTimer;
 
-const int REFRESH_TIME_IN_SECONDS = 1 * 60;  // 15 Minutes
+const int REFRESH_TIME_IN_SECONDS = 10 * 60;  // 10 Minutes
 const timerDuration = const Duration(seconds: REFRESH_TIME_IN_SECONDS);
 
 Timer _resetTimer(LocationRepository locationRepository) {
