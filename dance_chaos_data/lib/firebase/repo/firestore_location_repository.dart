@@ -16,6 +16,8 @@ import 'package:rxdart/rxdart.dart';
 
 import 'firestore_profile_repository.dart';
 
+enum ComparisonType {from, to}
+
 class FirestoreLocationRepository implements LocationRepository {
   static const String path = 'locations';
 
@@ -25,7 +27,31 @@ class FirestoreLocationRepository implements LocationRepository {
 
   CollectionReference getCollection() {
     return FirestoreProfileRepository.firestore().collection(path);
-//          .where('name', isEqualTo: 'darshan');
+  }
+
+  Query getQuery() {
+    Timestamp timestamp = Timestamp(Timestamp.now().seconds - 8 * 60 * 60, 0);
+    DateTime date = DateTime(2021, 2, 8, 14, 25, 43);
+    timestamp = Timestamp.fromDate(date);
+    print('datetime $timestamp');
+    print('date $date');
+    return getCollection()
+    // Note: I can't get timestamp comparison to work
+    // .where('test', isEqualTo: 'yes');
+    // .where('danceProfile.new', arrayContainsAny: ['IS','IP']);
+    // .where('danceProfile.timestamp', isEqualTo: timestamp);
+    // .orderBy('danceProfile.timestamp').startAt([timestamp]);
+    ;
+  }
+
+  String getProfileComparison(ComparisonType comparisonType, String dance) {
+    switch (comparisonType) {
+      case ComparisonType.from:
+        return LocationInfoEntity.DANCE_PROFILE + '.' + dance + '.from';
+      case ComparisonType.to:
+        return LocationInfoEntity.DANCE_PROFILE + '.' + dance + '.to';
+    }
+    return null;
   }
 
   DocumentReference getDocRef(String id) {
@@ -72,7 +98,7 @@ class FirestoreLocationRepository implements LocationRepository {
 
     // subscribe to query
     return convert(radius.switchMap((rad) {
-      return geo.collection(collectionRef: getCollection()).within(
+      return geo.collection(collectionRef: getQuery()).within(
         center: center,
         radius: rad,
         field: LocationInfoEntity.LOCATION,

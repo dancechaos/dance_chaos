@@ -194,9 +194,9 @@ class FireMapState extends State<FireMap> {
   }
 
   void _updateMarkers(List<LocationInfoEntity> documentList) {
-    print(documentList);
+    print('documentList: $documentList');
     markers.clear();
-    documentList.forEach((LocationInfoEntity document) {
+    documentList?.forEach((LocationInfoEntity document) {
       _onMapChange(document);
     });
   }
