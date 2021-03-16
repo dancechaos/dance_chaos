@@ -19,13 +19,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^0.5.3
-  firebase_auth: ^0.18.4+1
-  cloud_firestore: ^0.14.4
+  firebase_core: ^1.0.1
+  firebase_auth: ^1.0.1
+  cloud_firestore: ^1.0.1
 
-  location: ^3.2.0
-  geoflutterfire: ^2.2.1
-  google_maps_flutter: ^1.0.10
+  location: ^4.1.1
+  geoflutterfire: ^3.0.0-nullsafety.1
+  google_maps_flutter: ^2.0.1
   redux: ^4.0.0+3
   flutter_redux: ^0.7.0
 

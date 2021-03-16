@@ -19,14 +19,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  meta: ^1.2.4
-  path_provider: ^1.6.27
-  rxdart: ^0.24.1
-  badges: ^1.1.6
-  google_sign_in: ^4.5.9
-#  flutter_signin_button: ^1.1.0
-#  flutter_google_maps: ^4.0.0
-  intl: ^0.16.1
+  meta: ^1.3.0
+  path_provider: ^2.0.1
+  rxdart: ^0.26.0
+  badges: ^1.2.0
+  google_sign_in: ^5.0.0
+  #  flutter_signin_button: ^1.1.0
+  #  flutter_google_maps: ^4.0.0
+  intl: ^0.17.0
 
   font_awesome_flutter: ^9.0.0-nullsafety
 
@@ -40,7 +40,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  test: ^1.15.7
+  test: ^1.15.5
   mockito: ^5.0.0-nullsafety
 #  intl_translation: ^0.17.10+1
 
