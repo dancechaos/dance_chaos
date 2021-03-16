@@ -194,13 +194,16 @@ void Function(
   return (store, action, next) {
     next(action);
 
-    LatLng location = LatLng(store.state.locationInfo.location.latitude, store.state.locationInfo.location.longitude);
     _locationInfoChangedStreamSubscription?.cancel();
     _locationInfoChangedStreamSubscription = null;
     // Listen for changes to this profile
-    _locationInfoChangedStreamSubscription = locationRepository.locationChanges(location).listen((listLocationInfoEntity) {
-      action.onMapChange(listLocationInfoEntity);
-    });
+    if (store.state.locationInfo != null) {
+      LatLng location = LatLng(store.state.locationInfo.location.latitude, store.state.locationInfo.location.longitude);
+      _locationInfoChangedStreamSubscription =
+          locationRepository.locationChanges(location).listen((listLocationInfoEntity) {
+            action.onMapChange(listLocationInfoEntity);
+          });
+    }
   };
 }
 
