@@ -28,15 +28,15 @@ class ReactiveLocalStorageRepository implements ReactiveTodosRepository {
 
   @override
   Future<void> addNewTodo(String profileId, TodoEntity todo) async {
-    _subject.add([..._subject.value, todo]);
+    _subject.add([..._subject.valueWrapper.value, todo]);
 
-    await _repository.saveTodos(profileId, _subject.value);
+    await _repository.saveTodos(profileId, _subject.valueWrapper.value);
   }
 
   @override
   Future<void> deleteTodo(String profileId, List<String> idList) async {
     _subject.add(
-      List<TodoEntity>.unmodifiable(_subject.value.fold<List<TodoEntity>>(
+      List<TodoEntity>.unmodifiable(_subject.valueWrapper.value.fold<List<TodoEntity>>(
         <TodoEntity>[],
         (prev, entity) {
           return idList.contains(entity.id) ? prev : (prev..add(entity));
@@ -44,7 +44,7 @@ class ReactiveLocalStorageRepository implements ReactiveTodosRepository {
       )),
     );
 
-    await _repository.saveTodos(profileId, _subject.value);
+    await _repository.saveTodos(profileId, _subject.valueWrapper.value);
   }
 
   @override
@@ -59,7 +59,7 @@ class ReactiveLocalStorageRepository implements ReactiveTodosRepository {
 
     _repository.loadTodos(profileId).then((entities) {
       _subject.add(List<TodoEntity>.unmodifiable(
-        [if (_subject.value != null) ..._subject.value, ...entities],
+        [if (_subject.valueWrapper.value != null) ..._subject.valueWrapper.value, ...entities],
       ));
     });
   }
@@ -67,12 +67,12 @@ class ReactiveLocalStorageRepository implements ReactiveTodosRepository {
   @override
   Future<void> updateTodo(String profileId, TodoEntity update) async {
     _subject.add(
-      List<TodoEntity>.unmodifiable(_subject.value.fold<List<TodoEntity>>(
+      List<TodoEntity>.unmodifiable(_subject.valueWrapper.value.fold<List<TodoEntity>>(
         <TodoEntity>[],
         (prev, entity) => prev..add(entity.id == update.id ? update : entity),
       )),
     );
 
-    await _repository.saveTodos(profileId, _subject.value);
+    await _repository.saveTodos(profileId, _subject.valueWrapper.value);
   }
 }
