@@ -10,7 +10,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:redux/redux.dart';
-import 'package:rxdart/rxdart.dart';
 
 class FireMap extends StatefulWidget {
   final Profile profile;
@@ -61,8 +60,8 @@ class FireMapState extends State<FireMap> {
           top: 30,
           right: 30,
           child:
-          FlatButton(
-            child: Icon(Icons.pin_drop, color: Colors.white),
+          IconButton(
+            icon: Icon(Icons.pin_drop, color: Colors.white),
             color: Colors.green,
 //            onPressed: _addGeoPoint
           )
@@ -75,7 +74,7 @@ class FireMapState extends State<FireMap> {
           max: 500.0,
           divisions: 4,
           value: radiusKm,
-          label: 'Radius ${radiusKm} km',
+          label: 'Radius $radiusKm km',
           activeColor: Colors.green,
           inactiveColor: Colors.green.withOpacity(0.2),
           onChanged: _updateQuery,
@@ -170,7 +169,7 @@ class FireMapState extends State<FireMap> {
           builder: (BuildContext context) {
             return AlertDialog(
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: const Text('OK'),
                     onPressed: () => Navigator.of(context).pop(),
                   )

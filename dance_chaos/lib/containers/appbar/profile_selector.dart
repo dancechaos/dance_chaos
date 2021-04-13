@@ -8,8 +8,6 @@ import 'package:dance_chaos_data/models/models.dart';
 import 'package:dance_chaos_data/models/profile.dart';
 import 'package:dance_chaos_data/models/profile_actions.dart';
 import 'package:dance_chaos/presentation/appbar/profile_button.dart';
-import 'package:dance_chaos/presentation/home_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -55,24 +53,24 @@ class ProfileSelector extends StatelessWidget {
 }
 
 // Example code of how to sign in anonymously.
-void _signInAnonymously(BuildContext context) async {
-  try {
-    // await FirebaseAuth.instance.signOut();
-    await FirebaseAuth.instance.signOut();
-    final User user = (await FirebaseAuth.instance.signInAnonymously()).user;
-
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("User signed out"),
-    ));
-
-    Navigator.of(context).push(
-        MaterialPageRoute<void>(builder: (_) => HomeScreen()));
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Failed to sign in Anonymously"),
-    ));
-  }
-}
+// void _signInAnonymously(BuildContext context) async {
+//   try {
+//     // await FirebaseAuth.instance.signOut();
+//     await FirebaseAuth.instance.signOut();
+//     final User user = (await FirebaseAuth.instance.signInAnonymously()).user;
+//
+//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//       content: Text("User signed out"),
+//     ));
+//
+//     Navigator.of(context).push(
+//         MaterialPageRoute<void>(builder: (_) => HomeScreen()));
+//   } catch (e) {
+//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//       content: Text("Failed to sign in Anonymously"),
+//     ));
+//   }
+// }
 
 class _ViewModel {
   final Function(ProfileAction) onProfileAction;

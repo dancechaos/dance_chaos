@@ -13,7 +13,7 @@ class Todo {
   final String note;
   final String task;
 
-  Todo({@required this.task, this.complete = false, String note = '', String id})
+  Todo({this.task, this.complete = false, String note = '', String id})
       : note = note ?? '',
         id = id ?? Uuid().generateV4();
 
